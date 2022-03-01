@@ -141,6 +141,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="binary_tree.hpp" />
+    <ClInclude Include="polinom.hpp" />
+    <ClInclude Include="list.hpp" />
+    <ClInclude Include="stack.hpp" />
+    <ClInclude Include="tables.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
