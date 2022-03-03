@@ -145,6 +145,7 @@
     <ClInclude Include="binary_tree.hpp" />
     <ClInclude Include="polinom.hpp" />
     <ClInclude Include="list.hpp" />
+    <ClInclude Include="postfix.hpp" />
     <ClInclude Include="stack.hpp" />
     <ClInclude Include="tables.hpp" />
   </ItemGroup>
