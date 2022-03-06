@@ -15,9 +15,6 @@ private:
 public:
   Operations() // При добавлении операции в конструктор, обязательно нужно реализовать логику этой операции в Calc и добавить наименование в static string str_op()
   {
-    ops.emplace("sqrt", vector<int>{ 3, 1 });
-    ops.emplace("sin", vector<int>{ 3, 1 });
-    ops.emplace("cos", vector<int>{ 3, 1 });
     ops.emplace("*", vector<int>{ 2, 2 });
     ops.emplace("/", vector<int>{ 2, 2 });
     ops.emplace("+", vector<int>{ 1, 2 });
@@ -26,7 +23,7 @@ public:
     ops.emplace(")", vector<int>{ 0, 0 });
   }
 
-  static string str_op() { return string("sqrt(v), sin(v), cos(v), *, /, +, -, (, )"); }
+  static string str_op() { return string("*, /, +, -, (, )"); }
 
   bool IsOperation(const string& elem) const { return ops.find(elem) != ops.end(); } // Проверка является ли данный элемент операцией, которая объявлена в классе
 
@@ -36,12 +33,6 @@ public:
 
   double Calc(const string& elem, double right, double left = 0) // Вычислить
   {
-    if (elem == "sqrt")
-      return sqrt(right);
-    if (elem == "sin")
-      return sin(right);
-    if (elem == "cos")
-      return cos(right);
     if (elem == "*")
       return right * left;
     if (elem == "/")
@@ -53,7 +44,6 @@ public:
   }
 };
 
-
 class TPostfix
 {
 private:
@@ -64,7 +54,6 @@ private:
   bool BracketsCorrect(string& str) const; // Проверка на корректность раставления скобок в полученной на вход строке
   void ToInfix(string& str); // Преобразование полученной строки в vector<string> infix
   void ToPostfix(); // Преобразование infix в vector<string> postfix
-  vector<string> GetVecOfVariables() const; // Получить вектор переменных из постфиксной формы
 
 public:
   TPostfix(string str) // Конструктор
@@ -95,7 +84,7 @@ public:
     return tmp;
   }
 
-  double Calculate(bool interface = true, vector<double> vecofvalues = {}) const; // Ввод переменных, вычисление по постфиксной форме
+  double Calculate() const;
 };
 
 #endif
