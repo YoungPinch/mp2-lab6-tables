@@ -24,6 +24,7 @@
     <ProjectGuid>{c5f96e8b-c1af-431f-a731-db7da795e4d3}</ProjectGuid>
     <RootNamespace>mp2lab6tables</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>base</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
