@@ -2,55 +2,69 @@
 
 TEST(TList, can_create_list)
 {
-	ADD_FAILURE();
+	ASSERT_NO_THROW(TList<int> l);
 }
 
 TEST(TQueue, can_get_size_of_list)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	ASSERT_NO_THROW(l.GetSize());
 }
 
 TEST(TList, true_if_list_is_empty)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	EXPECT_EQ(true, l.IsEmpty());
 }
 
 TEST(TList, can_insert_first_elem_in_list)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	ASSERT_NO_THROW(l.InsertFirst(5));
 }
 
 TEST(TList, can_insert_last_elem_in_list)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	ASSERT_NO_THROW(l.InsertLast(5));
 }
 
 TEST(TList, can_create_list_iterator)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	ASSERT_NO_THROW(TList<int>::iterator it;);
 }
 
 TEST(TList, can_get_begin_in_list_iterator)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	ASSERT_NO_THROW(l.begin());
 }
 
 TEST(TList, can_get_end_in_list_iterator)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	ASSERT_NO_THROW(l.end());
 }
 
 TEST(TList, can_get_elem_in_list_iterator)
 {
-	ADD_FAILURE();
+	TList<int> l;
+	l.InsertLast(1);
+	auto it = l.begin();
+	EXPECT_EQ(1, *it);
 }
 
 TEST(TList, can_pre_increase_in_list_iterator)
 {
-	ADD_FAILURE();
+	TList<int> l; l.InsertLast(1);
+	auto it = l.begin();
+	ASSERT_NO_THROW(++it);
 }
 
 TEST(TList, can_post_increase_in_list_iterator)
 {
-	ADD_FAILURE();
+	TList<int> l; l.InsertLast(1);
+	auto it = l.begin();
+	ASSERT_NO_THROW(it++);
 }
