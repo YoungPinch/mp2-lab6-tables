@@ -53,6 +53,7 @@
     <ClCompile Include="test_list.cpp" />
     <ClCompile Include="test_sortarr_table.cpp" />
     <ClCompile Include="test_stack.cpp" />
+    <ClCompile Include="test_table.cpp" />
     <ClCompile Include="test_unsortarr_table.cpp" />
     <ClCompile Include="test_unsortlist_table.cpp" />
   </ItemGroup>
