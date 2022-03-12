@@ -54,7 +54,19 @@ public:
     pLast = &(p->next);
     ++Size;
   }
-
+  void Delete(const iterator it){
+    if(it == end())
+      throw -1;
+    Node **p = &pFirst, *i;
+    while(*p != it.cur)
+      p = &((*p)->next); 
+    i = *p;
+    *p = (*p)->next;
+    if(*p == nullptr)
+      pLast = p;
+    delete i;
+    --Size;
+  }
   virtual ~TList() {
     Node* i = pFirst, * p;
     while (i != nullptr) {
