@@ -1,24 +1,26 @@
 #pragma once
 #include <string.h>
+#include <memory>
 #include "polinom.hpp"
+
 #define COUNTTABLES 6
 
 class PolinomObj {
 private:
   std::string name;
   std::string strPol;
-  Polinom* pol;
+  Polinom pol;
 
   PolinomObj(std::string _name, std::string _strPol);
-  PolinomObj(std::string _name, Polinom* pol);
+  PolinomObj(std::string _name, Polinom pol);
 
 public:
-  static PolinomObj* Create(std::string _name, std::string _strPol) {
-    return &PolinomObj(_name, _strPol);
+  static std::shared_ptr<PolinomObj> Create(std::string _name, std::string _strPol) {
+    return std::make_shared<PolinomObj>(_name, _strPol);
   }
 
-  static PolinomObj* Create(std::string _name, Polinom* pol) {
-    return &PolinomObj(_name, pol);
+  static std::shared_ptr<PolinomObj> Create(std::string _name, Polinom pol) {
+    return std::make_shared<PolinomObj>(_name, pol);
   }
 };
 
@@ -37,7 +39,7 @@ private:
     OPENHASH
   };
 
-  void Insert(PolinomObj* obj) {
+  void Insert(std::shared_ptr<PolinomObj> obj) {
     for (int i = 0; i < COUNTTABLES; i++)
       tables[i]->Insert(obj);
   }
@@ -54,7 +56,7 @@ public:
 
   inline void SetActiveTable(int ind) { activeTable = tables[ind]; }
 
-  void Insert(std::string _name, Polinom* pol) { Insert(PolinomObj::Create(_name, pol)); }
+  void Insert(std::string _name, Polinom pol) { Insert(PolinomObj::Create(_name, pol)); }
 
   void Insert(std::string _name, std::string _strPol) { Insert(PolinomObj::Create(_name, _strPol)); }
 
@@ -68,24 +70,24 @@ public:
 
 class TTable {
 protected:
-  virtual PolinomObj* FindObj(std::string name);
+  virtual std::shared_ptr<PolinomObj> FindObj(std::string name);
 public:
   virtual void Delete(std::string _name);
   virtual const Polinom& Find(std::string name);
-  virtual void Insert(PolinomObj* obj);
+  virtual void Insert(std::shared_ptr<PolinomObj> obj);
   virtual friend std::ostream& operator<<(std::ostream& os, const TTable* table);
   virtual ~TTable() = 0;
 };
 
 class SortArrayTable final : public TTable {
 private:
-  PolinomObj** arr;
+  std::shared_ptr<PolinomObj>* arr;
 public:
 };
 
 class UnsortArrayTable final : public TTable {
 private:
-  PolinomObj** arr;
+  std::shared_ptr<PolinomObj>* arr;
 public:
 };
 
@@ -96,7 +98,7 @@ public:
 
 class UnsortListTable final : public TTable {
 private:
-  TList<PolinomObj*> list;
+  TList<std::shared_ptr<PolinomObj>> list;
 public:
 };
 
