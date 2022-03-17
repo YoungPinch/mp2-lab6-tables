@@ -20,7 +20,7 @@ public:
   }
 
   static std::shared_ptr<PolinomObj> Create(std::string _name, Polinom pol) {
-    return std::make_shared<PolinomObj>(_name, _strPol);
+    return std::make_shared<PolinomObj>(_name, pol);
   }
 };
 
