@@ -1,13 +1,13 @@
 #pragma once
-#include <tables.hpp>
+#include "tables.hpp"
 #define STEP 7
 
 class OpenHashTable final : public TTable {
 private:
-    struct Bucket{
-        std::shared_ptr<PolinomObj> po;
-        bool isDeleted;
-    }
+  struct Bucket {
+    std::shared_ptr<PolinomObj> po;
+    bool isDeleted;
+  };
 
     Bucket *table;
     unsigned int memSize;

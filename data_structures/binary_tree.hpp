@@ -3,12 +3,11 @@ template <class TType>
 class BinaryTree
 {
 private:
-  struct Node
+  struct TreeNode
   {
     TType data;
-    Node* pLeft;
-    Node* pRight;
-    Node();
+    TreeNode* pLeft, pRight;
+    TreeNode();
   };
 
   Node* pFirst;

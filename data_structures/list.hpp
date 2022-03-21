@@ -40,7 +40,7 @@ public:
 
   bool IsEmpty() const { return Size == 0; }
 
-  void InsertpFirst(T val) {
+  void InsertFirst(T val) {
     Node* p = new Node{ val, pFirst };
     if (pFirst == nullptr)
       pLast = &(p->next);

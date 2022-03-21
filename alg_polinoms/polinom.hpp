@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include <cmath>
-#include "list.hpp"
+#include "../data_structures/list.hpp"
 #define DEG_BIT 4
 
 class Polinom {
