@@ -70,6 +70,7 @@ public:
 
 class TTable {
 protected:
+  unsigned int MAX_SIZE;
   virtual std::shared_ptr<PolinomObj> FindObj(std::string name);
 public:
   virtual void Delete(std::string _name);

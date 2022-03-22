@@ -6,7 +6,7 @@ TEST(TList, can_create_list)
   ASSERT_NO_THROW(TList<int> l);
 }
 
-TEST(TQueue, can_get_size_of_list)
+TEST(TList, can_get_size_of_list)
 {
   TList<int> l;
   ASSERT_NO_THROW(l.GetSize());

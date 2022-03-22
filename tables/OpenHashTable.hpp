@@ -1,6 +1,5 @@
 #pragma once
 #include "tables.hpp"
-#define STEP 7
 
 class OpenHashTable final : public TTable {
 private:
@@ -12,6 +11,7 @@ private:
     Bucket *table;
     unsigned int memSize;
     unsigned int size;
+    unsigned int step = 7;
 
     unsigned int Hash(std::string key){ // HashLy
         unsigned int h = 0;
@@ -22,9 +22,10 @@ private:
         return h % memSize;
     }
 public:
-    OpenHashTable(unsigned int n){
-        table = new Bucket[n]{nullptr, false};
-        memSize = n;
+    OpenHashTable(){
+        MAX_SIZE = 24;
+        table = new Bucket[MAX_SIZE]{nullptr, false};
+        memSize = MAX_SIZE;
         size = 0;
     }
     void Insert(std::shared_ptr<PolinomObj> obj) {
@@ -37,7 +38,7 @@ public:
             if(table[h].po->name == obj->name)
                 throw -1; // already exist
             else
-                h = (h + STEP) % memSize;
+                h = (h + step) % memSize;
         
         table[h] = Bucket{obj, false};
         ++size;
@@ -50,7 +51,7 @@ public:
             if(table[h].po->name == name)
                 return *(table[h]->po->pol);
             else{
-                h = (h + STEP) % memSize;
+                h = (h + step) % memSize;
                 ++i;
             }
         throw -1;
@@ -64,7 +65,7 @@ public:
                 table[h].isDeleted = true;
                 --size;
             }else{
-                h = (h + STEP) % memSize;
+                h = (h + step) % memSize;
                 ++i;
             }
     }
