@@ -9,7 +9,6 @@ private:
   };
 
     Bucket *table;
-    unsigned int memSize;
     unsigned int size;
     unsigned int step = 7;
 
@@ -19,17 +18,17 @@ private:
         for(char c: key)
             h = (h * 1664525) + c + 1013904223;
         
-        return h % memSize;
+        return h % MAX_SIZE;
     }
+    friend class PolinomObj;
 public:
-    OpenHashTable(){
-        MAX_SIZE = 24;
-        table = new Bucket[MAX_SIZE]{nullptr, false};
-        memSize = MAX_SIZE;
+    OpenHashTable(unsigned int s){
+        table = new Bucket[s]{nullptr, false};
+        MAX_SIZE = s;
         size = 0;
     }
     void Insert(std::shared_ptr<PolinomObj> obj) {
-        if(size == memSize)
+        if(size == MAX_SIZE)
             throw -1;
         unsigned int h = Hash(obj->name);
         while(!table[h].isDeleted)
@@ -38,7 +37,7 @@ public:
             if(table[h].po->name == obj->name)
                 throw -1; // already exist
             else
-                h = (h + step) % memSize;
+                h = (h + step) % MAX_SIZE;
         
         table[h] = Bucket{obj, false};
         ++size;
@@ -51,7 +50,7 @@ public:
             if(table[h].po->name == name)
                 return *(table[h]->po->pol);
             else{
-                h = (h + step) % memSize;
+                h = (h + step) % MAX_SIZE;
                 ++i;
             }
         throw -1;
@@ -65,7 +64,7 @@ public:
                 table[h].isDeleted = true;
                 --size;
             }else{
-                h = (h + step) % memSize;
+                h = (h + step) % MAX_SIZE;
                 ++i;
             }
     }
