@@ -49,9 +49,9 @@ public:
     tables[SORTARR] = new SortArrayTable();
     tables[UNSORTARR] = new UnsortArrayTable();
     tables[BINTREE] = new BinaryTable();
-    tables[UNSORTLIST] = new UnsortListTable();
+    tables[UNSORTLIST] = new UnsortListTable(24);
     tables[CHAINHASH] = new ChainHashTable();
-    tables[OPENHASH] = new OpenHashTable();
+    tables[OPENHASH] = new OpenHashTable(24);
   }
 
   inline void SetActiveTable(int ind) { activeTable = tables[ind]; }
@@ -70,6 +70,7 @@ public:
 
 class TTable {
 protected:
+  unsigned int MAX_SIZE;
   virtual std::shared_ptr<PolinomObj> FindObj(std::string name);
 public:
   virtual void Delete(std::string _name);

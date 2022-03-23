@@ -1,6 +1,5 @@
 #pragma once
 #include "tables.hpp"
-#define STEP 7
 
 class OpenHashTable final : public TTable {
 private:
@@ -10,8 +9,8 @@ private:
   };
 
     Bucket *table;
-    unsigned int memSize;
     unsigned int size;
+    unsigned int step = 7;
 
     unsigned int Hash(std::string key){ // HashLy
         unsigned int h = 0;
@@ -19,16 +18,17 @@ private:
         for(char c: key)
             h = (h * 1664525) + c + 1013904223;
         
-        return h % memSize;
+        return h % MAX_SIZE;
     }
+    friend class PolinomObj;
 public:
-    OpenHashTable(unsigned int n){
-        table = new Bucket[n]{nullptr, false};
-        memSize = n;
+    OpenHashTable(unsigned int s){
+        table = new Bucket[s]{nullptr, false};
+        MAX_SIZE = s;
         size = 0;
     }
     void Insert(std::shared_ptr<PolinomObj> obj) {
-        if(size == memSize)
+        if(size == MAX_SIZE)
             throw -1;
         unsigned int h = Hash(obj->name);
         while(!table[h].isDeleted)
@@ -37,7 +37,7 @@ public:
             if(table[h].po->name == obj->name)
                 throw -1; // already exist
             else
-                h = (h + STEP) % memSize;
+                h = (h + step) % MAX_SIZE;
         
         table[h] = Bucket{obj, false};
         ++size;
@@ -50,7 +50,7 @@ public:
             if(table[h].po->name == name)
                 return *(table[h]->po->pol);
             else{
-                h = (h + STEP) % memSize;
+                h = (h + step) % MAX_SIZE;
                 ++i;
             }
         throw -1;
@@ -64,7 +64,7 @@ public:
                 table[h].isDeleted = true;
                 --size;
             }else{
-                h = (h + STEP) % memSize;
+                h = (h + step) % MAX_SIZE;
                 ++i;
             }
     }

@@ -6,7 +6,7 @@ TEST(TList, can_create_list)
   ASSERT_NO_THROW(TList<int> l);
 }
 
-TEST(TQueue, can_get_size_of_list)
+TEST(TList, can_get_size_of_list)
 {
   TList<int> l;
   ASSERT_NO_THROW(l.GetSize());
@@ -68,4 +68,11 @@ TEST(TList, can_post_increase_in_list_iterator)
   TList<int> l; l.InsertLast(1);
   auto it = l.begin();
   ASSERT_NO_THROW(it++);
+}
+
+TEST(TList, can_delete_elem_in_list)
+{
+  TList<int> l; l.InsertLast(1);
+  l.Delete(l.begin());
+  EXPECT_EQ(0, l.GetSize());
 }
