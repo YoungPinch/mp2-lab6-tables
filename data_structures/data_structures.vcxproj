@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="binary_tree.hpp" />
+    <ClInclude Include="avl_tree.hpp" />
     <ClInclude Include="list.hpp" />
     <ClInclude Include="stack.hpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

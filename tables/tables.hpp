@@ -22,6 +22,11 @@ public:
   static std::shared_ptr<PolinomObj> Create(std::string _name, Polinom pol) {
     return std::make_shared<PolinomObj>(_name, pol);
   }
+
+  const std::string& getName() { return name; }
+  const std::string& getStrPol() { return strPol; }
+  const Polinom& getPol() { return pol; }
+
 };
 
 class TableManager {

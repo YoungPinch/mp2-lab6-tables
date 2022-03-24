@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "gtest/gtest.h"
 
 TEST(sortarr_table, test1) {
   EXPECT_EQ(1, 1);

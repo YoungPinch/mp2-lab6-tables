@@ -1,65 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="test_bintree_table.cpp">
-      <Filter>test_data_structures</Filter>
-    </ClCompile>
-    <ClCompile Include="test_chainhash_table.cpp">
-      <Filter>test_tables</Filter>
-    </ClCompile>
-    <ClCompile Include="test_openhash_table.cpp">
-      <Filter>test_tables</Filter>
-    </ClCompile>
+    <Filter Include="test_alg_polinoms">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="test_data_structures">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="test_tables">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="test_polinom.cpp">
       <Filter>test_alg_polinoms</Filter>
-    </ClCompile>
-    <ClCompile Include="test_list.cpp">
-      <Filter>test_data_structures</Filter>
     </ClCompile>
     <ClCompile Include="test_postfix.cpp">
       <Filter>test_alg_polinoms</Filter>
     </ClCompile>
-    <ClCompile Include="test_sortarr_table.cpp">
-      <Filter>test_tables</Filter>
-    </ClCompile>
-    <ClCompile Include="test_stack.cpp">
-      <Filter>test_data_structures</Filter>
-    </ClCompile>
-    <ClCompile Include="test_table.cpp">
+    <ClCompile Include="test_unsortlist_table.cpp">
       <Filter>test_tables</Filter>
     </ClCompile>
     <ClCompile Include="test_unsortarr_table.cpp">
       <Filter>test_tables</Filter>
     </ClCompile>
-    <ClCompile Include="test_unsortlist_table.cpp">
+    <ClCompile Include="test_table.cpp">
       <Filter>test_tables</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>precompiled_header</Filter>
+    <ClCompile Include="test_stack.cpp">
+      <Filter>test_data_structures</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="test_data_structures">
-      <UniqueIdentifier>{9e77ce9a-9bf2-42ea-b50f-6eab57e0ead0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="test_alg_polinoms">
-      <UniqueIdentifier>{58917f40-1691-4dd9-a409-3cd663499f10}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="test_tables">
-      <UniqueIdentifier>{51e40e34-a6bd-459c-aa22-d855aa467c0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="precompiled_header">
-      <UniqueIdentifier>{fdf53055-f1a0-49ef-916f-4ad5596a2e4a}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>precompiled_header</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <Filter>precompiled_header</Filter>
-    </None>
+    <ClCompile Include="test_sortarr_table.cpp">
+      <Filter>test_tables</Filter>
+    </ClCompile>
+    <ClCompile Include="test_openhash_table.cpp">
+      <Filter>test_tables</Filter>
+    </ClCompile>
+    <ClCompile Include="test_list.cpp">
+      <Filter>test_data_structures</Filter>
+    </ClCompile>
+    <ClCompile Include="test_avl_tree_table.cpp">
+      <Filter>test_data_structures</Filter>
+    </ClCompile>
+    <ClCompile Include="test_chainhash_table.cpp">
+      <Filter>test_tables</Filter>
+    </ClCompile>
+    <ClCompile Include="gtest_main.cpp">
+      <Filter>test_alg_polinoms</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

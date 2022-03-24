@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "gtest/gtest.h"
 
 TEST(chainbash_table, test1) {
   EXPECT_EQ(1, 1);

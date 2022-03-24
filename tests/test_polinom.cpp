@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "gtest/gtest.h"
 #include "polinom.hpp"
 
 TEST(TList, can_create_polinom)
