@@ -145,6 +145,10 @@
     <ClInclude Include="tables.hpp" />
     <ClInclude Include="UnsortListTable.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ChainHashTable.cpp" />
+    <ClCompile Include="SortArrayTable.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
