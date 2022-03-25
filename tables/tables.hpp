@@ -1,6 +1,7 @@
 #pragma once
 #include <string.h>
 #include <memory>
+#include <vector>
 #include "polinom.hpp"
 
 #define COUNTTABLES 6
@@ -87,22 +88,37 @@ public:
 
 class UnsortArrayTable final : public TTable {
 private:
-  std::shared_ptr<PolinomObj>* arr;
+    std::shared_ptr<PolinomObj>* arr;
 public:
   UnsortArrayTable(int sz);
 };
 
 class SortArrayTable final : public TTable {
 private:
-  std::shared_ptr<PolinomObj>* arr;
+    std::vector<std::shared_ptr<PolinomObj>> row;
+    int size;
+    void Rewrite(int index);
 public:
-  SortArrayTable(int sz);
+    SortArrayTable(int sz):size(sz), row(size)
+    {};
+    const Polinom* Find(std::string key) override;
+    void Insert(std::shared_ptr<PolinomObj> obj) override;
+    void Delete(std::string key) override;
+    void Print() override;
 };
 
 class ChainHashTable final : public TTable {
 private:
+    std::vector<TList<std::shared_ptr<PolinomObj>>> tables;
+    int size;
 public:
-  ChainHashTable(int sz);
+    ChainHashTable(int sz) :size(sz), tables(size)
+    {};
+    unsigned int Hash(const std::string& key);
+    const Polinom* Find(std::string key) override;
+    void Insert(std::shared_ptr<PolinomObj> obj) override;
+    void Delete(std::string key) override;
+    void Print() override;
 };
 
 class OpenHashTable final : public TTable {
