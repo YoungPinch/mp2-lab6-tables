@@ -57,9 +57,9 @@ public:
 
   void Delete(const iterator it) {
     if (it == end())
-      throw - 1;
+      return;
     Node** p = &pFirst, * i;
-    while (*p != it.cur)
+    while (*p != it)
       p = &((*p)->next);
     i = *p;
     *p = (*p)->next;
@@ -85,21 +85,29 @@ public:
 
   class iterator {
   private:
-    // Node* cur;
+    Node* cur;
+
   public:
 
-    Node* cur; // Временное решение
-
     iterator() :cur(nullptr) {};
+
     iterator(Node* i) : cur(i) {};
+
     iterator(const iterator& i) { cur = i.cur; }
+
     iterator& operator=(const iterator& i) {
-      cur = i.cur; return *this;
+      cur = i.cur;
+      return *this;
     }
+
     T& operator*() const { return cur->data; }
+
     T* operator->() const { return &(cur->data); }
+
     bool operator!=(const iterator& i) const { return cur != i.cur; }
+
     bool operator==(const iterator& i) const { return cur == i.cur; }
+
     iterator& operator++() {
       cur = cur->next;
       return *this;
@@ -114,10 +122,9 @@ public:
 
   class const_iterator {
   private:
-    // Node* cur;
-  public:
+    Node* cur;
 
-    Node* cur; // Временное решение
+  public:
 
     const_iterator() :cur(nullptr) {};
 

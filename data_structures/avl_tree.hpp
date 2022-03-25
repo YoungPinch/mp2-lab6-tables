@@ -71,12 +71,6 @@ private:
     balanceNode(node);
   }
 
-  void balanceTree() {
-
-    // Дописать 
-
-  }
-
   int heightTreeNode(TreeNode<TType>* node) {
     if (this == nullptr)
       return 0;
@@ -107,10 +101,24 @@ private:
       node = new TreeNode<TType>(_data);
       return;
     }
-    if (_data < node->data)
+    if (_data < node->data) {
       Insert(_data, node->pLeft);
+      if (node->bal < -1) {
+        if (node->pLeft->bal > 0)
+          leftRotation(node->pLeft);
+        rightRotation(node);
+      }
+    }
     else if (_data > node->data)
+    {
       Insert(_data, node->pRight);
+      if (node->bal > 1) {
+        if (node->pRight->bal < 0)
+          rightRotation(node->pRight);
+        leftRotation(node);
+      }
+    }
+    balanceNode(node);
   }
 
 public:

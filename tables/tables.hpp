@@ -7,14 +7,13 @@
 
 struct PolinomObj {
 private:
+  PolinomObj(std::string _name, std::string _strPol);
+  PolinomObj(std::string _name, Polinom pol);
+public:
   std::string name;
   std::string strPol;
   Polinom pol;
 
-  PolinomObj(std::string _name, std::string _strPol);
-  PolinomObj(std::string _name, Polinom pol);
-
-public:
   static std::shared_ptr<PolinomObj> Create(std::string _name, std::string _strPol) {
     return std::make_shared<PolinomObj>(_name, _strPol);
   }
@@ -33,6 +32,7 @@ class TableManager {
 private:
   TTable* activeTable;
   TTable* tables[COUNTTABLES];
+  int curSize = 0;
 
   enum TableKind
   {
@@ -50,7 +50,8 @@ private:
   }
 
 public:
-  TableManager(int size) {
+  TableManager(int size) : curSize(size) {
+
     tables[UNSORTARR] = new UnsortArrayTable(size);
     tables[SORTARR] = new SortArrayTable(size);
     tables[OPENHASH] = new OpenHashTable(size);
@@ -66,7 +67,7 @@ public:
 
   void Insert(std::string _name, std::string _strPol) { Insert(PolinomObj::Create(_name, _strPol)); }
 
-  const Polinom& Find(std::string name) { return activeTable->Find(name); }
+  std::shared_ptr<PolinomObj> Find(std::string name) { activeTable->Find(name); }
 
   void Delete(std::string _name);
 
@@ -80,7 +81,7 @@ protected:
 public:
   virtual void Print();
   virtual void Delete(std::string _name);
-  virtual const Polinom& Find(std::string name);
+  virtual std::shared_ptr<PolinomObj> Find(std::string name);
   virtual void Insert(std::shared_ptr<PolinomObj> obj);
   virtual ~TTable() = 0;
 };
