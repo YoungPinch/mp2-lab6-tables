@@ -55,19 +55,19 @@ public:
     ++Size;
   }
 
-  //void Delete(const iterator it){
-  //  if(it == end())
-  //    throw -1;
-  //  Node **p = &pFirst, *i;
-  //  while(*p != it.cur)
-  //    p = &((*p)->next); 
-  //  i = *p;
-  //  *p = (*p)->next;
-  //  if(*p == nullptr)
-  //    pLast = p;
-  //  delete i;
-  //  --Size;
-  //}
+  void Delete(const iterator it) {
+    if (it == end())
+      throw - 1;
+    Node** p = &pFirst, * i;
+    while (*p != it.cur)
+      p = &((*p)->next);
+    i = *p;
+    *p = (*p)->next;
+    if (*p == nullptr)
+      pLast = p;
+    delete i;
+    --Size;
+  }
 
   virtual ~TList() {
     Node* i = pFirst, * p;
@@ -84,8 +84,12 @@ public:
   const_iterator cend() const { return const_iterator(*pLast); }
 
   class iterator {
-    Node* cur;
+  private:
+    // Node* cur;
   public:
+
+    Node* cur; // Временное решение
+
     iterator() :cur(nullptr) {};
     iterator(Node* i) : cur(i) {};
     iterator(const iterator& i) { cur = i.cur; }
@@ -100,6 +104,7 @@ public:
       cur = cur->next;
       return *this;
     }
+
     iterator operator++(int) {
       iterator tmp(*this);
       cur = cur->next;
@@ -108,24 +113,36 @@ public:
   };
 
   class const_iterator {
-    Node* cur;
+  private:
+    // Node* cur;
   public:
+
+    Node* cur; // Временное решение
+
     const_iterator() :cur(nullptr) {};
+
     const_iterator(Node* i) : cur(i) {};
+
     const_iterator(const const_iterator& i) { cur = i.cur; }
+
     const_iterator& operator=(const const_iterator& i) {
-      cur = i.cur; return *this;
+      cur = i.cur;
+      return *this;
     }
-    const T& operator*() const {
-      return cur->data;
-    }
+
+    const T& operator*() const { return cur->data; }
+
     T* operator->() const { return &(cur->data); }
+
     bool operator!=(const const_iterator& i) const { return cur != i.cur; }
+
     bool operator==(const const_iterator& i) const { return cur == i.cur; }
+
     const_iterator& operator++() {
       cur = cur->next;
       return *this;
     }
+
     const_iterator operator++(int) {
       const_iterator tmp(*this);
       cur = cur->next;

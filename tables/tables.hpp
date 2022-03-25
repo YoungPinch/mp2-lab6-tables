@@ -5,7 +5,7 @@
 
 #define COUNTTABLES 6
 
-class PolinomObj {
+struct PolinomObj {
 private:
   std::string name;
   std::string strPol;
@@ -36,12 +36,12 @@ private:
 
   enum TableKind
   {
-    SORTARR = 0,
-    UNSORTARR,
-    BINTREE,
+    UNSORTARR = 0,
+    SORTARR,
+    OPENHASH,
     UNSORTLIST,
-    CHAINHASH,
-    OPENHASH
+    AVLTREE,
+    CHAINHASH
   };
 
   void Insert(std::shared_ptr<PolinomObj> obj) {
@@ -50,13 +50,14 @@ private:
   }
 
 public:
-  TableManager() {
-    tables[SORTARR] = new SortArrayTable();
-    tables[UNSORTARR] = new UnsortArrayTable();
-    tables[BINTREE] = new BinaryTable();
-    tables[UNSORTLIST] = new UnsortListTable(24);
-    tables[CHAINHASH] = new ChainHashTable();
-    tables[OPENHASH] = new OpenHashTable(24);
+  TableManager(int size) {
+    tables[UNSORTARR] = new UnsortArrayTable(size);
+    tables[SORTARR] = new SortArrayTable(size);
+    tables[OPENHASH] = new OpenHashTable(size);
+    tables[CHAINHASH] = new ChainHashTable(size);
+
+    tables[UNSORTLIST] = new UnsortListTable();
+    tables[AVLTREE] = new AVLTable();
   }
 
   inline void SetActiveTable(int ind) { activeTable = tables[ind]; }
@@ -75,29 +76,36 @@ public:
 
 class TTable {
 protected:
-  unsigned int MAX_SIZE;
   virtual std::shared_ptr<PolinomObj> FindObj(std::string name);
 public:
+  virtual void Print();
   virtual void Delete(std::string _name);
   virtual const Polinom& Find(std::string name);
   virtual void Insert(std::shared_ptr<PolinomObj> obj);
-  virtual friend std::ostream& operator<<(std::ostream& os, const TTable* table);
   virtual ~TTable() = 0;
-};
-
-class SortArrayTable final : public TTable {
-private:
-  std::shared_ptr<PolinomObj>* arr;
-public:
 };
 
 class UnsortArrayTable final : public TTable {
 private:
   std::shared_ptr<PolinomObj>* arr;
 public:
+  UnsortArrayTable(int sz);
 };
 
-class BinaryTable final : public TTable {
+class SortArrayTable final : public TTable {
+private:
+  std::shared_ptr<PolinomObj>* arr;
+public:
+  SortArrayTable(int sz);
+};
+
+class ChainHashTable final : public TTable {
+private:
+public:
+  ChainHashTable(int sz);
+};
+
+class OpenHashTable final : public TTable {
 private:
 public:
 };
@@ -108,12 +116,7 @@ private:
 public:
 };
 
-class ChainHashTable final : public TTable {
-private:
-public:
-};
-
-class OpenHashTable final : public TTable {
+class AVLTable final : public TTable {
 private:
 public:
 };

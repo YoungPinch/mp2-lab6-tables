@@ -14,22 +14,18 @@ private:
 
   unsigned int Hash(std::string key) { // HashLy
     unsigned int h = 0;
-
     for (char c : key)
       h = (h * 1664525) + c + 1013904223;
-
-    return h % MAX_SIZE;
+    return h % size;
   }
-  friend class PolinomObj;
+
 public:
   OpenHashTable(unsigned int s) {
     table = new Bucket[s]{ nullptr, false };
-    MAX_SIZE = s;
+    size = s;
     size = 0;
   }
   void Insert(std::shared_ptr<PolinomObj> obj) {
-    if (size == MAX_SIZE)
-      throw - 1;
     unsigned int h = Hash(obj->getName());
     while (!table[h].isDeleted)
       if (table[h].po == nullptr)
@@ -37,7 +33,7 @@ public:
     if (table[h].po->getName() == obj->getName())
       throw - 1; // already exist
     else
-      h = (h + step) % MAX_SIZE;
+      h = (h + step) % size;
 
     table[h] = Bucket{ obj, false };
     ++size;
@@ -50,7 +46,7 @@ public:
     if (table[h].po->getName() == name)
       return table[h].po->getPol();
     else {
-      h = (h + step) % MAX_SIZE;
+      h = (h + step) % size;
       ++i;
     }
     throw - 1;
@@ -65,7 +61,7 @@ public:
       --size;
     }
     else {
-      h = (h + step) % MAX_SIZE;
+      h = (h + step) % size;
       ++i;
     }
   }

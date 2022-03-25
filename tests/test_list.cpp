@@ -70,9 +70,9 @@ TEST(TList, can_post_increase_in_list_iterator)
   ASSERT_NO_THROW(it++);
 }
 
-//TEST(TList, can_delete_elem_in_list)
-//{
-//  TList<int> l; l.InsertLast(1);
-//  l.Delete(l.begin());
-//  EXPECT_EQ(0, l.GetSize());
-//}
+TEST(TList, can_delete_elem_in_list)
+{
+  TList<int> l; l.InsertLast(1);
+  l.Delete(l.begin());
+  EXPECT_EQ(0, l.GetSize());
+}
