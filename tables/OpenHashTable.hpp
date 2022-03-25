@@ -63,7 +63,7 @@ public:
         return;
     if (table[h].po->getName() == name) {
       table[h].isDeleted = true;
-      --size;
+      --curSize;
     }
     else {
       h = (h + step) % size;
