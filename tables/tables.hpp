@@ -9,6 +9,7 @@ struct PolinomObj {
 private:
   PolinomObj(std::string _name, std::string _strPol);
   PolinomObj(std::string _name, Polinom pol);
+
 public:
   std::string name;
   std::string strPol;
@@ -26,6 +27,15 @@ public:
   const std::string& getStrPol() { return strPol; }
   const Polinom& getPol() { return pol; }
 
+};
+
+class TTable {
+public:
+  virtual void Print();
+  virtual void Delete(std::string _name);
+  virtual std::shared_ptr<PolinomObj> Find(std::string name);
+  virtual void Insert(std::shared_ptr<PolinomObj> obj);
+  virtual ~TTable() = 0;
 };
 
 class TableManager {
@@ -69,21 +79,13 @@ public:
 
   std::shared_ptr<PolinomObj> Find(std::string name) { activeTable->Find(name); }
 
-  void Delete(std::string _name);
+  void Delete(std::string _name) {
+    for (int i = 0; i < COUNTTABLES; i++)
+      tables[i]->Delete(_name);
+  }
 
-  void Print() { std::cout << activeTable; }
+  void Print() { activeTable->Print(); }
 
-};
-
-class TTable {
-protected:
-  virtual std::shared_ptr<PolinomObj> FindObj(std::string name);
-public:
-  virtual void Print();
-  virtual void Delete(std::string _name);
-  virtual std::shared_ptr<PolinomObj> Find(std::string name);
-  virtual void Insert(std::shared_ptr<PolinomObj> obj);
-  virtual ~TTable() = 0;
 };
 
 class UnsortArrayTable final : public TTable {
@@ -91,30 +93,6 @@ private:
   std::shared_ptr<PolinomObj>* arr;
 public:
   UnsortArrayTable(int sz);
-};
-
-class SortArrayTable final : public TTable {
-private:
-  std::shared_ptr<PolinomObj>* arr;
-public:
-  SortArrayTable(int sz);
-};
-
-class ChainHashTable final : public TTable {
-private:
-public:
-  ChainHashTable(int sz);
-};
-
-class OpenHashTable final : public TTable {
-private:
-public:
-};
-
-class UnsortListTable final : public TTable {
-private:
-  TList<std::shared_ptr<PolinomObj>> list;
-public:
 };
 
 class AVLTable final : public TTable {
