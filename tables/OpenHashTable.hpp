@@ -1,5 +1,5 @@
 #pragma once
-#include "tables.hpp"
+#include "TTable.hpp"
 
 class OpenHashTable final : public TTable {
 private:

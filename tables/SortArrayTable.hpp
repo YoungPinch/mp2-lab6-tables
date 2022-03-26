@@ -1,6 +1,5 @@
 #pragma once
-#include <vector>
-#include "tables.hpp"
+#include "TTable.hpp"
 
 class SortArrayTable final : public TTable {
 private:
