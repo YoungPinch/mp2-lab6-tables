@@ -42,56 +42,22 @@ private:
   }
 
   void rightRotation(TreeNode*& node) {
-    /*
-    Right Rotation
-
-    Before:
-                    node
-                   /    \
-              pLeft      pRight
-             /     \
-    pLeftLeft       pLeftRight
-
-    After:
-                 pLeft
-                /     \
-       pLeftLeft       node
-                      /    \
-            pLeftRight      pRight
-    */
-    TreeNode* pLeft = node->pLeft;
-    TreeNode* pLeftRight = node->pLeft->pRight;
-    pLeft->pRight = node;
-    node->pLeft = pLeftRight;
-    node = pLeft;
-    balanceNode(node->pRight);
+    TreeNode* pLeft = node->pLeft;              /*                        Right Rotation                      */
+    TreeNode* pLeftRight = node->pLeft->pRight; /*                 node                     pLeft             */
+    pLeft->pRight = node;                       /*                /    \                   /     \            */
+    node->pLeft = pLeftRight;                   /*           pLeft      pRight -> pLeftLeft       node        */
+    node = pLeft;                               /*          /     \                              /    \       */
+    balanceNode(node->pRight);                  /* pLeftLeft       pLeftRight          pLeftRight      pRight */
     balanceNode(node);
   }
 
   void leftRotation(TreeNode*& node) {
-    /*
-    Left Rotation
-
-    Before:
-          node
-         /    \
-    pLeft      pRight
-              /      \
-    pRightLeft        pRightRight
-
-    After:
-               pRight
-              /      \
-          node        pRightRight
-         /    \
-    pLeft      pRightLeft
-    */
-    TreeNode* pRight = node->pRight;
-    TreeNode* pRightLeft = node->pRight->pLeft;
-    pRight->pLeft = node;
-    node->pRight = pRightLeft;
-    node = pRight;
-    balanceNode(node->pLeft);
+    TreeNode* pRight = node->pRight;            /*                          Left Rotation                         */
+    TreeNode* pRightLeft = node->pRight->pLeft; /*       node                                  pRight             */
+    pRight->pLeft = node;                       /*      /    \                                /      \            */
+    node->pRight = pRightLeft;                  /* pLeft      pRight             ->       node        pRightRight */
+    node = pRight;                              /*           /      \                    /    \                   */
+    balanceNode(node->pLeft);                   /* pRightLeft        pRightRight    pLeft      pRightLeft         */
     balanceNode(node);
   }
 
