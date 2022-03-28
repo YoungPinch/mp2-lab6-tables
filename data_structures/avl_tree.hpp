@@ -18,6 +18,29 @@ private:
 
   TreeNode* pRoot;
 
+  AVLTree(const AVLTree<TType>& obj) = delete; // Запрещено копирование
+
+  AVLTree operator=(const AVLTree<TType>& obj) = delete; // Запрещено присваивать
+
+  int heightTreeNode(TreeNode* node) {
+    if (node == nullptr)
+      return 0;
+    int heightLeft = heightTreeNode(node->pLeft);
+    int heightRight = heightTreeNode(node->pRight);
+    if (heightLeft > heightRight)
+      return heightLeft + 1;
+    else
+      return heightRight + 1;
+  }
+
+  int balanceNode(TreeNode*& node) {
+    if (node != nullptr) {
+      node->bal = heightTreeNode(node->pRight) - heightTreeNode(node->pLeft);
+      return node->bal;
+    }
+    return 0;
+  }
+
   void rightRotation(TreeNode*& node) {
     /*
     Right Rotation
@@ -72,23 +95,6 @@ private:
     balanceNode(node);
   }
 
-  int heightTreeNode(TreeNode*& node) {
-    if (node == nullptr)
-      return 0;
-    int heightLeft = heightTreeNode(node->pLeft);
-    int heightRight = heightTreeNode(node->pRight);
-    if (heightLeft > heightRight)
-      return heightLeft + 1;
-    else
-      return heightRight + 1;
-  }
-
-  int balanceNode(TreeNode*& node) {
-    if (node != nullptr)
-      node->bal = heightTreeNode(node->pRight) - heightTreeNode(node->pLeft);
-    return node->bal;
-  }
-
   void balanceTree(TreeNode*& node) {
     balanceNode(node);
     if (node->bal == -2) {
@@ -103,19 +109,6 @@ private:
     }
   }
 
-  TreeNode* findMinNode(TreeNode*& node) {
-    if (node->pLeft != nullptr)
-      return findMinNode(node->pLeft);
-    return node;
-  }
-
-  TreeNode* deleteMinNode(TreeNode*& node) {
-    if (node->pLeft == nullptr)
-      return node->pRight;
-    node->pLeft = deleteMinNode(node->pLeft);
-    return;
-  }
-
   void Insert(TType _data, TreeNode*& node) {
     if (node == nullptr) {
       node = new TreeNode(_data);
@@ -128,7 +121,7 @@ private:
     balanceTree(node);
   }
 
-  TreeNode* FindNode(TType _data, TreeNode*& node) {
+  TreeNode* FindNode(TType _data, TreeNode* node) {
     if (node == nullptr)
       return nullptr;
     if (node->data == _data)
@@ -139,8 +132,21 @@ private:
       return Find(_data, node->pRight);
   }
 
-  TType* Find(TType _data, TreeNode*& node) {
+  TType* Find(TType _data, TreeNode* node) {
     return &FindNode(_data, node)->data;
+  }
+
+  TreeNode* findMinNode(TreeNode*& node) {
+    if (node->pLeft != nullptr)
+      return findMinNode(node->pLeft);
+    return node;
+  }
+
+  TreeNode* deleteMinNode(TreeNode*& node) {
+    if (node->pLeft == nullptr)
+      return node->pRight;
+    node->pLeft = deleteMinNode(node->pLeft);
+    return node;
   }
 
   void Delete(TType _data, TreeNode*& node) {
@@ -156,15 +162,18 @@ private:
       TreeNode* pLeft = node->pLeft;
       TreeNode* pRight = node->pRight;
       delete node;
-      if (pRight == nullptr)
+      if (pRight == nullptr) {
         node = pLeft;
-      TreeNode* tmp = findMinNode(pRight);
-      tmp->pRight = deleteMinNode(pRight);
-      tmp->pLeft = pLeft;
-      balanceTree(tmp);
-      return;
+      }
+      else {
+        TreeNode* tmp = findMinNode(pRight);
+        tmp->pRight = deleteMinNode(pRight);
+        tmp->pLeft = pLeft;
+        node = tmp;
+      }
     }
-    balanceTree(node);
+    if (node != nullptr)
+      balanceTree(node);
   }
 
   void clear(TreeNode*& node) {
@@ -176,6 +185,14 @@ private:
     node = nullptr;
   }
 
+  void PrintNode(TreeNode* node) {
+    if (node == nullptr)
+      return;
+    PrintNode(node->pLeft);
+    std::cout << node->data << '\n';
+    PrintNode(node->pRight);
+  }
+
 public:
 
   AVLTree() { pRoot = nullptr; }
@@ -184,29 +201,9 @@ public:
 
   TType* Find(TType _data) { return Find(_data, pRoot); }
 
-  void Delete(TType _data) { }
+  void Delete(TType _data) { Delete(_data, pRoot); }
 
-  int height() { return heightTreeNode(pRoot); }
-
-  void print(TreeNode*& node) {
-    static int tabs = 0;
-    if (!node)
-      return; //Если ветки не существует - выходим. Выводить нечего
-    tabs += 5; //Иначе увеличим счетчик рекурсивно вызванных процедур
-    //Который будет считать нам отступы для красивого вывода
-
-    print(node->pLeft); //Выведем ветку и ее подветки слева
-
-    for (int i = 0; i < tabs; i++) std::cout << " "; //Потом отступы
-    std::cout << node->data << std::endl; //Данные этой ветки
-
-    print(node->pRight);//И ветки, что справа
-
-    tabs -= 5; //После уменьшим кол-во отступов
-    return;
-  }
-
-  void print() { return print(pRoot); }
+  void Print() { PrintNode(pRoot); }
 
   ~AVLTree() { clear(pRoot); }
 

@@ -36,6 +36,8 @@ public:
     tables[CHAINHASH] = new ChainHashTable(size);
     tables[UNSORTLIST] = new UnsortListTable();
     tables[AVLTREE] = new AVLTable();
+
+    activeTable = tables[0];
   }
 
   inline void SetActiveTable(int ind) { activeTable = tables[ind]; }
@@ -53,5 +55,10 @@ public:
 
   void Print() { activeTable->Print(); }
 
+  ~TableManager() {
+    for (int i = 0; i < COUNTTABLES; i++)
+      delete tables[i];
+    activeTable = nullptr;
+  }
 };
 
