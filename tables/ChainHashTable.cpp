@@ -33,5 +33,9 @@ void ChainHashTable::Delete(std::string key) {
 }
 
 void ChainHashTable::Print() {
-
+  for (size_t i = 0; i < size; i++) {
+    for (auto it = tables[i].begin(); it != tables[i].end(); ++it) {
+      std::cout << *it;
+    }
+  }
 }

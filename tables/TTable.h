@@ -57,4 +57,3 @@ public:
   virtual void Insert(std::shared_ptr<PolinomObj> obj) = 0;
   virtual ~TTable() = 0;
 };
-

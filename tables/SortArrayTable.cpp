@@ -1,7 +1,7 @@
 #include "SortArrayTable.h"
 
 void SortArrayTable::Rewrite(int index) {
-  for (int i = index; i < row.size(); i++)
+  for (int i = index; i < row.size() - 1; i++)
     row[i] = row[i + 1];
 }
 
@@ -41,24 +41,17 @@ void SortArrayTable::Delete(std::string key) {
   int left = 0;
   int right = size - 1;
   int mid = 0;
-  bool isFound = false;
   while (left <= right) {
     mid = (right + left) / 2;
     if (key == row[mid].get()->getName()) {
-      isFound = true;
+      delete row[mid].get();
+      Rewrite(mid);
       break;
     }
     else if (key > row[mid].get()->getName())
       left = mid + 1;
     else
       right = mid - 1;
-  }
-  if (isFound)
-    delete row[mid].get();
-  else if (row[right].get()->getName() == key) {
-
-    // Нужно дописать
-
   }
 }
 

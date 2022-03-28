@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="AVLTreeTable.cpp" />
     <ClCompile Include="ChainHashTable.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="OpenHashTable.cpp" />
     <ClCompile Include="SortArrayTable.cpp" />
     <ClCompile Include="TableManager.cpp" />
@@ -59,7 +60,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
