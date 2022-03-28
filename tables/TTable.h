@@ -1,20 +1,31 @@
 #pragma once
+#define COUNTTABLES 6
 #include <string.h>
-#include <vector>
-#include <memory>
 #include "polinom.hpp"
 
-#define COUNTTABLES 6
-
 struct PolinomObj {
-private:
-  PolinomObj(std::string _name, std::string _strPol);
-  PolinomObj(std::string _name, Polinom pol);
-
 public:
   std::string name;
   std::string strPol;
   Polinom pol;
+
+  PolinomObj(std::string _name, std::string _strPol) {
+    name = _name;
+    strPol = _strPol;
+    pol = Polinom(strPol);
+  };
+
+  PolinomObj(std::string _name, Polinom _pol) {
+    name = _name;
+    strPol = pol.ToString();
+    pol = _pol;
+  }
+
+  PolinomObj() {
+    name = "";
+    strPol = "";
+    pol = Polinom();
+  }
 
   static std::shared_ptr<PolinomObj> Create(std::string _name, std::string _strPol) {
     return std::make_shared<PolinomObj>(_name, _strPol);
@@ -38,3 +49,4 @@ public:
   virtual void Insert(std::shared_ptr<PolinomObj> obj);
   virtual ~TTable() = 0;
 };
+

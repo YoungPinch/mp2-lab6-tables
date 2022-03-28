@@ -18,6 +18,25 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AVLTreeTable.cpp" />
+    <ClCompile Include="ChainHashTable.cpp" />
+    <ClCompile Include="OpenHashTable.cpp" />
+    <ClCompile Include="SortArrayTable.cpp" />
+    <ClCompile Include="TableManager.cpp" />
+    <ClCompile Include="UnsortArrayTable.cpp" />
+    <ClCompile Include="UnsortListTable.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AVLTreeTable.h" />
+    <ClInclude Include="ChainHashTable.h" />
+    <ClInclude Include="OpenHashTable.h" />
+    <ClInclude Include="SortArrayTable.h" />
+    <ClInclude Include="TableManager.h" />
+    <ClInclude Include="TTable.h" />
+    <ClInclude Include="UnsortArrayTable.h" />
+    <ClInclude Include="UnsortListTable.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -40,7 +59,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -140,18 +159,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="AVLTreeTable.hpp" />
-    <ClInclude Include="ChainHashTable.hpp" />
-    <ClInclude Include="OpenHashTable.hpp" />
-    <ClInclude Include="SortArrayTable.hpp" />
-    <ClInclude Include="TTable.hpp" />
-    <ClInclude Include="UnsortArrayTable.hpp" />
-    <ClInclude Include="UnsortListTable.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="TableManager.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
