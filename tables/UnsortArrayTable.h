@@ -2,17 +2,26 @@
 #include <vector>
 #include "TTable.h"
 
-class UnsortArrayTable final : public TTable {
+template <class TKey, class TData>
+class UnsortArrayTable final : public TTable<class TKey, class TData> {
 private:
-  std::vector<std::shared_ptr<PolinomObj>> data;
+  std::vector<TData> data;
   int size;
 
 public:
   UnsortArrayTable(int sz) : size(sz), data(size) {}
 
-  void Print();
-  void Delete(std::string _name);
-  std::shared_ptr<PolinomObj> Find(std::string name);
-  void Insert(std::shared_ptr<PolinomObj> obj);
+  void Insert(TData data) {};
+
+  TData& Find(TKey) {
+    for (int i = 0; i < size; i++)
+      if (data[i].get() != nullptr && data[i].get()->getName() == name)
+        return data[i];
+    return TData();  
+  }
+
+  void Delete(TKey name) {};
+
+  void Print() {};
 };
 
