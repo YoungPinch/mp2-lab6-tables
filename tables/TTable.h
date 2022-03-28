@@ -35,18 +35,18 @@ public:
     return std::make_shared<PolinomObj>(_name, pol);
   }
 
-  const std::string& getName() { return name; }
-  const std::string& getStrPol() { return strPol; }
-  const Polinom& getPol() { return pol; }
+  const std::string& GetName() { return name; }
+  const std::string& GetStrPol() { return strPol; }
+  const Polinom& GetPol() { return pol; }
 
 };
 
 class TTable {
 public:
-  virtual void Print();
-  virtual void Delete(std::string _name);
-  virtual std::shared_ptr<PolinomObj> Find(std::string name);
-  virtual void Insert(std::shared_ptr<PolinomObj> obj);
+  virtual void Print() = 0;
+  virtual void Delete(std::string _name) = 0;
+  virtual std::shared_ptr<PolinomObj> Find(std::string name) = 0;
+  virtual void Insert(std::shared_ptr<PolinomObj> obj) = 0;
   virtual ~TTable() = 0;
 };
 

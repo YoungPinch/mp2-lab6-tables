@@ -10,11 +10,11 @@ unsigned int OpenHashTable::Hash(const std::string& key) {
 void OpenHashTable::Insert(std::shared_ptr<PolinomObj> obj) {
   if (size != curSize) // no free space
     return;
-  unsigned int h = Hash(obj->getName());
+  unsigned int h = Hash(obj->GetName());
   while (!table[h].isDeleted) {
     if (table[h].po == nullptr)
       break;
-    if (table[h].po->getName() == obj->getName())
+    if (table[h].po->GetName() == obj->GetName())
       return; // already exist
     else
       h = (h + step) % size;
@@ -28,7 +28,7 @@ std::shared_ptr<PolinomObj> OpenHashTable::Find(std::string name) {
   while (!(table[h].isDeleted || i == size))
     if (table[h].po == nullptr)
       return nullptr;
-  if (table[h].po->getName() == name)
+  if (table[h].po->GetName() == name)
     return table[h].po;
   else {
     h = (h + step) % size;
@@ -42,7 +42,7 @@ void OpenHashTable::Delete(std::string name) {
   while (!(table[h].isDeleted || i == size))
     if (table[h].po == nullptr)
       return;
-  if (table[h].po->getName() == name) {
+  if (table[h].po->GetName() == name) {
     table[h].isDeleted = true;
     --curSize;
   }
@@ -57,5 +57,5 @@ void OpenHashTable::Print() {
     if (table[i].isDeleted || table[i].po == nullptr)
       std::cout << std::endl;
     else
-      std::cout << table[i].po->getName() << " : " << table[i].po->getStrPol() << std::endl;
+      std::cout << table[i].po->GetName() << " : " << table[i].po->GetStrPol() << std::endl;
 }

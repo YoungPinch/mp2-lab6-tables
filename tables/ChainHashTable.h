@@ -11,9 +11,12 @@ private:
 public:
   ChainHashTable(int sz) : size(sz), tables(size) {}
 
-  std::shared_ptr<PolinomObj> Find(std::string key) override;
-  void Insert(std::shared_ptr<PolinomObj> obj) override;
-  void Delete(std::string key) override;
-  void Print() override;
+  std::shared_ptr<PolinomObj> Find(std::string key);
+  void Insert(std::shared_ptr<PolinomObj> obj);
+  void Delete(std::string key);
+  void Print();
+  ~ChainHashTable(){
+	tables.clear();
+  }
 };
 

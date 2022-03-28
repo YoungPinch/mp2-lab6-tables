@@ -1,7 +1,7 @@
 #include "SortArrayTable.h"
 
 void SortArrayTable::Rewrite(int index) {
-  for (int i = index; i < row.size(); i++)
+  for (int i = index; i < row.size() - 1; i++)
     row[i] = row[i + 1];
 }
 
@@ -11,9 +11,9 @@ std::shared_ptr<PolinomObj> SortArrayTable::Find(std::string key) {
   int mid = 0;
   while (left <= right) {
     mid = (right + left) / 2;
-    if (key == row[mid].get()->getName())
+    if (key == row[mid].get()->GetName())
       return row[mid];
-    else if (key > row[mid].get()->getName())
+    else if (key > row[mid].get()->GetName())
       left = mid + 1;
     else
       right = mid - 1;
@@ -27,9 +27,9 @@ void SortArrayTable::Insert(std::shared_ptr<PolinomObj> obj) {
   int mid = 0;
   while (left <= right) {
     mid = (right + left) / 2;
-    if (obj.get()->getName() == row[mid].get()->getName())
+    if (obj.get()->GetName() == row[mid].get()->GetName())
       return;
-    else if (obj.get()->getName() > row[mid].get()->getName())
+    else if (obj.get()->GetName() > row[mid].get()->GetName())
       left = mid + 1;
     else
       right = mid - 1;
@@ -41,25 +41,18 @@ void SortArrayTable::Delete(std::string key) {
   int left = 0;
   int right = size - 1;
   int mid = 0;
-  bool isFound = false;
   while (left <= right) {
     mid = (right + left) / 2;
-    if (key == row[mid].get()->getName()) {
-      isFound = true;
+    if (key == row[mid].get()->GetName()) {
+      delete row[mid].get();
+      Rewrite(mid);
       break;
     }
-    else if (key > row[mid].get()->getName())
+    else if (key > row[mid].get()->GetName())
       left = mid + 1;
     else
       right = mid - 1;
-  }
-  if (isFound)
-    delete row[mid].get();
-  else if (row[right].get()->getName() == key) {
-
-    // Нужно дописать
-
-  }
+  }   
 }
 
 void SortArrayTable::Print() {

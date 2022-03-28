@@ -10,7 +10,7 @@ void UnsortArrayTable::Delete(std::string _name) {
 
 std::shared_ptr<PolinomObj> UnsortArrayTable::Find(std::string name) {
   for (int i = 0; i < size; i++)
-    if (data[i].get() != nullptr && data[i].get()->getName() == name)
+    if (data[i].get() != nullptr && data[i].get()->GetName() == name)
       return data[i];
   return nullptr;
 }
