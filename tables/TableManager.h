@@ -29,7 +29,13 @@ private:
       tables[i]->Insert(obj);
   }
 
+  TableManager(const TableManager& obj) = delete; // Запрещено копирование
+
+  TableManager operator=(const TableManager& obj) = delete; // Запрещено присваивать
+
 public:
+  static const std::vector<std::string> TableNames;
+
   TableManager(int size) : curSize(size) {
     tables[UNSORTARR] = new UnsortArrayTable<std::string, std::shared_ptr<PolinomObj>>(size);
     tables[SORTARR] = new SortArrayTable<std::string, std::shared_ptr<PolinomObj>>(size);
@@ -60,3 +66,6 @@ public:
   }
 };
 
+const std::vector<std::string> TableManager::TableNames = { "Unsort Array Table", "Sort Array Table",
+                                                            "Open Hash Table", "Chain Hash Table",
+                                                            "Unsort List Table", "AVL-Tree Table" };

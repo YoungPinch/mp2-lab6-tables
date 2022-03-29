@@ -2,6 +2,16 @@
 #include <string.h>
 #include "polinom.hpp"
 
+template <class TKey, class TData>
+class TTable {
+public:
+  virtual void Insert(TData) = 0;
+  virtual TData& Find(TKey) = 0;
+  virtual void Delete(TKey) = 0;
+  virtual void Print() = 0;
+  virtual ~TTable() = 0;
+};
+
 struct PolinomObj {
 private:
   std::string name;
@@ -46,14 +56,4 @@ public:
     return out;
   }
 
-};
-
-template <class TKey, class TData>
-class TTable {
-public:
-  virtual void Insert(TData) = 0;
-  virtual TData& Find(TKey) = 0;
-  virtual void Delete(TKey) = 0;
-  virtual void Print() = 0;
-  virtual ~TTable() = 0;
 };
