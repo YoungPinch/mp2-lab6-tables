@@ -169,6 +169,35 @@ private:
     }
   };
 
+  bool static isMonom(std::string s) {
+    if (s.empty())
+      return false;
+    int i1, i2; bool dot = false;
+    for (i1 = 0; i1 < s.size(); ++i1) {
+      if (!(std::isdigit(s[i1]) || s[i1] == '.' || s[i1] == '-' || s[i1] == '+'))
+        break;
+      if (s[i1] == '.')
+        if (dot == true) // two dots
+          return false;
+        else
+          dot = true;
+    } // coef finished
+
+    for (; i1 < s.size(); ++i1) { // i1 point to letter
+      for (i2 = i1 + 1; i2 < s.size() && std::isdigit(s[i2]); ++i2) {} // find not digit
+      if (i2 == i1 + 1) // no degree
+        if (!(s[i1] == 'x' || s[i1] == 'y' || s[i1] == 'z'))
+          return false;
+        else
+          if (stoi(s.substr(i1 + 1, i2 - i1 - 1)) > (1 << DEG_BIT) - 1)
+            return false;
+
+      i1 = i2 - 1;
+    }
+
+    return true;
+  }
+
   TList<Monom> pol;
 
   Polinom(const Monom& x) {
