@@ -19,16 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AVLTreeTable.cpp" />
-    <ClCompile Include="ChainHashTable.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="OpenHashTable.cpp" />
-    <ClCompile Include="SortArrayTable.cpp" />
-    <ClCompile Include="TableManager.cpp" />
-    <ClCompile Include="UnsortArrayTable.cpp" />
-    <ClCompile Include="UnsortListTable.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AVLTreeTable.h" />
     <ClInclude Include="ChainHashTable.h" />
     <ClInclude Include="OpenHashTable.h" />

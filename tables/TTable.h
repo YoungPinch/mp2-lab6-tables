@@ -1,5 +1,4 @@
 #pragma once
-#define COUNTTABLES 6
 #include <string.h>
 #include "polinom.hpp"
 
@@ -22,7 +21,6 @@ private:
   }
 
 public:
-
   static std::shared_ptr<PolinomObj> Create(std::string _name, std::string _strPol) {
     std::shared_ptr<PolinomObj> shptr(new PolinomObj(_name, _strPol));
     return shptr;
@@ -33,27 +31,29 @@ public:
     return shptr;
   }
 
-  const std::string& getName() { return name; }
-  const std::string& getStrPol() { return strPol; }
-  const Polinom& getPol() { return pol; }
-
-  friend std::ostream& operator<< (std::ostream& out, const PolinomObj& polObj) {
-    out << polObj.name << " = " << polObj.strPol.substr(0, 19);
-    return out;
-  }
+  Polinom& getPol() { return pol; }
 
   bool operator==(const PolinomObj& other) const noexcept { return name == other.name; }
   bool operator!=(const PolinomObj& other) const noexcept { return name != other.name; }
   bool operator<(const PolinomObj& other) const noexcept { return name < other.name; }
   bool operator>(const PolinomObj& other) const noexcept { return name > other.name; }
 
+  friend bool operator==(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name == s; }
+  friend bool operator!=(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name != s; }
+
+  friend std::ostream& operator<< (std::ostream& out, const std::shared_ptr<PolinomObj>& polObj) {
+    out << polObj->name << " = " << polObj->strPol.substr(0, 19);
+    return out;
+  }
+
 };
 
+template <class TKey, class TData>
 class TTable {
 public:
+  virtual void Insert(TData) = 0;
+  virtual TData& Find(TKey) = 0;
+  virtual void Delete(TKey) = 0;
   virtual void Print() = 0;
-  virtual void Delete(std::string _name) = 0;
-  virtual std::shared_ptr<PolinomObj> Find(std::string name) = 0;
-  virtual void Insert(std::shared_ptr<PolinomObj> obj) = 0;
   virtual ~TTable() = 0;
 };
