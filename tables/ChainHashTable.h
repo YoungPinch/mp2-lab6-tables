@@ -23,7 +23,7 @@ public:
   }
 
   void Insert(TData data){
-    if (Find(data) == TData())
+    if (Find(data) != TData())
       return;
     else
     {
@@ -41,17 +41,20 @@ public:
   }
 
   void Delete(TKey key) {
-    int h = Hash(key);
-    for (auto it = tables[h].begin(); it != tables[h].end(); ++it)
+    int index = Hash(key);
+    for (auto it = tables[index].begin(); it != tables[index].end(); ++it)
       if (*it == key)
-        tables[h].Delete(it);
+        return tables[index].Delete(it);
   }
 
   void Print(){
-    for (size_t i = 0; i < size; i++)
-      for (auto it = tables[i].begin(); it != tables[i].end(); ++it)
-        std::cout << *it;
+    for (size_t i = 0; i < size; i++) {
+      for (auto it = tables[i].begin(); it != tables[i].end(); ++it) {
+        std::cout << "| " << *it << "| " << *it << std::endl;
+      }
+    }
   }
+
   
 };
 

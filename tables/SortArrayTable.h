@@ -6,41 +6,71 @@ template <class TKey, class TData>
 class SortArrayTable final : public TTable<class TKey, class TData> {
 private:
   std::vector<TData> row;
-  int size;
+  int countElem;
 
-  void Rewrite(int index) {
-    for (int i = index; i < row.size() - 1; i++)
+  void AddRewrite(int index) {
+    for (int i = countElem - 1; i >= index; i--)
+      row[i] = row[i - 1];
+  }
+
+  void DelRewrite(int index) {
+    for (size_t i = index; i < countElem; i++) {
       row[i] = row[i + 1];
+    }
   }
 
 public:
-  SortArrayTable(int sz) : size(sz), row(size) {}
+  SortArrayTable(int sz) : countElem(0), row(sz) {}
 
   void Insert(TData data){
     int left = 0;
-    int right = size - 1;
+    int right = countElem;
+    int lastCompare = 0; //1 - left 2 - right
     int mid = 0;
+    if (countElem == row.size())
+    {
+      std::cout << "MAX" << std::endl;
+      return;
+    }
     while (left <= right) {
       mid = (right + left) / 2;
+      if (row[mid] == TData()) {
+        row[mid] = data;
+        countElem++;
+        return;
+      }
       if (data == row[mid])
         return;
-      else if (data > row[mid])
+      if (data > row[mid]) {
         left = mid + 1;
-      else
+        lastCompare = 1;
+      }
+      else {
         right = mid - 1;
+        lastCompare = 2;
+      }
     }
-    row[left] = data;
+    countElem++;
+    if (lastCompare == 1) {
+      AddRewrite(left + 1);
+      row[left] = data;
+
+    }
+    else {
+      AddRewrite(right + 1);
+      row[right + 1] = data;
+    }
   }
 
   TData& Find(TKey key){
     int left = 0;
-    int right = size - 1;
+    int right = countElem - 1;
     int mid = 0;
     while (left <= right) {
       mid = (right + left) / 2;
-      if (key == row[mid])
+      if (row[mid] == key)
         return row[mid];
-      else if (key > row[mid])
+      else if (row[mid] < key)
         left = mid + 1;
       else
         right = mid - 1;
@@ -50,23 +80,31 @@ public:
 
   void Delete(TKey key) {
     int left = 0;
-    int right = size - 1;
+    int right = countElem - 1;
     int mid = 0;
+    if (countElem == 0)
+      return;
     while (left <= right) {
       mid = (right + left) / 2;
-      if (key == row[mid]) {
-        delete row[mid];
-        Rewrite(mid);
+      if (row[mid] == key) {
+        row[mid] = TData();
+        countElem--;
+        DelRewrite(mid);
         break;
       }
-      else if (key > row[mid])
+      else if (row[mid] < key)
         left = mid + 1;
       else
         right = mid - 1;
     }
   }
   
-  void Print() {};
+  void Print() {
+    for (size_t i = 0; i < countElem; i++)
+    {
+      std::cout << "|" << row[i] << "|" << row[i] << std::endl;
+    }
+  }
 
 };
 
