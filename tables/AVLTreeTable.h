@@ -8,16 +8,8 @@ private:
   AVLTree<TData> tree;
 public:
   AVLTable() { };
-
-  //void Print() { tree.Print(); }
-  //void Insert(std::shared_ptr<PolinomObj> obj) { tree.Insert(obj); };
-  //{
-  //  std::shared_ptr<PolinomObj>();
-  //  tree.Delete(_name);
-  //}
-  //{ tree.Find(name); }
-  void Insert(TData data) {}
-  TData& Find(TKey key) {}
-  void Delete(TKey key) {}
-  void Print() {}
+  void Insert(TData data) { tree.Insert(data); }
+  TData& Find(TKey key) { tree.Find(key); }
+  void Delete(TKey key) { tree.Delete(key); }
+  void Print() { tree.Print(); }
 };

@@ -3,15 +3,23 @@
 
 class Interface {
 
+  bool showStats = false;
+  TableManager* tm = nullptr;
   void(Interface::* modeptr[12])() = { &Interface::mode0, &Interface::mode1, &Interface::mode2,
                                       &Interface::mode3, &Interface::mode4, &Interface::mode5,
                                       &Interface::mode6, &Interface::mode7, &Interface::mode8,
                                       &Interface::mode9, &Interface::mode10, &Interface::mode11 };
 
-  bool showStats = false;
-
   bool executableFunc() {
-    
+    try {
+
+    }
+    catch (std::string str) {
+      std::cout << str;
+    }
+    (...) {
+      std::cout << "Unexpected error.";
+    }
     return false;
   }
 
@@ -65,7 +73,7 @@ public:
     while (choice < border1 || choice > border2) {
       std::cin >> choice;
       if (choice < border1 || choice > border2) {
-        std::cout << "Invalid number entered. Try again\n";
+        std::cout << "Invalid number entered. Try again.\n";
         Cleaner();
       }
     }

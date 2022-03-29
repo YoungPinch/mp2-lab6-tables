@@ -22,11 +22,16 @@ private:
 
   TTable<std::string, std::shared_ptr<PolinomObj>>* tables[COUNTTABLES];
   TableKind cur = UNSORTARR;
-  int curSize = 0;
+  int curSize, maxSize;
 
   void Insert(std::shared_ptr<PolinomObj> obj) {
-    for (int i = 0; i < COUNTTABLES; i++)
-      tables[i]->Insert(obj);
+    if (curSize != maxSize) {
+      for (int i = 0; i < COUNTTABLES; i++)
+        tables[i]->Insert(obj);
+    }
+    else {
+      throw std::string("Too many objects in Table.");
+    }
   }
 
   TableManager(const TableManager& obj) = delete; // Запрещено копирование
@@ -36,7 +41,7 @@ private:
 public:
   static const std::vector<std::string> TableNames;
 
-  TableManager(int size) : curSize(size) {
+  TableManager(int size) : curSize(0), maxSize(size) {
     tables[UNSORTARR] = new UnsortArrayTable<std::string, std::shared_ptr<PolinomObj>>(size);
     tables[SORTARR] = new SortArrayTable<std::string, std::shared_ptr<PolinomObj>>(size);
     tables[OPENHASH] = new OpenHashTable<std::string, std::shared_ptr<PolinomObj>>(size);
