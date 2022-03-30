@@ -25,13 +25,12 @@ private:
   int curSize, maxSize;
 
   void Insert(std::shared_ptr<PolinomObj> obj) {
-    if (curSize != maxSize) {
-      for (int i = 0; i < COUNTTABLES; i++)
-        tables[i]->Insert(obj);
-    }
-    else {
+    if (curSize == maxSize) {
       throw std::string("Too many objects in Table.");
     }
+      for (int i = 0; i < COUNTTABLES; i++)
+        tables[i]->Insert(obj);
+      curSize++;
   }
 
   TableManager(const TableManager& obj) = delete; // Запрещено копирование
@@ -41,7 +40,13 @@ private:
 public:
   static const std::vector<std::string> TableNames;
 
+  int getCurSize() { return curSize; }
+  int getMaxSize() { return maxSize; }
+  int getCountTables() { return COUNTTABLES; }
+
   TableManager(int size) : curSize(0), maxSize(size) {
+    if (size <= 0)
+      throw std::string("The table size is too small");
     tables[UNSORTARR] = new UnsortArrayTable<std::string, std::shared_ptr<PolinomObj>>(size);
     tables[SORTARR] = new SortArrayTable<std::string, std::shared_ptr<PolinomObj>>(size);
     tables[OPENHASH] = new OpenHashTable<std::string, std::shared_ptr<PolinomObj>>(size);
@@ -59,8 +64,12 @@ public:
   Polinom Find(std::string name) { tables[cur]->Find(name)->getPol(); }
 
   void Delete(std::string _name) {
+    if (curSize <= 0) {
+      throw std::string("Too few objects in Table.");
+    }
     for (int i = 0; i < COUNTTABLES; i++)
       tables[i]->Delete(_name);
+    curSize--;
   }
 
   void Print() { tables[cur]->Print(); }

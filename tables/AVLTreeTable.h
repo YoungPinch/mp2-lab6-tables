@@ -8,8 +8,8 @@ private:
   AVLTree<TData> tree;
 public:
   AVLTable() { };
-  void Insert(TData data) { tree.Insert(data); }
-  TData& Find(TKey key) { tree.Find(key); }
-  void Delete(TKey key) { tree.Delete(key); }
+  void Insert(TData data) { }
+  TData& Find(TKey key) { }
+  void Delete(TKey key) { }
   void Print() { tree.Print(); }
 };

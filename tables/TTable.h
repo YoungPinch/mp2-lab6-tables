@@ -12,7 +12,7 @@ public:
   virtual ~TTable() = 0;
 };
 
-struct PolinomObj {
+class PolinomObj {
 private:
   std::string name;
   std::string strPol;

@@ -8,7 +8,7 @@ private:
   std::vector<TList<TData>> tables;
   int size;
   
-  unsigned int ChainHashTable::Hash(const TKey key) {
+  unsigned int Hash(const TKey key) {
     unsigned int h = 0;
     for (char c : key)
       h = (h * 1664525) + c + 1013904223;

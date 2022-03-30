@@ -1,6 +1,8 @@
 #include <iostream>
+#include "Interface.h"
 
-int main()
-{
-  std::cout << "It's our project!\n";
+int main() {
+  Interface gui;
+  gui.Run();
+  return 0;
 }
