@@ -14,11 +14,11 @@ public:
     list.InsertFirst(data);
   }
 
- TData& Find(TKey name) {
+ TData* Find(TKey name) {
     for (auto it = list.cbegin(); it != list.cend(); ++it)
       if (*it == name)
-        return *it;
-    return TData();
+        return &(*it);
+    return nullptr;
   }
 
  void Delete(TKey name) {

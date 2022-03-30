@@ -6,7 +6,7 @@ template <class TKey, class TData>
 class TTable {
 public:
   virtual void Insert(TData) = 0;
-  virtual TData& Find(TKey) = 0;
+  virtual TData* Find(TKey) = 0;
   virtual void Delete(TKey) = 0;
   virtual void Print() = 0;
   virtual ~TTable() = 0;
@@ -50,6 +50,8 @@ public:
 
   friend bool operator==(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name == s; }
   friend bool operator!=(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name != s; }
+  friend bool operator>(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name > s; }
+  friend bool operator<(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name < s; }
 
   friend std::ostream& operator<< (std::ostream& out, const std::shared_ptr<PolinomObj>& polObj) {
     out << polObj->name << " = " << polObj->strPol.substr(0, 19);

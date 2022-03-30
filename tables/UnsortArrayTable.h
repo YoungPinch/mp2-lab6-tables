@@ -5,7 +5,12 @@
 template <class TKey, class TData>
 class UnsortArrayTable final : public TTable<class TKey, class TData> {
 private:
-  std::vector<TData> data;
+  struct Cell {
+    TData val;
+    bool isNone = true;
+  };
+
+  std::vector<Cell> data;
   int maxInd;
 
 public:
@@ -15,8 +20,9 @@ public:
     if (data.size() == maxInd)
       throw 1;
     for (int i = 0; i < data.size(); i++) {
-      if (data[i] == TData()) {
-        data[i] = _data;
+      if (data[i].isNone) {
+        data[i].val = _data;
+        data[i].isNone = false;
         if (i == maxInd)
           maxInd++;
         break;
@@ -24,18 +30,18 @@ public:
     }
   }
 
-  TData& Find(TKey name) {
+  TData* Find(TKey name) {
     for (int i = 0; i < size; i++)
-      if (data[i] != TData() && data[i] == name)
-        return data[i];
-    return TData();  
+      if (!data[i].isNone && data[i].val == name)
+        return &data[i].val;
+    return nullptr;  
   }
 
   void Delete(TKey name) {
     int i = 0;
     for (; i < maxInd; i++) {
-      if (data[i] != TData() && data[i] == name) {
-        data[i] = TData();
+      if (!data[i].isNull && data[i] == name) {
+        data[i].isNull = true;
         break;
       }
     }
@@ -52,8 +58,8 @@ public:
 
   void Print() {
     for (int i = 0; i < maxInd; i++) {
-      if (data[i] != TData())
-        std::cout << data[i];
+      if (!data[i].isNull)
+        std::cout << data[i].val;
       else
         std::cout << '\n';
     }

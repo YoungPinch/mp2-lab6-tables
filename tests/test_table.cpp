@@ -1,10 +1,12 @@
 #include "gtest/gtest.h"
+#include "TableManager.h"
 
 // Common tests for all tables
+typedef UnsortListTable<int, int> Tab;
 
 TEST(TTable, can_create_table)
 {
-  ADD_FAILURE();
+  Tab t;
 }
 
 TEST(TTable, new_table_is_empty)

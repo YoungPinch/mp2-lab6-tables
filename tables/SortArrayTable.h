@@ -5,7 +5,12 @@
 template <class TKey, class TData>
 class SortArrayTable final : public TTable<class TKey, class TData> {
 private:
-  std::vector<TData> row;
+  struct Cell {
+    TData val;
+    bool isNone = true;
+  };
+
+  std::vector<Cell> row;
   int countElem;
 
   void AddRewrite(int index) {
@@ -29,19 +34,19 @@ public:
     int mid = 0;
     if (countElem == row.size())
     {
-      std::cout << "MAX" << std::endl;
-      return;
+      throw -1;
     }
     while (left <= right) {
       mid = (right + left) / 2;
-      if (row[mid] == TData()) {
-        row[mid] = data;
+      if (row[mid].isNone) {
+        row[mid].val = data;
+        row[mid].isNone = false;
         countElem++;
         return;
       }
-      if (data == row[mid])
+      if (data == row[mid].val)
         return;
-      if (data > row[mid]) {
+      if (data > row[mid].val) {
         left = mid + 1;
         lastCompare = 1;
       }
@@ -53,29 +58,30 @@ public:
     countElem++;
     if (lastCompare == 1) {
       AddRewrite(left + 1);
-      row[left] = data;
-
+      row[left].val = data;
+      row[left].isNone = false;
     }
     else {
       AddRewrite(right + 1);
-      row[right + 1] = data;
+      row[right + 1].val = data;
+      row[right + 1].isNone = false;
     }
   }
 
-  TData& Find(TKey key){
+  TData* Find(TKey key){
     int left = 0;
     int right = countElem - 1;
     int mid = 0;
     while (left <= right) {
       mid = (right + left) / 2;
-      if (row[mid] == key)
-        return row[mid];
-      else if (row[mid] < key)
+      if (row[mid].val == key)
+        return &row[mid].val;
+      else if (row[mid].val < key)
         left = mid + 1;
       else
         right = mid - 1;
     }
-    return TData();
+    return nullptr;
   }
 
   void Delete(TKey key) {
@@ -86,13 +92,13 @@ public:
       return;
     while (left <= right) {
       mid = (right + left) / 2;
-      if (row[mid] == key) {
-        row[mid] = TData();
+      if (row[mid].val == key) {
+        row[mid].isNone = true;
         countElem--;
         DelRewrite(mid);
         break;
       }
-      else if (row[mid] < key)
+      else if (row[mid].val < key)
         left = mid + 1;
       else
         right = mid - 1;
@@ -102,7 +108,7 @@ public:
   void Print() {
     for (size_t i = 0; i < countElem; i++)
     {
-      std::cout << "|" << row[i] << "|" << row[i] << std::endl;
+      std::cout << row[i].val << std::endl;
     }
   }
 

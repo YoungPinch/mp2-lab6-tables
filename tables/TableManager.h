@@ -64,7 +64,7 @@ public:
 
   void Insert(std::string _name, std::string _strPol) { Insert(PolinomObj::Create(_name, _strPol)); }
 
-  Polinom Find(std::string name) { tables[cur]->Find(name)->getPol(); }
+  std::shared_ptr<PolinomObj>* Find(std::string name) { tables[cur]->Find(name); }
 
   void Delete(std::string _name) {
     if (curSize <= 0) {

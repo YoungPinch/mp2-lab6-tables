@@ -9,7 +9,7 @@ private:
 public:
   AVLTable() { };
   void Insert(TData data) { }
-  TData& Find(TKey key) { }
+  TData* Find(TKey key) { }
   void Delete(TKey key) { }
   void Print() { tree.Print(); }
 };
