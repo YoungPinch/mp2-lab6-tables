@@ -1,8 +1,13 @@
 #include <iostream>
 #include "Interface.h"
 
-int main() {
+void useInterface() {
   Interface gui;
   gui.Run();
+  system("pause");
+}
+
+int main() {
+  useInterface();
   return 0;
 }

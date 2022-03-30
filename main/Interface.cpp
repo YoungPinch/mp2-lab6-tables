@@ -10,11 +10,11 @@ void Interface::setTableManager() {
   system("cls");
 }
 
-bool Interface::executableFunc() {
+void Interface::executableFunc() {
   try {
     if (tabMan == nullptr) {
       setTableManager();
-      return true;
+      return;
     }
     printFunctions();
     int choice = Clamp(1, 12) - 1;
@@ -26,55 +26,92 @@ bool Interface::executableFunc() {
   catch (...) {
     std::cout << "Unexpected error.\n";
   }
-  return true;
 }
 
-
+// Alg Polinoms
+// Будет добавлено по завершении полиномов
 void Interface::mode0() {
 
 }
 
-void Interface::mode1()
-{
+// Print Table +
+void Interface::mode1() {
+  tabMan->Print();
 }
 
-void Interface::mode2()
-{
+// Insert Elem
+// Добавить проверки на string
+void Interface::mode2() {
+  std::string tmpName, tmpStrPol;
+  std::cout << "name =\n";
+  getline(std::cin,tmpName);
+  std::cout << "pol =\n";
+  getline(std::cin, tmpStrPol);
+  tabMan->Insert(tmpName, tmpStrPol);
 }
 
-void Interface::mode3()
-{
+// Find Elem
+// Добавить проверки на string
+// Добавить проверки на Find (найдено или нет)
+void Interface::mode3() {
+  std::string tmpName;
+  std::cout << "name =\n";
+  getline(std::cin, tmpName);
+  tabMan->Find(tmpName);
 }
 
-void Interface::mode4()
-{
+// Delete Elem
+// Добавить проверки на string
+void Interface::mode4() {
+  std::string tmpName;
+  std::cout << "name =\n";
+  getline(std::cin, tmpName);
+  tabMan->Delete(tmpName);
 }
 
-void Interface::mode5()
-{
-}
-void Interface::mode6()
-{
-}
-
-void Interface::mode7()
-{
+// Current Information +
+void Interface::mode5() {
+  std::cout << TableManager::TableNames[tabMan->getActiveTableInd()] << " now is active.\n";
+  std::cout << "Total memory used in tables " << tabMan->getCurSize() << '/' << tabMan->getMaxSize() << '\n';
 }
 
-void Interface::mode8()
-{
+// Change Active Table +
+void Interface::mode6() {
+  std::cout << "Select one of these tables:";
+  printTables();
+  TableManager::TableKind choice = TableManager::TableKind(Clamp(1, TableManager::TableNames.size()) - 1);
+  tabMan->setActiveTable(choice);
 }
 
-void Interface::mode9()
-{
+// Clearing Screen +
+void Interface::mode7() { system("clear"); }
+
+// Settings
+// Добавить изменение границ вывода
+// Добавить Change Showing Of Stats
+void Interface::mode8() {
+
 }
 
-void Interface::mode10()
-{
+// Help
+// краткое их описание, какие поддерживаются алгебраические операции
+// (интеграл, дифференцирование, + - *), расчёт значения в точке
+// Добавить информацию про вывод определённого кол-ва символов в полиноме
+// И его названии
+void Interface::mode9() {
+  std::cout << "Help";
+  std::cout << "\n Rules for Alg Polinoms:\n0) You can write as many spaces as you want\n";
+  std::cout << "1) Variable names are entered without spaces\n(for example, not like \"a b\" but like \"ab\")\n";
+  std::cout << "2) The variable name does not start with a digit\n";
+  std::cout << "3) Floating-point numbers are written with a dot (for example: 3.7)\n";
+  //std::cout << "4) Supported operations:\n" << Operations::str_op() << "\n\n";
+  // Раскоментировать после добавления к интерфейсу alg_polinoms
 }
 
-void Interface::mode11()
-{
+// Exit +
+void Interface::mode10() {
+  std::cout << "\nSee you soon!\n";
+  isWorks = false;
 }
 
 void Interface::Cleaner() {
@@ -100,10 +137,18 @@ void Interface::printFunctions() {
     if (i % 3 == 0) {
       std::cout << '\n';
     }
-    std::cout << i + 1 << ") " << FuncNames[i];
+    std::cout << ' ' << i + 1 << ") " << FuncNames[i];
   }
   if (i % 3 != 0) {
     std::cout << '\n';
   }
   std::cout << "Your choice: ";
+}
+
+void Interface::printTables() {
+  std::cout << "\nAll tables: ";
+  for (int i = 0; i < FuncNames.size(); i++) {
+    std::cout << i + 1 << ") " << TableManager::TableNames[i] << '\n';
+  }
+  std::cout << '\n';
 }

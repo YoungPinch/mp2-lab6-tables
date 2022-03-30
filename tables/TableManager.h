@@ -10,7 +10,7 @@
 #define COUNTTABLES 6
 
 class TableManager {
-private:
+public:
   enum TableKind {
     UNSORTARR = 0,
     SORTARR,
@@ -20,6 +20,7 @@ private:
     CHAINHASH
   };
 
+private:
   TTable<std::string, std::shared_ptr<PolinomObj>>* tables[COUNTTABLES];
   TableKind cur = UNSORTARR;
   int curSize, maxSize;
@@ -38,6 +39,7 @@ private:
   TableManager operator=(const TableManager& obj) = delete; // Запрещено присваивать
 
 public:
+
   static const std::vector<std::string> TableNames;
 
   int getCurSize() { return curSize; }
@@ -55,7 +57,8 @@ public:
     tables[AVLTREE] = new AVLTable<std::string, std::shared_ptr<PolinomObj>>();
   }
 
-  inline void SetActiveTable(TableKind ind) { cur = ind; }
+  inline void setActiveTable(TableKind ind) { cur = ind; }
+  inline TableKind getActiveTableInd() { return cur; }
 
   void Insert(std::string _name, Polinom pol) { Insert(PolinomObj::Create(_name, pol)); }
 
