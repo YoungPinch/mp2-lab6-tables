@@ -29,7 +29,7 @@ public:
   ~OpenHashTable() { delete[] table; }
 
   void Insert(TData data) {
-    if (size != curSize) // no free space
+    if (size == curSize) // no free space
       throw -1;
     unsigned int h = Hash(data);
     while (!table[h].isDeleted) {

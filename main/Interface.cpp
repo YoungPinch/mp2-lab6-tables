@@ -111,6 +111,7 @@ void Interface::mode9() {
 // Exit +
 void Interface::mode10() {
   std::cout << "\nSee you soon!\n";
+  delete tabMan;
   isWorks = false;
 }
 
