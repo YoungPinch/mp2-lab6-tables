@@ -344,4 +344,3 @@ Polinom TPostfix::Calculate()
   }
   return result.pop();
 }
-
