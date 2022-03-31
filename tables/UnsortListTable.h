@@ -2,26 +2,25 @@
 #include "TTable.h"
 #include "list.hpp"
 
-template<class TKey, class TData>
-class UnsortListTable final : public TTable<class TKey, class TData> {
+class UnsortListTable final : public TTable {
 private:
-  TList<TData> list;
+  TList<std::shared_ptr<PolinomObj>> list;
 
 public:
   UnsortListTable() {}
 
-  void Insert(TData data) {
+  void Insert(std::shared_ptr<PolinomObj> data) {
     list.InsertFirst(data);
   }
 
- TData* Find(TKey name) {
-    for (auto it = list.cbegin(); it != list.cend(); ++it)
+  std::shared_ptr<PolinomObj>* Find(std::string name) {
+    for (auto it = list.begin(); it != list.end(); ++it)
       if (*it == name)
         return &(*it);
     return nullptr;
   }
 
- void Delete(TKey name) {
+ void Delete(std::string name) {
    for (auto it = list.begin(); it != list.end(); ++it)
      if (*it == name)
        list.Delete(it);
