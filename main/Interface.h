@@ -36,8 +36,3 @@ public:
   }
 
 };
-
-const std::vector<std::string> Interface::FuncNames = { "Alg Polinoms", "Print Table",
-                                                        "Insert Elem", "Find Elem","Delete Elem"
-                                                        "Cur Information", "Change Active Table",
-                                                        "Clearing Screen", "Settings", "Help", "Exit" };

@@ -1,13 +1,16 @@
 #include "Interface.h"
 
+const std::vector<std::string> Interface::FuncNames = { "Alg Polinoms", "Print Table",
+                                                        "Insert Elem", "Find Elem", "Delete Elem",
+                                                        "Cur Information", "Change Active Table",
+                                                        "Clearing Screen", "Settings", "Help", "Exit" };
+
 void Interface::setTableManager() {
   std::cout << "Choose size of all tables: ";
-  int choice = Clamp(INT_MIN, INT_MAX);
+  int choice = Clamp(INT_MIN + 1, INT_MAX - 1);
   tabMan = new TableManager(choice);
   std::cout << "Successfully created " << tabMan->getCountTables() <<
     " tables with " << tabMan->getMaxSize() << " elements!\n";
-  system("pause");
-  system("cls");
 }
 
 void Interface::executableFunc() {
@@ -17,7 +20,7 @@ void Interface::executableFunc() {
       return;
     }
     printFunctions();
-    int choice = Clamp(1, 12) - 1;
+    int choice = Clamp(1, 11) - 1;
     (this->*modeptr[choice])();
   }
   catch (std::string str) {
@@ -42,9 +45,10 @@ void Interface::mode1() {
 // Insert Elem
 // Добавить проверки на string
 void Interface::mode2() {
+  Cleaner();
   std::string tmpName, tmpStrPol;
   std::cout << "name =\n";
-  getline(std::cin,tmpName);
+  getline(std::cin, tmpName);
   std::cout << "pol =\n";
   getline(std::cin, tmpStrPol);
   tabMan->Insert(tmpName, tmpStrPol);
@@ -71,7 +75,7 @@ void Interface::mode4() {
 
 // Current Information +
 void Interface::mode5() {
-  std::cout << TableManager::TableNames[tabMan->getActiveTableInd()] << " now is active.\n";
+  std::cout << tabMan->getTableName(tabMan->getActiveTableInd()) << " now is active.\n";
   std::cout << "Total memory used in tables " << tabMan->getCurSize() << '/' << tabMan->getMaxSize() << '\n';
 }
 
@@ -79,12 +83,12 @@ void Interface::mode5() {
 void Interface::mode6() {
   std::cout << "Select one of these tables:";
   printTables();
-  TableManager::TableKind choice = TableManager::TableKind(Clamp(1, TableManager::TableNames.size()) - 1);
+  TableManager::TableKind choice = TableManager::TableKind(Clamp(1, tabMan->getCountTables()));
   tabMan->setActiveTable(choice);
 }
 
 // Clearing Screen +
-void Interface::mode7() { system("clear"); }
+void Interface::mode7() { system("cls"); }
 
 // Settings
 // Добавить изменение границ вывода
@@ -129,6 +133,7 @@ int Interface::Clamp(int border1, int border2) {
       Interface::Cleaner();
     }
   }
+  return choice;
 }
 
 void Interface::printFunctions() {
@@ -148,8 +153,8 @@ void Interface::printFunctions() {
 
 void Interface::printTables() {
   std::cout << "\nAll tables: ";
-  for (int i = 0; i < FuncNames.size(); i++) {
-    std::cout << i + 1 << ") " << TableManager::TableNames[i] << '\n';
+  for (int i = 0; i < tabMan->getCountTables(); i++) {
+    std::cout << i + 1 << ") " << tabMan->getTableName(i) << '\n';
   }
   std::cout << '\n';
 }
