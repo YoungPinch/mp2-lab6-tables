@@ -20,7 +20,7 @@ public:
     ops.emplace("(", vector<int>{ 0, 0 });
     ops.emplace(")", vector<int>{ 0, 0 });
     ops.emplace("d", vector<int>{ 3, 1 });
-    ops.emplace("i", vector<int>{ 3, 1 });
+    ops.emplace("I", vector<int>{ 3, 1 });
   }
 
   static string str_op() { return string("*, +, -, (, ), d, I"); }

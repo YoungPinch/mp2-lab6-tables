@@ -7,7 +7,7 @@ private:
   std::vector<TList<std::shared_ptr<PolinomObj>>> tables;
   int size;
   
-  unsigned int Hash(const std::string key) {
+  unsigned int Hash(const std::string& key) {
     unsigned int h = 0;
     for (char c : key)
       h = (h * 1664525) + c + 1013904223;
@@ -15,7 +15,7 @@ private:
   }
 
 public:
-  ChainHashTable(int sz) : size(sz), tables(size) {}
+  ChainHashTable(int sz) : size(sz), tables(sz) {}
 
   ~ChainHashTable() {
     tables.clear();
