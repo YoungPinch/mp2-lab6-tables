@@ -2,16 +2,6 @@
 #include <string.h>
 #include "polinom.hpp"
 
-template <class TKey, class TData>
-class TTable {
-public:
-  virtual void Insert(TData) = 0;
-  virtual TData* Find(TKey) = 0;
-  virtual void Delete(TKey) = 0;
-  virtual void Print() = 0;
-  virtual ~TTable() = 0;
-};
-
 class PolinomObj {
 private:
   std::string name;
@@ -41,6 +31,8 @@ public:
     return shptr;
   }
 
+  std::string& getName() { return name; }
+  std::string& getStrPol() { return strPol; }
   Polinom& getPol() { return pol; }
 
   bool operator==(const PolinomObj& other) const noexcept { return name == other.name; }
@@ -58,4 +50,13 @@ public:
     return out;
   }
 
+};
+
+class TTable {
+public:
+  virtual void Insert(std::shared_ptr<PolinomObj>) = 0;
+  virtual std::shared_ptr<PolinomObj>* Find(std::string) = 0;
+  virtual void Delete(std::string) = 0;
+  virtual void Print() = 0;
+  virtual ~TTable() = 0 {}
 };

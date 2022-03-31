@@ -2,13 +2,12 @@
 #include "TTable.h"
 #include <vector>
 
-template <class TKey, class TData>
-class ChainHashTable final : public TTable<class TKey, class TData> {
+class ChainHashTable final : public TTable {
 private:
-  std::vector<TList<TData>> tables;
+  std::vector<TList<std::shared_ptr<PolinomObj>>> tables;
   int size;
   
-  unsigned int Hash(const TKey key) {
+  unsigned int Hash(const std::string key) {
     unsigned int h = 0;
     for (char c : key)
       h = (h * 1664525) + c + 1013904223;
@@ -22,29 +21,29 @@ public:
     tables.clear();
   }
 
-  void Insert(TData data){
-    if (Find(data) != nullptr)
+  void Insert(std::shared_ptr<PolinomObj> data){
+    if (Find(data.get()->getName()) != nullptr)
       return;
     else
     {
-      int index = Hash(data);
+      int index = Hash(data.get()->getName());
       tables[index].InsertFirst(data);
     }
   }
 
-  TData* Find(TKey key){
+  std::shared_ptr<PolinomObj>* Find(std::string key){
     int index = Hash(key);
     for (auto it = tables[index].begin(); it != tables[index].end(); ++it)
-      if (*it == key)
+      if (it->get()->getName() == key)
         return &(*it);
     return nullptr;
   }
 
-  void Delete(TKey key) {
+  void Delete(std::string key) {
     int index = Hash(key);
     for (auto it = tables[index].begin(); it != tables[index].end(); ++it)
       if (*it == key)
-        return tables[index].Delete(it); // void?
+        tables[index].Delete(it);
   }
 
   void Print(){

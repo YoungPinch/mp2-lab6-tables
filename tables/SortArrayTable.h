@@ -2,15 +2,10 @@
 #include "TTable.h"
 #include <vector>
 
-template <class TKey, class TData>
-class SortArrayTable final : public TTable<class TKey, class TData> {
+class SortArrayTable final : public TTable {
 private:
-  struct Cell {
-    TData val;
-    bool isNone = true;
-  };
 
-  std::vector<Cell> row;
+  std::vector<std::shared_ptr<PolinomObj>> row;
   int countElem;
 
   void AddRewrite(int index) {
@@ -27,7 +22,7 @@ private:
 public:
   SortArrayTable(int sz) : countElem(0), row(sz) {}
 
-  void Insert(TData data){
+  void Insert(std::shared_ptr<PolinomObj> data){
     int left = 0;
     int right = countElem;
     int lastCompare = 0; //1 - left 2 - right
@@ -38,15 +33,14 @@ public:
     }
     while (left <= right) {
       mid = (right + left) / 2;
-      if (row[mid].isNone) {
-        row[mid].val = data;
-        row[mid].isNone = false;
+      if (row[mid] == nullptr) {
+        row[mid] = data;
         countElem++;
         return;
       }
-      if (data == row[mid].val)
+      if (data.get()->getName() == row[mid].get()->getName())
         return;
-      if (data > row[mid].val) {
+      if (data.get()->getName() > row[mid].get()->getName()) {
         left = mid + 1;
         lastCompare = 1;
       }
@@ -58,25 +52,23 @@ public:
     countElem++;
     if (lastCompare == 1) {
       AddRewrite(left + 1);
-      row[left].val = data;
-      row[left].isNone = false;
+      row[left] = data;
     }
     else {
       AddRewrite(right + 1);
-      row[right + 1].val = data;
-      row[right + 1].isNone = false;
+      row[right + 1] = data;
     }
   }
 
-  TData* Find(TKey key){
+  std::shared_ptr<PolinomObj>* Find(std::string key){
     int left = 0;
     int right = countElem - 1;
     int mid = 0;
     while (left <= right) {
       mid = (right + left) / 2;
-      if (row[mid].val == key)
-        return &row[mid].val;
-      else if (row[mid].val < key)
+      if (row[mid].get()->getName() == key)
+        return &row[mid];
+      else if (row[mid].get()->getName() < key)
         left = mid + 1;
       else
         right = mid - 1;
@@ -84,7 +76,7 @@ public:
     return nullptr;
   }
 
-  void Delete(TKey key) {
+  void Delete(std::string key) {
     int left = 0;
     int right = countElem - 1;
     int mid = 0;
@@ -92,13 +84,12 @@ public:
       return;
     while (left <= right) {
       mid = (right + left) / 2;
-      if (row[mid].val == key) {
-        row[mid].isNone = true;
+      if (row[mid].get()->getName() == key) {
         countElem--;
         DelRewrite(mid);
         break;
       }
-      else if (row[mid].val < key)
+      else if (row[mid].get()->getName() < key)
         left = mid + 1;
       else
         right = mid - 1;
@@ -106,9 +97,8 @@ public:
   }
   
   void Print() {
-    for (size_t i = 0; i < countElem; i++)
-    {
-      std::cout << row[i].val << std::endl;
+    for (size_t i = 0; i < countElem; i++) {
+      std::cout << row[i] << std::endl;
     }
   }
 

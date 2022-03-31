@@ -2,27 +2,20 @@
 #include <vector>
 #include "TTable.h"
 
-template <class TKey, class TData>
-class UnsortArrayTable final : public TTable<class TKey, class TData> {
+class UnsortArrayTable final : public TTable {
 private:
-  struct Cell {
-    TData val;
-    bool isNone = true;
-  };
-
-  std::vector<Cell> data;
+  std::vector<std::shared_ptr<PolinomObj>> data;
   int maxInd;
 
 public:
   UnsortArrayTable(int sz) : data(sz), maxInd(0) {}
 
-  void Insert(TData _data) {
+  void Insert(std::shared_ptr<PolinomObj> _data) {
     if (data.size() == maxInd)
       throw 1;
     for (int i = 0; i < data.size(); i++) {
-      if (data[i].isNone) {
-        data[i].val = _data;
-        data[i].isNone = false;
+      if (data[i] == nullptr) {
+        data[i] = _data;
         if (i == maxInd)
           maxInd++;
         break;
@@ -30,25 +23,25 @@ public:
     }
   }
 
-  TData* Find(TKey name) {
-    for (int i = 0; i < size; i++)
-      if (!data[i].isNone && data[i].val == name)
-        return &data[i].val;
+  std::shared_ptr<PolinomObj>* Find(std::string name) {
+    for (int i = 0; i < maxInd; i++)
+      if (data[i] != nullptr && data[i].get()->getName() == name)
+        return &data[i];
     return nullptr;  
   }
 
-  void Delete(TKey name) {
+  void Delete(std::string name) {
     int i = 0;
     for (; i < maxInd; i++) {
-      if (!data[i].isNull && data[i] == name) {
-        data[i].isNull = true;
+      if (data[i] != nullptr && data[i].get()->getName() == name) {
+        data[i] = nullptr;
         break;
       }
     }
 
     if (i == maxInd - 1) {
-      for (; i > 0; i--) {
-        if (data[i] == TData())
+      for (; i >= 0; i--) {
+        if (data[i] == nullptr)
           maxInd--;
         else
           break;
@@ -58,10 +51,10 @@ public:
 
   void Print() {
     for (int i = 0; i < maxInd; i++) {
-      if (!data[i].isNull)
-        std::cout << data[i].val;
+      if (data[i] != nullptr)
+        std::cout << data[i] << '\n';
       else
-        std::cout << '\n';
+        std::cout << "No data\n";
     }
   }
 };

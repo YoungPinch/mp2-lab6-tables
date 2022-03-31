@@ -2,7 +2,7 @@
 #include "TableManager.h"
 
 // Common tests for all tables
-typedef UnsortListTable<int, int> Tab;
+typedef UnsortListTable Tab;
 
 TEST(TTable, can_create_table)
 {

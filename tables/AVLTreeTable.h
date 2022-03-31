@@ -2,14 +2,13 @@
 #include "TTable.h"
 #include "avl_tree.hpp"
 
-template <class TKey, class TData>
-class AVLTable final : public TTable<class TKey, class TData> {
+class AVLTable final : public TTable {
 private:
-  AVLTree<TData> tree;
+  AVLTree tree;
 public:
   AVLTable() { };
-  void Insert(TData data) { }
-  TData* Find(TKey key) { }
-  void Delete(TKey key) { }
+  void Insert(std::shared_ptr<PolinomObj> data) { tree.Insert(data); }
+  std::shared_ptr<PolinomObj>* Find(std::string key) { return tree.Find(key); }
+  void Delete(std::string key) { tree.Delete(key); }
   void Print() { tree.Print(); }
 };

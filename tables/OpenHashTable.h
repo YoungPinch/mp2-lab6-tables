@@ -1,12 +1,11 @@
 #pragma once
 #include "TTable.h"
 
-template <class TKey, class TData>
-class OpenHashTable final : public TTable<class TKey, class TData> {
+class OpenHashTable final : public TTable {
 private:
   struct Bucket {
-    TData data;
-    bool isNone
+    std::shared_ptr<PolinomObj> data;
+    bool isNone;
     bool isDeleted;
   };
   Bucket* table;
@@ -14,7 +13,7 @@ private:
   unsigned int curSize;
   unsigned int step = 7;
 
-  unsigned int Hash(const TData& data) {
+  unsigned int Hash(const std::string& key) {
     unsigned int h = 0;
     for (char c : key)
       h = (h * 1664525) + c + 1013904223;
@@ -23,15 +22,15 @@ private:
 
 public:
   OpenHashTable(unsigned int s) : size(s), curSize(0) {
-    table = new Bucket[s]{ TData(), true, false };
+    table = new Bucket[s]{ std::shared_ptr<PolinomObj>(), true, false };
   }
 
   ~OpenHashTable() { delete[] table; }
 
-  void Insert(TData data) {
+  void Insert(std::shared_ptr<PolinomObj> data) {
     if (size == curSize) // no free space
       throw -1;
-    unsigned int h = Hash(data);
+    unsigned int h = Hash(data.get()->getName());
     while (!table[h].isDeleted) {
       if (table[h].isNone)
         break;
@@ -44,12 +43,12 @@ public:
     ++curSize;
   }
 
-  TData* Find(TKey key){
+  std::shared_ptr<PolinomObj>* Find(std::string key){
     unsigned int h = Hash(key), i = 0;
     while (!(table[h].isDeleted || i == size)) {
       if (table[h].isNone)
         return nullptr;
-      if (table[h].data == key)
+      if (table[h].data.get()->getName() == key)
         return &table[h].data;
       else {
         h = (h + step) % size;
@@ -59,12 +58,12 @@ public:
     return nullptr;
   }
 
-  void Delete(TKey key){
-    unsigned int h = Hash(name), i = 0;
+  void Delete(std::string key){
+    unsigned int h = Hash(key), i = 0;
     while (!(table[h].isDeleted || i == size)) {
       if (table[h].isNone)
         return;
-      if (table[h].data == key) {
+      if (table[h].data.get()->getName() == key) {
         table[h].isDeleted = true;
         --curSize;
       }
