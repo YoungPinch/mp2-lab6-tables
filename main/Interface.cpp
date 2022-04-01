@@ -63,6 +63,7 @@ void Interface::mode2() {
 // Добавить проверки на string
 // Добавить проверки на Find (найдено или нет)
 void Interface::mode3() {
+  Cleaner();
   std::string tmpName;
   std::cout << "name =\n";
   getline(std::cin, tmpName);
@@ -72,6 +73,7 @@ void Interface::mode3() {
 // Delete Elem
 // Добавить проверки на string
 void Interface::mode4() {
+  Cleaner();
   std::string tmpName;
   std::cout << "name =\n";
   getline(std::cin, tmpName);

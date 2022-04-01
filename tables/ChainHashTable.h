@@ -46,16 +46,19 @@ public:
         tables[index].Delete(it);
   }
 
-  void Print(){
+  void Print() {
     int ind = 0;
     for (size_t i = 0; i < size; i++) {
       std::cout << i << ") ";
       for (auto it = tables[i].begin(); it != tables[i].end(); ++it, ind++) {
         if (ind != 0)
-          std::cout << "--";
+          std::cout << "    ";
         std::cout << *it << '\n';
       }
-      ind = 0;
+      if (ind != 0)
+        ind = 0;
+      else
+        std::cout << '\n';
     }
   }
 };
