@@ -8,7 +8,7 @@ private:
   int maxInd;
 
 public:
-  UnsortArrayTable(int sz) : data(sz), maxInd(0) {}
+  UnsortArrayTable(int sz = 20) : data(sz), maxInd(0) {}
 
   void Insert(std::shared_ptr<PolinomObj> _data) {
     if (data.size() == maxInd)

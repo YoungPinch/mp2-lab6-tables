@@ -15,7 +15,7 @@ private:
   }
 
 public:
-  ChainHashTable(int sz) : size(sz), tables(sz) {}
+  ChainHashTable(int sz = 20) : size(sz), tables(sz) {}
 
   ~ChainHashTable() {
     tables.clear();
