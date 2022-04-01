@@ -15,10 +15,11 @@ public:
     UNSORTARR = 0,
     SORTARR,
     OPENHASH,
+    CHAINHASH,
     UNSORTLIST,
     AVLTREE,
-    CHAINHASH
   };
+
 
 private:
   TTable* tables[COUNTTABLES];
@@ -78,7 +79,10 @@ public:
     curSize--;
   }
 
-  void Print() { tables[cur]->Print(); }
+  void Print() 
+  {
+    tables[getActiveTableInd()]->Print();
+  }
 
   ~TableManager() {
     for (int i = 0; i < COUNTTABLES; i++)
