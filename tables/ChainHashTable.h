@@ -47,13 +47,15 @@ public:
   }
 
   void Print(){
+    int ind = 0;
     for (size_t i = 0; i < size; i++) {
-      for (auto it = tables[i].begin(); it != tables[i].end(); ++it) {
-        std::cout << *it << std::endl;
+      std::cout << i << ") ";
+      for (auto it = tables[i].begin(); it != tables[i].end(); ++it, ind++) {
+        if (ind != 0)
+          std::cout << "--";
+        std::cout << *it << '\n';
       }
+      ind = 0;
     }
   }
-
-  
 };
-

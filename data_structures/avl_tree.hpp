@@ -101,6 +101,7 @@ private:
       return FindNode(_data, node->pLeft);
     if (_data > node->data.get()->getName())
       return FindNode(_data, node->pRight);
+    return nullptr; // when something goes wrong
   }
 
   std::shared_ptr<PolinomObj>* Find(std::string _data, TreeNode* node) {

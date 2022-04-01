@@ -10,7 +10,7 @@ private:
 
   void AddRewrite(int index) {
     for (int i = countElem - 1; i >= index; i--)
-      row[i] = row[i - 1];
+      row[i] = row[static_cast<int>(i - 1)];
   }
 
   void DelRewrite(int index) {

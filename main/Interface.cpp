@@ -49,6 +49,11 @@ void Interface::mode2() {
   std::string tmpName, tmpStrPol;
   std::cout << "name =\n";
   getline(std::cin, tmpName);
+  for (auto& c : tmpName) {
+    if (c == ' ') {
+      c = '_';
+    }
+  }
   std::cout << "pol =\n";
   getline(std::cin, tmpStrPol);
   tabMan->Insert(tmpName, tmpStrPol);
@@ -83,7 +88,7 @@ void Interface::mode5() {
 void Interface::mode6() {
   std::cout << "Select one of these tables:";
   printTables();
-  TableManager::TableKind choice = TableManager::TableKind(Clamp(1, tabMan->getCountTables()));
+  int choice = Clamp(1, tabMan->getCountTables()) - 1;
   tabMan->setActiveTable(choice);
 }
 
@@ -105,6 +110,7 @@ void Interface::mode8() {
 void Interface::mode9() {
   std::cout << "Help";
   std::cout << "\n Rules for Alg Polinoms:\n0) You can write as many spaces as you want\n";
+  // Изменить описание, что меняется "ab cd" на "ab_cd"
   std::cout << "1) Variable names are entered without spaces\n(for example, not like \"a b\" but like \"ab\")\n";
   std::cout << "2) The variable name does not start with a digit\n";
   std::cout << "3) Floating-point numbers are written with a dot (for example: 3.7)\n";
