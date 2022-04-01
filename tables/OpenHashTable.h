@@ -4,9 +4,9 @@
 class OpenHashTable final : public TTable {
 private:
   struct Bucket {
-    std::shared_ptr<PolinomObj> data;
-    bool isNone;
-    bool isDeleted;
+    std::shared_ptr<PolinomObj> data = nullptr;
+    bool isNone = true;
+    bool isDeleted = false;
   };
   Bucket* table;
   unsigned int size;
@@ -22,7 +22,7 @@ private:
 
 public:
   OpenHashTable(unsigned int s) : size(s), curSize(0) {
-    table = new Bucket[s]{ std::shared_ptr<PolinomObj>(), true, false };
+    table = new Bucket[s]();
   }
 
   ~OpenHashTable() { delete[] table; }
