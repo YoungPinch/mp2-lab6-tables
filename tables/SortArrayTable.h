@@ -20,7 +20,7 @@ private:
   }
 
 public:
-  SortArrayTable(int sz) : countElem(0), row(sz) {}
+  SortArrayTable(int sz = 20) : countElem(0), row(sz) {}
 
   void Insert(std::shared_ptr<PolinomObj> data){
     int left = 0;
