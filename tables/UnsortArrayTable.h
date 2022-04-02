@@ -11,7 +11,7 @@ private:
 public:
   UnsortArrayTable(int sz = 20) : data(sz), maxInd(0), curSize(0) {}
 
-  int getSize() { return curSize; }
+  int getCurSize() { return curSize; }
 
   void Insert(std::shared_ptr<PolinomObj> _data) {
     if (data.size() == curSize)

@@ -9,7 +9,7 @@ private:
 public:
   UnsortListTable() {}
 
-  int getSize() { return list.GetSize(); }
+  int getCurSize() { return list.GetSize(); }
 
   void Insert(std::shared_ptr<PolinomObj> data) {
     list.InsertFirst(data);

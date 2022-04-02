@@ -73,11 +73,9 @@ public:
     if (curSize <= 0) {
       throw std::string("Too few objects in Table.");
     }
-    int sizeBeforeDel = tables[cur]->getSize();
     for (int i = 0; i < COUNTTABLES; i++)
       tables[i]->Delete(_name);
-    if (sizeBeforeDel != tables[cur]->getSize())
-      --curSize;
+    curSize = tables[cur]->getCurSize();
   }
 
   void Print() { tables[cur]->Print(); }

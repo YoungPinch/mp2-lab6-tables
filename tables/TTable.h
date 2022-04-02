@@ -58,6 +58,6 @@ public:
   virtual std::shared_ptr<PolinomObj>* Find(std::string) = 0;
   virtual void Delete(std::string) = 0;
   virtual void Print() = 0;
-  virtual int getSize() = 0;
+  virtual int getCurSize() = 0;
   virtual ~TTable() = 0 {}
 };

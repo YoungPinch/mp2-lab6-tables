@@ -41,7 +41,7 @@ public:
 
   ~OpenHashTable() { delete[] table; }
 
-  int getSize() { return curSize; }
+  int getCurSize() { return curSize; }
 
   void Insert(std::shared_ptr<PolinomObj> data) {
     if (size == curSize) // no free space

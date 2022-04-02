@@ -22,7 +22,7 @@ private:
 public:
   SortArrayTable(int sz = 20) : countElem(0), row(sz) {}
 
-  int getSize() { return countElem; }
+  int getCurSize() { return countElem; }
 
   void Insert(std::shared_ptr<PolinomObj> data){
     int left = 0;

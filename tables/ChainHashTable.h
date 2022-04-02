@@ -22,7 +22,7 @@ public:
     tables.clear();
   }
 
-  int getSize() { return curSize; }
+  int getCurSize() { return curSize; }
 
   void Insert(std::shared_ptr<PolinomObj> data){
     if (Find(data.get()->getName()) != nullptr)

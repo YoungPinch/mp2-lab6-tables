@@ -7,7 +7,7 @@ private:
   AVLTree tree;
 public:
   AVLTable() { };
-  int getSize() { return tree.getSize(); }
+  int getCurSize() { return tree.getSize(); }
   void Insert(std::shared_ptr<PolinomObj> data) { tree.Insert(data); }
   std::shared_ptr<PolinomObj>* Find(std::string key) { return tree.Find(key); }
   void Delete(std::string key) { tree.Delete(key); }
