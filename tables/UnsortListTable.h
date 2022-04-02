@@ -9,6 +9,8 @@ private:
 public:
   UnsortListTable() {}
 
+  int getSize() { return list.GetSize(); }
+
   void Insert(std::shared_ptr<PolinomObj> data) {
     list.InsertFirst(data);
   }
@@ -22,13 +24,17 @@ public:
 
  void Delete(std::string name) {
    for (auto it = list.begin(); it != list.end(); ++it)
-     if (*it == name)
+     if (*it == name) {
        list.Delete(it);
+       break;
+     }
  }
 
  void Print() {
-   for (auto it = list.cbegin(); it != list.cend(); ++it)
-     std::cout << *it << std::endl;
+   int ind = 0;
+   for (auto it = list.cbegin(); it != list.cend(); ++it, ++ind) {
+     std::cout << ind + 1 << ") " << *it << std::endl;
+   }
  }
 
 };

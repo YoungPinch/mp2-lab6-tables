@@ -41,6 +41,8 @@ public:
 
   ~OpenHashTable() { delete[] table; }
 
+  int getSize() { return curSize; }
+
   void Insert(std::shared_ptr<PolinomObj> data) {
     if (size == curSize) // no free space
       throw -1;
@@ -91,9 +93,9 @@ public:
   void Print() {
     for (unsigned i = 0; i < size; ++i)
       if (table[i].isDeleted || table[i].isNone)
-        std::cout << std::endl;
+        std::cout << i + 1 << ')' << std::endl;
       else
-        std::cout << table[i].data << std::endl;
+        std::cout << i + 1 << ')' << table[i].data << std::endl;
   }
 
 };

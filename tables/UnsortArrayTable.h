@@ -6,12 +6,15 @@ class UnsortArrayTable final : public TTable {
 private:
   std::vector<std::shared_ptr<PolinomObj>> data;
   int maxInd;
+  int curSize;
 
 public:
-  UnsortArrayTable(int sz = 20) : data(sz), maxInd(0) {}
+  UnsortArrayTable(int sz = 20) : data(sz), maxInd(0), curSize(0) {}
+
+  int getSize() { return curSize; }
 
   void Insert(std::shared_ptr<PolinomObj> _data) {
-    if (data.size() == maxInd)
+    if (data.size() == curSize)
       throw 1;
     for (int i = 0; i < data.size(); i++) {
       if (data[i] == nullptr) {
@@ -21,6 +24,7 @@ public:
         break;
       }
     }
+    curSize++;
   }
 
   std::shared_ptr<PolinomObj>* Find(std::string name) {
@@ -35,6 +39,7 @@ public:
     for (; i < maxInd; i++) {
       if (data[i] != nullptr && data[i].get()->getName() == name) {
         data[i] = nullptr;
+        curSize--;
         break;
       }
     }
@@ -51,10 +56,12 @@ public:
 
   void Print() {
     for (int i = 0; i < maxInd; i++) {
-      if (data[i] != nullptr)
-        std::cout << data[i] << '\n';
-      else
-        std::cout << "No data\n";
+      if (data[i] != nullptr) {
+        std::cout << i + 1 << ") " << data[i] << '\n';
+      }
+      else {
+        std::cout << i + 1 << ")\n";
+      }
     }
   }
 };

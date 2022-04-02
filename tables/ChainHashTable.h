@@ -6,6 +6,7 @@ class ChainHashTable final : public TTable {
 private:
   std::vector<TList<std::shared_ptr<PolinomObj>>> tables;
   int size;
+  int curSize;
   
   unsigned int Hash(const std::string& key) {
     unsigned int h = 0;
@@ -15,11 +16,13 @@ private:
   }
 
 public:
-  ChainHashTable(int sz = 20) : size(sz), tables(sz) {}
+  ChainHashTable(int sz = 20) : size(sz), tables(sz), curSize(0) {}
 
   ~ChainHashTable() {
     tables.clear();
   }
+
+  int getSize() { return curSize; }
 
   void Insert(std::shared_ptr<PolinomObj> data){
     if (Find(data.get()->getName()) != nullptr)
@@ -28,6 +31,7 @@ public:
     {
       int index = Hash(data.get()->getName());
       tables[index].InsertFirst(data);
+      ++curSize;
     }
   }
 
@@ -44,6 +48,7 @@ public:
     for (auto it = tables[index].begin(); it != tables[index].end(); ++it)
       if (it->get()->getName() == key) {
         tables[index].Delete(it);
+        --curSize;
         break;
       }
   }

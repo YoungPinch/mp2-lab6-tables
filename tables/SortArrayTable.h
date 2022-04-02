@@ -22,6 +22,8 @@ private:
 public:
   SortArrayTable(int sz = 20) : countElem(0), row(sz) {}
 
+  int getSize() { return countElem; }
+
   void Insert(std::shared_ptr<PolinomObj> data){
     int left = 0;
     int right = countElem;
@@ -98,7 +100,7 @@ public:
   
   void Print() {
     for (size_t i = 0; i < countElem; i++) {
-      std::cout << row[i] << std::endl;
+      std::cout << i + 1 << ") " << row[i] << std::endl;
     }
   }
 

@@ -1,17 +1,16 @@
 #pragma once
 #include <iostream>
 
-template <class TType>
 class AVLTree {
 private:
 
   struct TreeNode {
-    TType data;
+    std::shared_ptr<PolinomObj> data;
     TreeNode* pLeft;
     TreeNode* pRight;
     int bal; // balance value
 
-    TreeNode(TType _data = {}) : data(_data) {
+    TreeNode(std::shared_ptr<PolinomObj> _data = {}) : data(_data) {
       pLeft = pRight = nullptr;
       bal = 0;
     }
@@ -22,7 +21,8 @@ private:
     }
   };
 
-  TreeNode* pRoot;
+  TreeNode* pRoot = nullptr;
+  int indInPrint = 0;
 
   AVLTree(const AVLTree& obj) = delete; // Запрещено копирование
 
@@ -81,32 +81,32 @@ private:
     }
   }
 
-  void Insert(TType& _data, TreeNode*& node) {
+  void Insert(std::shared_ptr<PolinomObj>& _data, TreeNode*& node) {
     if (node == nullptr) {
       node = new TreeNode(_data);
       return;
     }
-    if (_data < node->data)
+    if (_data->getName() < node->data->getName())
       Insert(_data, node->pLeft);
-    else if (_data > node->data)
+    else if (_data->getName() > node->data->getName())
       Insert(_data, node->pRight);
     balanceTree(node);
   }
 
-  TreeNode* FindNode(std::string _data, TreeNode* node) {
+  TreeNode* FindNode(std::string name, TreeNode* node) {
     if (node == nullptr)
       return nullptr;
-    if (node->data.get()->getName() == _data)
+    if (node->data->getName() == name)
       return node;
-    if (_data < node->data.get()->getName())
-      return FindNode(_data, node->pLeft);
-    if (_data > node->data.get()->getName())
-      return FindNode(_data, node->pRight);
+    if (name < node->data->getName())
+      return FindNode(name, node->pLeft);
+    if (name > node->data->getName())
+      return FindNode(name, node->pRight);
     return nullptr; // when something goes wrong
   }
 
-  TType* Find(std::string _data, TreeNode* node) {
-    return &FindNode(_data, node)->data;
+  std::shared_ptr<PolinomObj>* Find(std::string name, TreeNode* node) {
+    return &FindNode(name, node)->data;
   }
 
   TreeNode* findMinNode(TreeNode*& node) {
@@ -122,16 +122,16 @@ private:
     return node;
   }
 
-  void Delete(std::string _data, TreeNode*& node) {
+  void Delete(std::string name, TreeNode*& node) {
     if (node == nullptr)
       return;
-    if (_data < node->data.get()->getName()) {
-      Delete(_data, node->pLeft);
+    if (name < node->data->getName()) {
+      Delete(name, node->pLeft);
     }
-    if (_data > node->data.get()->getName()) {
-      Delete(_data, node->pRight);
+    if (name > node->data->getName()) {
+      Delete(name, node->pRight);
     }
-    if (_data == node->data.get()->getName()) {
+    if (name == node->data->getName()) {
       TreeNode* pLeft = node->pLeft;
       TreeNode* pRight = node->pRight;
       delete node;
@@ -162,21 +162,32 @@ private:
     if (node == nullptr)
       return;
     PrintNode(node->pLeft);
-    std::cout << node->data << '\n';
+    std::cout << ++indInPrint << ") " << node->data << '\n';
     PrintNode(node->pRight);
+  }
+
+  int getSize(TreeNode* node) {
+    if (node == nullptr)
+      return 0;
+    return getSize(node->pRight) + getSize(node->pLeft) + 1;
   }
 
 public:
 
-  AVLTree() { pRoot = nullptr; }
+  AVLTree() { }
 
-  void Insert(TType _data) { Insert(_data, pRoot); }
+  int getSize() { return getSize(pRoot); }
 
-  TType* Find(std::string _data) { return Find(_data, pRoot); }
+  void Insert(std::shared_ptr<PolinomObj> _data) { Insert(_data, pRoot); }
 
-  void Delete(std::string _data) { Delete(_data, pRoot); }
+  std::shared_ptr<PolinomObj>* Find(std::string name) { return Find(name, pRoot); }
 
-  void Print() { PrintNode(pRoot); }
+  void Delete(std::string name) { Delete(name, pRoot); }
+
+  void Print() {
+    indInPrint = 0;
+    PrintNode(pRoot);
+  }
 
   ~AVLTree() { clear(pRoot); }
 

@@ -34,9 +34,8 @@ private:
     if (curSize == maxSize) {
       throw std::string("Too many objects in Table.");
     }
-      for (int i = 0; i < COUNTTABLES; i++)
-        tables[i]->Insert(obj);
-      curSize++;
+    for (int i = 0; i < COUNTTABLES; i++)
+      tables[i]->Insert(obj);
   }
 
   TableManager(const TableManager& obj) = delete; // Запрещено копирование
@@ -50,7 +49,7 @@ public:
   int getCountTables() { return COUNTTABLES; }
   int getActiveTableInd() { return cur; }
   std::string getTableName(int ind) { return TableNames[ind]; }
-  
+
   void setActiveTable(int ind) { cur = ind; }
 
   TableManager(int size) : curSize(0), maxSize(size) {
@@ -74,15 +73,14 @@ public:
     if (curSize <= 0) {
       throw std::string("Too few objects in Table.");
     }
+    int sizeBeforeDel = tables[cur]->getSize();
     for (int i = 0; i < COUNTTABLES; i++)
       tables[i]->Delete(_name);
-    curSize--;
+    if (sizeBeforeDel != tables[cur]->getSize())
+      --curSize;
   }
 
-  void Print() 
-  {
-    tables[getActiveTableInd()]->Print();
-  }
+  void Print() { tables[cur]->Print(); }
 
   ~TableManager() {
     for (int i = 0; i < COUNTTABLES; i++)

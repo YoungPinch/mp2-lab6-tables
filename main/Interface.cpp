@@ -67,7 +67,13 @@ void Interface::mode3() {
   std::string tmpName;
   std::cout << "name =\n";
   getline(std::cin, tmpName);
-  tabMan->Find(tmpName);
+  auto result = tabMan->Find(tmpName);
+  if (result == nullptr) {
+    std::cout << tmpName << " was not found in the table.\n";
+  }
+  else {
+    std::cout << result << '\n';
+  }
 }
 
 // Delete Elem
