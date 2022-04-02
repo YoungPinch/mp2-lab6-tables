@@ -11,6 +11,7 @@ private:
   Bucket* table;
   unsigned int size;
   unsigned int curSize;
+  unsigned int step;
 
   unsigned int Hash(const std::string& key) {
     unsigned int h = 0;
@@ -20,9 +21,22 @@ private:
     return h % size;
   }
 
+  unsigned int gcd(unsigned int x,  unsigned int y) {
+    while (x != 0 && y != 0)
+      if (x > y)
+        x = x % y;
+      else
+        y = y % x;
+    return x + y;
+  }
+
 public:
   OpenHashTable(unsigned int s = 20) : size(s), curSize(0) {
     table = new Bucket[s]();
+    step = 1;
+    for (int i = 2; i < s / 2 + 1; ++i)
+      if (gcd(i, s) == 1)
+        step = i;
   }
 
   ~OpenHashTable() { delete[] table; }
@@ -37,7 +51,7 @@ public:
       if (table[h].data.get()->getName() == data.get()->getName())
         return; // already exist
       else
-        h = (h + 1) % size;
+        h = (h + step) % size;
     }
     table[h] = Bucket{ data, false, false };
     ++curSize;
@@ -51,7 +65,7 @@ public:
       if (table[h].data.get()->getName() == key)
         return &table[h].data;
       else {
-        h = (h + 1) % size;
+        h = (h + step) % size;
         ++i;
       }
     }
@@ -68,7 +82,7 @@ public:
         --curSize;
       }
       else {
-        h = (h + 1) % size;
+        h = (h + step) % size;
         ++i;
       }
     }
