@@ -4,7 +4,7 @@
 
 class AVLTable final : public TTable {
 private:
-  AVLTree tree;
+  AVLTree<std::shared_ptr<PolinomObj>> tree;
 public:
   AVLTable() { };
   void Insert(std::shared_ptr<PolinomObj> data) { tree.Insert(data); }

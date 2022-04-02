@@ -1,16 +1,17 @@
 #pragma once
 #include <iostream>
 
+template <class TType>
 class AVLTree {
 private:
 
   struct TreeNode {
-    std::shared_ptr<PolinomObj> data;
+    TType data;
     TreeNode* pLeft;
     TreeNode* pRight;
     int bal; // balance value
 
-    TreeNode(std::shared_ptr<PolinomObj> _data = nullptr) : data(_data) {
+    TreeNode(TType _data = {}) : data(_data) {
       pLeft = pRight = nullptr;
       bal = 0;
     }
@@ -80,7 +81,7 @@ private:
     }
   }
 
-  void Insert(std::shared_ptr<PolinomObj>& _data, TreeNode*& node) {
+  void Insert(TType& _data, TreeNode*& node) {
     if (node == nullptr) {
       node = new TreeNode(_data);
       return;
@@ -104,7 +105,7 @@ private:
     return nullptr; // when something goes wrong
   }
 
-  std::shared_ptr<PolinomObj>* Find(std::string _data, TreeNode* node) {
+  TType* Find(std::string _data, TreeNode* node) {
     return &FindNode(_data, node)->data;
   }
 
@@ -169,9 +170,9 @@ public:
 
   AVLTree() { pRoot = nullptr; }
 
-  void Insert(std::shared_ptr<PolinomObj> _data) { Insert(_data, pRoot); }
+  void Insert(TType _data) { Insert(_data, pRoot); }
 
-  std::shared_ptr<PolinomObj>* Find(std::string _data) { return Find(_data, pRoot); }
+  TType* Find(std::string _data) { return Find(_data, pRoot); }
 
   void Delete(std::string _data) { Delete(_data, pRoot); }
 
