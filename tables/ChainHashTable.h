@@ -42,7 +42,7 @@ public:
   void Delete(std::string key) {
     int index = Hash(key);
     for (auto it = tables[index].begin(); it != tables[index].end(); ++it)
-      if (*it == key)
+      if (it->get()->getName() == key)
         tables[index].Delete(it);
   }
 
