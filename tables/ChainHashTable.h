@@ -46,7 +46,6 @@ public:
         tables[index].Delete(it);
         break;
       }
-    
   }
 
   void Print() {
