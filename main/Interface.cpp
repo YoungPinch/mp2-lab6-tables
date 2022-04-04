@@ -61,6 +61,8 @@ void Interface::mode2() {
   }
   std::cout << "pol = ";
   getline(std::cin, tmpStrPol);
+  if (tmpStrPol.find_first_not_of("0123456789.xyz") != string::npos)
+    throw std::string("Invalid polinomial");
   int sizeBefore = tabMan->getCurSize();
   tabMan->Insert(tmpName, tmpStrPol);
   if (sizeBefore != tabMan->getCurSize()) {
@@ -124,8 +126,9 @@ void Interface::mode8() {
   std::cout << "1) The names of polynomials with spaces are converted\n   to others (for example, \"a b\" -> \"a_b\")\n";
   std::cout << "2) The name of the polynomial does not start with a digit\n";
   std::cout << "3) Floating-point numbers are written with a dot\n   (for example: 3.7)\n";
-  std::cout << "4) Supported operations: " << Operations::str_op() << '\n';
-  std::cout << "5) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
+  std::cout << "4) A polynomial of three variables (x, y, z), the\n   degree of each variable is less than 16\n";
+  std::cout << "5) Supported operations: " << Operations::str_op() << '\n';
+  std::cout << "6) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
 }
 
 // Exit +
