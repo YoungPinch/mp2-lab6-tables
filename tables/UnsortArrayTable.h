@@ -15,7 +15,7 @@ public:
 
   void Insert(std::shared_ptr<PolinomObj> _data) {
     if (data.size() == curSize)
-      throw 1;
+      throw std::string("Too many objects in Table.");
     for (int i = 0; i < data.size(); i++) {
       if (data[i] == nullptr) {
         data[i] = _data;

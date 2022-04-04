@@ -80,7 +80,11 @@ public:
     curSize = tables[cur]->getCurSize();
   }
 
-  void Print() { tables[cur]->Print(); }
+  void Print() {
+    if (curSize == 0)
+      std::cout << "The table is empty.\n";
+    tables[cur]->Print();
+  }
 
   ~TableManager() {
     for (int i = 0; i < COUNTTABLES; i++)

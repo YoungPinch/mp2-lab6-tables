@@ -72,7 +72,7 @@ void TPostfix::ToInfix(const string& str)
     //проверка на правильность введенной переменной
     if (lexem.find_first_of("0123456789") == 0 && lexem.find_first_not_of("0123456789.") != string::npos) // ѕроверка на корректность имени переменной, если это переменна€
     {
-      string exc = "Invalid format of variable: " + lexem;
+      std::string exc = "Invalid format of variable: " + lexem;
       throw exc;
     }
     if (lexem.size() != 0)

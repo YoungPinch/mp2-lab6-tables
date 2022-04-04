@@ -20,7 +20,7 @@ private:
 
     Monom(double cf, int a, int b, int c) {
       if (a < 0 || a >(1 << DEG_BIT) - 1 || b < 0 || b >(1 << DEG_BIT) - 1 || c < 0 || c >(1 << DEG_BIT) - 1)
-        throw - 1;
+        throw std::string("Incorrect monomial degree");
       coef = cf; i = a; j = b; k = c;
     }
 
@@ -54,7 +54,7 @@ private:
         else {
           n = stoi(s.substr(static_cast<unsigned>(i1 + 1), static_cast<unsigned>(i2 - i1 - 1)));
           if (n > (1 << DEG_BIT) - 1)
-            throw - 1;
+            throw std::string("Incorrect monomial degree");
           switch (s[i1]) {
           case 'x': i += n; break;
           case 'y': j += n; break;
@@ -76,13 +76,13 @@ private:
 
     Monom operator+(const Monom& x)const {
       if (!IsSimilar(x))
-        throw - 1;
+        throw std::string("Error:\nAn attempt to find the sum of two monomials with different degrees");
       return Monom(coef + x.coef, i, j, k);
     }
 
     Monom operator-(const Monom& x)const {
       if (!IsSimilar(x))
-        throw - 1;
+        throw std::string("Error:\nAn attempt to find the difference of two monomials with different degrees");
       return Monom(coef - x.coef, i, j, k);
     }
 
@@ -93,7 +93,7 @@ private:
     Monom operator*(const Monom& x)const {
       if ((i + x.i) > (1 << DEG_BIT) - 1 ||
         (j + x.j) > (1 << DEG_BIT) - 1 || (k + x.k) > (1 << DEG_BIT) - 1)
-        throw - 1;
+        throw std::string("Overflow of the monomial degree");
       return Monom(coef * x.coef, i + x.i, j + x.j, k + x.k);
     }
 
@@ -337,8 +337,10 @@ public:
   }
 
   Polinom Differentiate(char c) const {
-    if (!(c == 'x' || c == 'y' || c == 'z'))
-      throw - 1;
+    if (!(c == 'x' || c == 'y' || c == 'z')) {
+      std::string exc = "Failed to differentiate by variable " + c;
+      throw exc;
+    }
     Polinom res;
     for (auto p = pol.cbegin(); p != pol.cend(); ++p)
       switch (c) {
@@ -358,8 +360,10 @@ public:
   }
 
   Polinom Integrate(char c) const {
-    if (!(c == 'x' || c == 'y' || c == 'z'))
-      throw - 1;
+    if (!(c == 'x' || c == 'y' || c == 'z')) {
+      std::string exc = "Failed to integrate by variable " + c;
+      throw exc;
+    }
     Polinom res;
     for (auto p = pol.cbegin(); p != pol.cend(); ++p)
       switch (c) {

@@ -45,7 +45,7 @@ public:
 
   void Insert(std::shared_ptr<PolinomObj> data) {
     if (size == curSize) // no free space
-      throw -1;
+      throw std::string("Too many objects in Table.");
     unsigned int h = Hash(data.get()->getName());
     while (!table[h].isDeleted) {
       if (table[h].isNone)

@@ -29,9 +29,8 @@ public:
     int right = countElem;
     int lastCompare = 0; //1 - left 2 - right
     int mid = 0;
-    if (countElem == row.size())
-    {
-      throw -1;
+    if (countElem == row.size()) {
+      throw std::string("Too many objects in Table.");
     }
     while (left <= right) {
       mid = (right + left) / 2;

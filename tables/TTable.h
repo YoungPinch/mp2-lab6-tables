@@ -46,7 +46,7 @@ public:
   friend bool operator<(const std::shared_ptr<PolinomObj>& po, const std::string& s) noexcept { return  po->name < s; }
 
   friend std::ostream& operator<< (std::ostream& out, const std::shared_ptr<PolinomObj>& polObj) {
-    out << polObj->name.substr(0, 4) << " = " << polObj->strPol.substr(0, 19);
+    out << polObj->name.substr(0, 9) << " = " << polObj->strPol.substr(0, 19);
     return out;
   }
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "TableManager.h"
+#include "TPostfix.h"
+#include <Windows.h>
 
 class Interface {
 
@@ -24,7 +26,9 @@ class Interface {
 public:
   Interface() {}
 
-  static void Cleaner();
+  static COORD getPos();
+  static void istreamCleaner();
+  static void screenCleaner(COORD pos);
   static int Clamp(int border1, int border2);
 
   static const std::vector<std::string> FuncNames;

@@ -24,7 +24,7 @@ public:
     ops.emplace("I", vector<int>{ 3, 1 });
   }
 
-  static string str_op() { return string("*, +, -, (, ), d, I"); }
+  static string str_op() { return string("*, +, -, (, ), d()/dv, I()"); }
 
   bool IsOperation(const string& elem) const { return ops.find(elem) != ops.end(); } // Проверка является ли данный элемент операцией, которая объявлена в классе
 
