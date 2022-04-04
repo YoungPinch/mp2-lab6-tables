@@ -34,8 +34,10 @@ private:
     if (curSize == maxSize) {
       throw std::string("Too many objects in Table.");
     }
-    for (int i = 0; i < COUNTTABLES; i++)
+    for (int i = 0; i < COUNTTABLES; i++) {
       tables[i]->Insert(obj);
+    }
+    ++curSize;
   }
 
   TableManager(const TableManager& obj) = delete; // Запрещено копирование

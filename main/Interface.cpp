@@ -3,7 +3,7 @@
 const std::vector<std::string> Interface::FuncNames = { "Alg Polinoms", "Print Table",
                                                         "Insert Elem", "Find Elem", "Delete Elem",
                                                         "Cur Information", "Change Active Table",
-                                                        "Clearing Screen", "Settings", "Help", "Exit" };
+                                                        "Clearing Screen", "Help", "Exit" };
 
 void Interface::setTableManager() {
   std::cout << "Choose size of all tables: ";
@@ -42,8 +42,7 @@ void Interface::mode1() {
   tabMan->Print();
 }
 
-// Insert Elem
-// Добавить проверки на string
+// Insert Elem +
 void Interface::mode2() {
   Cleaner();
   std::string tmpName, tmpStrPol;
@@ -59,9 +58,7 @@ void Interface::mode2() {
   tabMan->Insert(tmpName, tmpStrPol);
 }
 
-// Find Elem
-// Добавить проверки на string
-// Добавить проверки на Find (найдено или нет)
+// Find Elem +
 void Interface::mode3() {
   Cleaner();
   std::string tmpName;
@@ -72,12 +69,11 @@ void Interface::mode3() {
     std::cout << tmpName << " was not found in the table.\n";
   }
   else {
-    std::cout << result << '\n';
+    std::cout << *result << '\n';
   }
 }
 
-// Delete Elem
-// Добавить проверки на string
+// Delete Elem +
 void Interface::mode4() {
   Cleaner();
   std::string tmpName;
@@ -103,19 +99,12 @@ void Interface::mode6() {
 // Clearing Screen +
 void Interface::mode7() { system("cls"); }
 
-// Settings
-// Добавить изменение границ вывода
-// Добавить Change Showing Of Stats
-void Interface::mode8() {
-
-}
-
 // Help
 // краткое их описание, какие поддерживаются алгебраические операции
 // (интеграл, дифференцирование, + - *), расчёт значения в точке
 // Добавить информацию про вывод определённого кол-ва символов в полиноме
 // И его названии
-void Interface::mode9() {
+void Interface::mode8() {
   std::cout << "Help";
   std::cout << "\n Rules for Alg Polinoms:\n0) You can write as many spaces as you want\n";
   // Изменить описание, что меняется "ab cd" на "ab_cd"
@@ -127,7 +116,7 @@ void Interface::mode9() {
 }
 
 // Exit +
-void Interface::mode10() {
+void Interface::mode9() {
   std::cout << "\nSee you soon!\n";
   delete tabMan;
   isWorks = false;
