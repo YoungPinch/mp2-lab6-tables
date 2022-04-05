@@ -33,12 +33,18 @@ void TPostfix::ToInfix(const string& str)
   {
     string lexem;
     elem = copyStr[i];
+    if (elem == "/")
+    {
+      i++;
+      continue;
+    }
+      
     //проверка на то, операция ли это или нет, если да, то в tmp записываем эту операцию и увеличиваем счетчик на 1
     if (operation.IsOperation(elem))
     {
       lexem = elem;
       i++;
-      if (elem == "d")
+      if (elem == "d" || elem == "I")
       {
         string variable = IsDiff(copyStr[i]);
         if (variable != "none")
@@ -48,11 +54,21 @@ void TPostfix::ToInfix(const string& str)
           i++;
           continue;
         }
+        else if (copyStr[i] != '(')
+        {
+          lexem = "";
+          elem += copyStr[i];
+          while ((!operation.IsOperation(elem) && i < copyStr.size()) || elem == "d" || elem == "I")
+          {
+            lexem += elem;
+            elem = copyStr[++i];
+          }
+        }
       }
     }
     else
     {
-      while (!operation.IsOperation(elem) && i < copyStr.size())
+      while ((!operation.IsOperation(elem) && i < copyStr.size()) || (elem == "d") || (elem == "I"))
       {
         lexem += elem;
         elem = copyStr[++i];
@@ -189,7 +205,7 @@ Polinom TPostfix::Calculate()
     {
       auto p = tableManager->Find(postfix[i]);
       if (p == nullptr)
-        throw string("Отсутствует переменная с именем " + postfix[i]);
+        throw string("Named variable" + postfix[i] + "not found");
       result.push(p->get()->getPol());
     }
   }

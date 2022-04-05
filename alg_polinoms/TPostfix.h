@@ -68,7 +68,7 @@ private:
   string IsDiff(const char& str);
   TableManager* tableManager;
 public:
-  TPostfix(string str, TableManager* tb) // Конструктор
+  TPostfix(string str, TableManager* tb = nullptr) // Конструктор
   {
     if (!BracketsCorrect(str))
       throw string("The brackets in expression are incorrect");
