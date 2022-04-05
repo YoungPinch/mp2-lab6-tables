@@ -195,18 +195,23 @@ private:
   TList<Monom> pol;
 
   Polinom(const Monom& x) {
-    pol.InsertLast(x);
+    if(x.coef != 0)
+      pol.InsertLast(x);
   }
 
   Polinom operator+(const Monom& x) {
     Polinom res; auto it = pol.begin();
     while (it != pol.end() && x < (*it)) // before x
       res.pol.InsertLast(*(it++));
-    if (it == pol.end())
-      res.pol.InsertLast(x);
+    if (it == pol.end()) {
+      if (x.coef != 0)
+        res.pol.InsertLast(x);
+    }
     else {
-      if (x.IsSimilar(*it))
-        res.pol.InsertLast(*(it++) + x);
+      if (x.IsSimilar(*it)) {
+        if(-x.coef != it->coef)
+          res.pol.InsertLast(*(it++) + x);
+      }
       else
         res.pol.InsertLast(x);
       while (it != pol.end())
