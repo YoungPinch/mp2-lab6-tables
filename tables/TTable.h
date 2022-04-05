@@ -8,16 +8,12 @@ private:
   std::string strPol;
   Polinom pol;
 
-  PolinomObj(std::string _name, std::string _strPol) {
-    name = _name;
-    strPol = _strPol;
+  PolinomObj(std::string _name, std::string _strPol) : name(_name), strPol(_strPol) {
     pol = Polinom(strPol);
   };
 
-  PolinomObj(std::string _name, Polinom _pol) {
-    name = _name;
+  PolinomObj(std::string _name, Polinom _pol) : name(_name), pol(_pol) {
     strPol = pol.ToString();
-    pol = _pol;
   }
 
 public:

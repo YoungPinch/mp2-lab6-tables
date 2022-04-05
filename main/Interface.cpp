@@ -129,8 +129,8 @@ void Interface::valueInDot() {
     y = Clamp(DBL_MIN + 1, DBL_MAX - 1);
     std::cout << "z = ";
     z = Clamp(DBL_MIN + 1, DBL_MAX - 1);
-    string result = std::to_string(obj->get()->getPol().Calculate(x, y, z));
-    std::cout << "Result: " << result << '\n';
+    string resultStr = std::to_string(obj->get()->getPol().Calculate(x, y, z));
+    std::cout << "Result: " << resultStr << '\n';
     std::cout << "Save the result to tables?\n1) Yes\n2) No";
     int choice = Clamp(1, 2) - 1;
     if (choice == 0) {
@@ -145,7 +145,7 @@ void Interface::valueInDot() {
           std::cout << str << '\n';
         }
       }
-      tabMan->Insert(name, result);
+      tabMan->Insert(name, resultStr);
     }
   }
 }
@@ -230,7 +230,7 @@ void Interface::mode8() {
   std::cout << "2) The name of the polynomial does not start with a digit\n";
   std::cout << "3) Floating-point numbers are written with a dot\n   (for example: 3.7)\n";
   std::cout << "4) A polynomial of three variables (x, y, z), the\n   degree of each variable is less than 16\n";
-  std::cout << "5) Monomes are introduced without any signs\n (for example: 2*x^5*y^6*z^7 must be entered as 2x5y6z7)";
+  std::cout << "5) Monomes are introduced without any symbols\n   (-2*x^5*y^6*z^7 must be entered as -2x5y6z7)\n";
   std::cout << "6) Supported operations: " << Operations::str_op() << '\n';
   std::cout << "7) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
 }
