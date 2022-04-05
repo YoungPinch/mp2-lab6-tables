@@ -121,16 +121,15 @@ void Interface::mode2() {
   }
   std::cout << "pol = ";
   getline(std::cin, tmpStrPol);
-  if (tmpStrPol.find_first_not_of("0123456789.xyz") != string::npos)
+  if (tmpStrPol.find_first_not_of("0123456789.xyz+- ") != string::npos)
     throw std::string("Invalid polinomial");
   int sizeBefore = tabMan->getCurSize();
   tabMan->Insert(tmpName, tmpStrPol);
   if (sizeBefore != tabMan->getCurSize()) {
     std::cout << "Object inserted\n";
   }
-  else
-  {
-    std::cout << "Объект с данным именем уже существует в таблице" << endl;
+  else {
+    std::cout << "Couldn't insert an object into the table\nProbably, an object with that name already exists";
   }
 }
 

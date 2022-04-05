@@ -147,6 +147,11 @@
   <ItemGroup>
     <ClInclude Include="Interface.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\alg_polinoms\alg_polinoms.vcxproj">
+      <Project>{294290a7-af51-45e3-9203-e7f31aa59319}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

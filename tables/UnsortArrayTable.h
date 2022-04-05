@@ -16,15 +16,17 @@ public:
   void Insert(std::shared_ptr<PolinomObj> _data) {
     if (data.size() == curSize)
       throw std::string("Too many objects in Table.");
-    for (int i = 0; i < data.size(); i++) {
-      if (data[i] == nullptr) {
-        data[i] = _data;
-        if (i == maxInd)
-          maxInd++;
-        break;
+    if (Find(_data->getName()) == nullptr) {
+      for (int i = 0; i < data.size(); i++) {
+        if (data[i] == nullptr) {
+          data[i] = _data;
+          if (i == maxInd)
+            maxInd++;
+          break;
+        }
       }
+      curSize++;
     }
-    curSize++;
   }
 
   std::shared_ptr<PolinomObj>* Find(std::string name) {
