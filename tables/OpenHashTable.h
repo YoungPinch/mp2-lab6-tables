@@ -34,7 +34,7 @@ public:
   OpenHashTable(unsigned int s = 20) : size(s), curSize(0) {
     table = new Bucket[s]();
     step = 1;
-    for (int i = 2; i < s / 2 + 1; ++i)
+    for (unsigned i = 2; i < s / 2 + 1; ++i)
       if (gcd(i, s) == 1)
         step = i;
   }

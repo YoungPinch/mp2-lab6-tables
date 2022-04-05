@@ -65,7 +65,7 @@ public:
     tables[OPENHASH] = new OpenHashTable(size);
     tables[CHAINHASH] = new ChainHashTable(size);
     tables[UNSORTLIST] = new UnsortListTable();
-    tables[AVLTREE] = new AVLTable();
+    tables[AVLTREE] = new AVLTreeTable();
   }
 
   void Insert(std::string _name, Polinom pol) { Insert(PolinomObj::Create(_name, pol)); }

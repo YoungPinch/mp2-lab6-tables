@@ -2,11 +2,11 @@
 #include "TTable.h"
 #include "avl_tree.hpp"
 
-class AVLTable final : public TTable {
+class AVLTreeTable final : public TTable {
 private:
   AVLTree tree;
 public:
-  AVLTable() { };
+  AVLTreeTable() { };
   int getCurSize() { return tree.getSize(); }
   void Insert(std::shared_ptr<PolinomObj> data) { tree.Insert(data); }
   std::shared_ptr<PolinomObj>* Find(std::string key) { return tree.Find(key); }

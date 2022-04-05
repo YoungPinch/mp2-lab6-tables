@@ -8,6 +8,27 @@ const std::vector<std::string> Interface::FuncNames = { "Alg Polinoms", "Print T
 const std::vector<std::string> Interface::AlgPolFuncNames = { "Algebra of polynomials",
                                                               "The value of the polynomial at the point" };
 
+void Interface::executableFunc() {
+  try {
+    if (tabMan == nullptr) {
+      setTableManager();
+      return;
+    }
+    COORD curPos = getPos();
+    printFunctions();
+    int choice = Clamp(1, 10) - 1;
+    screenCleaner(curPos);
+    std::cout << "\nYou have chosen \"" << FuncNames[choice] << "\"\n\n";
+    (this->*modeptr[choice])();
+  }
+  catch (std::string str) {
+    std::cout << str << '\n';
+  }
+  catch (...) {
+    std::cout << "Unexpected error.\n";
+  }
+}
+
 void Interface::setTableManager() {
   std::cout << "Choose size of all tables: ";
   int choice = Clamp(INT_MIN + 1, INT_MAX - 1);
@@ -44,27 +65,6 @@ std::string Interface::getStrPolInInterface() {
   if (tmpStrPol.find_first_not_of("0123456789.xyz+- ") != string::npos)
     throw std::string("Invalid polinomial");
   return tmpStrPol;
-}
-
-void Interface::executableFunc() {
-  try {
-    if (tabMan == nullptr) {
-      setTableManager();
-      return;
-    }
-    COORD curPos = getPos();
-    printFunctions();
-    int choice = Clamp(1, 10) - 1;
-    screenCleaner(curPos);
-    std::cout << "\nYou have chosen \"" << FuncNames[choice] << "\"\n\n";
-    (this->*modeptr[choice])();
-  }
-  catch (std::string str) {
-    std::cout << str << '\n';
-  }
-  catch (...) {
-    std::cout << "Unexpected error.\n";
-  }
 }
 
 // Alg Polinoms
@@ -120,18 +120,17 @@ void Interface::valueInDot() {
     std::cout << "There is no such polynomial in the table\n";
     return;
   }
-  else
-  {
+  else {
     double x, y, z;
     std::cout << "x = ";
-    x = Clamp(DBL_MIN + 1, DBL_MAX - 1);
+    x = Clamp(double(INT_MIN + 1), double(INT_MAX - 1));
     std::cout << "y = ";
-    y = Clamp(DBL_MIN + 1, DBL_MAX - 1);
+    y = Clamp(double(INT_MIN + 1), double(INT_MAX - 1));
     std::cout << "z = ";
-    z = Clamp(DBL_MIN + 1, DBL_MAX - 1);
+    z = Clamp(double(INT_MIN + 1), double(INT_MAX - 1));
     string resultStr = std::to_string(obj->get()->getPol().Calculate(x, y, z));
     std::cout << "Result: " << resultStr << '\n';
-    std::cout << "Save the result to tables?\n1) Yes\n2) No";
+    std::cout << "Save the result to tables?\n1) Yes\n2) No\n";
     int choice = Clamp(1, 2) - 1;
     if (choice == 0) {
       bool flag = false;
@@ -287,7 +286,7 @@ int Interface::Clamp(int border1, int border2) {
 }
 
 double Interface::Clamp(double border1, double border2) {
-  double choice = DBL_MIN;
+  double choice = double(INT_MIN);
   while (choice < border1 || choice > border2) {
     std::cin >> choice;
     if (choice < border1 || choice > border2) {

@@ -1,81 +1,44 @@
 #include "gtest/gtest.h"
+#include "stack.hpp"
 
 TEST(TStack, can_create_stack_with_positive_length)
 {
-  ADD_FAILURE();
+  ASSERT_NO_THROW(TStack<int> st(5));
+}
+
+TEST(TStack, cant_create_too_large_stack)
+{
+  ASSERT_ANY_THROW(TStack<int> st(MaxStackSize + 1));
 }
 
 TEST(TStack, throws_when_create_stack_with_negative_length)
 {
-  ADD_FAILURE();
+  ASSERT_ANY_THROW(TStack<int> st(-5));
 }
 
-TEST(TStack, throws_when_create_stack_with_too_large_length)
+TEST(TStack, can_set_and_get_last_element)
 {
-  ADD_FAILURE();
+  TStack<int> st(5);
+  st.push(7);
+  EXPECT_EQ(7, st.pop());
 }
 
-TEST(TStack, can_get_length)
+TEST(TStack, can_set_and_check_last_element)
 {
-  ADD_FAILURE();
+  TStack<int> st(5);
+  st.push(21);
+  EXPECT_EQ(21, st.tos());
 }
 
-TEST(TStack, can_check_emptiness)
+TEST(TStack, can_get_information_that_empty_stack_is_empty)
 {
-  ADD_FAILURE();
+  TStack<int> st(5);
+  EXPECT_EQ(true, st.empty());
 }
 
-TEST(TStack, can_push)
+TEST(TStack, can_get_information_that_full_stack_is_full)
 {
-  ADD_FAILURE();
-}
-
-TEST(TStack, can_check_fullness)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, throws_when_push_with_fullness_stack)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, can_pop)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, throws_when_pop_with_empty_stack)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, can_create_copied_stack)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, copied_stack_is_equal_to_source_one)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, can_assign_stack_to_itself)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, can_assign_stacks_of_equal_size)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, assign_operator_change_vector_size)
-{
-  ADD_FAILURE();
-}
-
-TEST(TStack, can_assign_stacks_of_different_size)
-{
-  ADD_FAILURE();
+  TStack<int> st(1);
+  st.push(21);
+  EXPECT_EQ(true, st.full());
 }

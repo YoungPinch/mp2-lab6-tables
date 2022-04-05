@@ -42,14 +42,17 @@
     <ClCompile Include="test_list.cpp">
       <Filter>test_data_structures</Filter>
     </ClCompile>
-    <ClCompile Include="test_avl_tree_table.cpp">
-      <Filter>test_data_structures</Filter>
-    </ClCompile>
     <ClCompile Include="test_chainhash_table.cpp">
       <Filter>test_tables</Filter>
     </ClCompile>
     <ClCompile Include="gtest_main.cpp">
       <Filter>test_alg_polinoms</Filter>
+    </ClCompile>
+    <ClCompile Include="test_avl_tree_table.cpp">
+      <Filter>test_tables</Filter>
+    </ClCompile>
+    <ClCompile Include="test_avl_tree.cpp">
+      <Filter>test_data_structures</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

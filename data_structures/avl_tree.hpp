@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "TTable.h"
 
 class AVLTree {
 private:

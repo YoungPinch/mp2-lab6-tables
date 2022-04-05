@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gtest_main.cpp" />
+    <ClCompile Include="test_avl_tree.cpp" />
     <ClCompile Include="test_avl_tree_table.cpp" />
     <ClCompile Include="test_chainhash_table.cpp" />
     <ClCompile Include="test_list.cpp" />
