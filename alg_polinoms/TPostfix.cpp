@@ -204,8 +204,10 @@ Polinom TPostfix::Calculate()
     else //переменная
     {
       auto p = tableManager->Find(postfix[i]);
-      if (p == nullptr)
-        throw string("Named variable" + postfix[i] + "not found");
+      if (p == nullptr) {
+        std::string exc = postfix[i] + " was not found";
+        throw exc;
+      }
       result.push(p->get()->getPol());
     }
   }
