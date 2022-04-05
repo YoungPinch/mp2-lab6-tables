@@ -27,10 +27,8 @@ void TPostfix::ToInfix(const string& str)
 {
   string elem;
   string copyStr(str);
+
   DeleteSpaces(copyStr);
-  if (!infix.empty())
-    infix.clear();
-  //проходка по массиву строки:
   for (int i = 0; i < copyStr.size();)
   {
     string lexem;
@@ -82,23 +80,7 @@ void TPostfix::ToInfix(const string& str)
 
 void TPostfix::ToPostfix()
 {
-  if (!postfix.empty())
-    postfix.clear();
   TStack<string> opStack;
-  /*
-  а) ѕроходимс€ по всему вектору infix:
-    0) ≈сли перед нами лексема, помещаем еЄ в postfix
-    1) ≈сли встречаем открывающуюс€ скобку, сразу записываем еЄ в стек
-    2) ≈сли встречаем закрывающуюс€ скобку, (помещаем в postfix) с удалением из стека все операции
-    до открывающейс€ скобки (которую также удал€ем),
-    забранные значени€ помещаем в postfix
-    3) ≈сли последн€€ операци€ в стеке имеет больший приоритет, чем у текущей операции, то
-    помещаем в postfix (с удалением из стека) все операции, пока выполн€етс€ это условие
-    4) ≈сли стек пустой, то заполн€ем его текущей операцией, иначе, если приоритет
-    текущей операции больше, чем приоритет последней операции в стеке, то добавл€ем в конец стека
-    текущую операцию
-  б) ќставшиес€ в стеке операции помещаем в postfix
-  */
 
   for (int i = 0; i < infix.size(); i++)
   {
@@ -123,14 +105,8 @@ void TPostfix::ToPostfix()
         while (opStack.tos() != "(")
           postfix.push_back(opStack.pop());
         opStack.pop();
-        /*if (opStack.tos() == "d" || opStack.tos() == "I")
-        {
-          postfix.push_back(opStack.pop());
-          postfix.push_back(infix[++i]);
-        }*/
         continue;
       }
-
       //ѕока на вершине стека находитс€ операци€ с большим приоритетом, чем текуща€ добавл€ем в постфикс
       while (!opStack.empty() && operation.GetPriority(opStack.tos()) >= operation.GetPriority(lexem))
         postfix.push_back(opStack.pop());
@@ -168,11 +144,6 @@ bool TPostfix::IsNumber(const string& lexem)
   return true;
 }
 
-inline void TPostfix::Differentiate(const string& str)
-{
-
-}
-
 inline void TPostfix::DeleteSpaces(string& str)
 {
   for (size_t i = 0; i < str.size(); i++)
@@ -191,18 +162,6 @@ inline string TPostfix::IsDiff(const char& str)
   else if (str == 'z')
     return "z";
   else return "none";
-}
-
-Polinom TPostfix::GetValueVarialbe(const string& valueVariable)
-{
-  return Polinom(valueVariable);
-}
-
-Polinom TPostfix::GetValueVariableFromUser(const string& variable) {
-  string strPol;
-  std::cout << "¬ведите значение переменной " << variable << " = ";
-  std::cin >> strPol;
-  return Polinom(strPol);
 }
 
 Polinom TPostfix::Calculate()
@@ -228,8 +187,10 @@ Polinom TPostfix::Calculate()
     }
     else //переменна€
     {
-      result.push(GetValueVariableFromUser(postfix[i]));
-      //result.push(tabMan->Find(postfix[i]).pol); »зменить
+      auto p = tableManager->Find(postfix[i]);
+      if (p == nullptr)
+        throw string("ќтсутствует переменна€ с именем " + postfix[i]);
+      result.push(p->get()->getPol());
     }
   }
   return result.pop();

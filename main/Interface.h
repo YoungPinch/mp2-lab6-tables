@@ -2,6 +2,7 @@
 #include "TableManager.h"
 #include "TPostfix.h"
 #include <Windows.h>
+#include <stdio.h>
 
 class Interface {
 

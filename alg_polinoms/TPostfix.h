@@ -55,9 +55,6 @@ private:
   vector<string> infix;
   vector<string> postfix;
   Operations operation;
-  map<string, string> difVariable;
-  map<string, string> intVariable;
-  bool IsInterface = false;
   TPostfix(const TPostfix&) = delete; // Запрет на копирование
   void operator=(const TPostfix&) = delete; // Запрет на присваивание
   bool BracketsCorrect(const string& str) const; // Проверка на корректность раставления скобок в полученной на вход строке
@@ -65,21 +62,19 @@ private:
   void ToPostfix(); // Преобразование infix в vector<string> postfix
   bool IsMonom(const string& lexem);
   bool IsNumber(const string& lexem);
-  void Differentiate(const string& str);
   void DeleteSpaces(string& str);
   string IsDiff(const char& str);
+  TableManager* tableManager;
 public:
-  TPostfix(string str) // Конструктор
+  TPostfix(string str, TableManager* tb) // Конструктор
   {
     if (!BracketsCorrect(str))
       throw string("The brackets in expression are incorrect");
+    tableManager = tb;
     ToInfix(str);
     ToPostfix();
   }
-
   vector<string> GetInfix() const { return infix; }
-  Polinom GetValueVarialbe(const string& valueVariable);
-  Polinom GetValueVariableFromUser(const string& variable);
   vector<string> GetPostfix() const { return postfix; }
 
   string GetStringInfix() const
@@ -88,15 +83,6 @@ public:
     for (const string& elem : infix)
       tmp += elem + ' ';
     return tmp;
-  }
-
-  void NewInfix(const string& infixStr) {
-    if (BracketsCorrect(infixStr))
-    {
-      ToInfix(infixStr);
-      ToPostfix();
-    }
-    throw string("The brackets in expression are incorrect");
   }
 
   string GetStringPostfix() const

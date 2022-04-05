@@ -38,7 +38,67 @@ void Interface::executableFunc() {
 // Alg Polinoms
 // Будет добавлено по завершении полиномов
 void Interface::mode0() {
-
+  int choice = -1;
+  string polStr;
+  //калькулятор полиномов
+  if (choice == 0)
+  {
+    std::cout << "Введите алгебраическое выражение: ";
+    std::cin >> polStr;
+    TPostfix postfix(polStr, tabMan);
+    Polinom result = postfix.Calculate();
+    cout << "Результат: " << result << endl;
+    cout << "Сохранить результат в таблицу? 0 - Да, 1 - Нет" << endl;
+    cin >> choice;
+    if (choice == 0)
+    {
+      cout << "Введите имя полинома: ";
+      string name;
+      cin >> name;
+      tabMan->Insert(name, result);
+      return;
+    }
+    else if (choice == 1)
+      return;
+  }
+  //расчет полинома в точке
+  else if(choice == 1)
+  {
+    string namePol;
+    
+    cout << "Введите имя полинома, в котором нужно произвести расчет в точке:";
+    cin >> namePol;
+    auto sharedPol = tabMan->Find(namePol);
+    if (sharedPol == nullptr)
+    {
+      cout << "Полином с именем " + namePol + " отсутствует";
+      return;
+    }
+    else
+    {
+      int x, y ,z = 0;
+      cout << "Введите значение переменной x = ";
+      cin >> x;
+      cout << "Введите значение переменной y = ";
+      cin >> y;
+      cout << "Введите значение переменной z = ";
+      cin >> z;
+      string stdResult = to_string(sharedPol->get()->getPol().Calculate(x, y, z));
+      cout << "Результат: " << stdResult << std::endl;
+      cout << "Сохранить результат в таблицу? 0 - Да, 1 - Нет" << endl;
+      cin >> choice;
+      if (choice == 0)
+      {
+        cout << "Введите имя полинома: ";
+        string name;
+        cin >> name;
+        tabMan->Insert(name, Polinom());
+        return;
+      }
+      else if (choice == 1)
+        return;
+    }
+  }
 }
 
 // Print Table +
@@ -67,6 +127,10 @@ void Interface::mode2() {
   tabMan->Insert(tmpName, tmpStrPol);
   if (sizeBefore != tabMan->getCurSize()) {
     std::cout << "Object inserted\n";
+  }
+  else
+  {
+    std::cout << "Объект с данным именем уже существует в таблице" << endl;
   }
 }
 
