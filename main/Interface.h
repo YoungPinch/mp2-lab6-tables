@@ -18,6 +18,11 @@ class Interface {
   void printFunctions();
   void printTables();
   void setTableManager();
+  void algPolinoms();
+  void valueInDot();
+
+  std::string getStrPolInInterface();
+  std::string getNameInInterface(bool checkUnique = true);
 
   void mode0(); void mode1(); void mode2();
   void mode3(); void mode4(); void mode5();
@@ -31,8 +36,10 @@ public:
   static void istreamCleaner();
   static void screenCleaner(COORD pos);
   static int Clamp(int border1, int border2);
+  static double Clamp(double border1, double border2);
 
   static const std::vector<std::string> FuncNames;
+  static const std::vector<std::string> AlgPolFuncNames;
 
   void Run() {
     while (isWorks) {

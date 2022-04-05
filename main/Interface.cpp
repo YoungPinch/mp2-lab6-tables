@@ -5,6 +5,9 @@ const std::vector<std::string> Interface::FuncNames = { "Alg Polinoms", "Print T
                                                         "Cur Information", "Change Active Table",
                                                         "Clearing Screen", "Help", "Exit" };
 
+const std::vector<std::string> Interface::AlgPolFuncNames = { "Algebra of polynomials",
+                                                              "The value of the polynomial at the point" };
+
 void Interface::setTableManager() {
   std::cout << "Choose size of all tables: ";
   int choice = Clamp(INT_MIN + 1, INT_MAX - 1);
@@ -12,6 +15,35 @@ void Interface::setTableManager() {
   system("cls");
   std::cout << "Successfully created " << tabMan->getCountTables() <<
     " tables with " << tabMan->getMaxSize() << " elements!\n";
+}
+
+std::string Interface::getNameInInterface(bool checkUnique) {
+  istreamCleaner();
+  std::string tmpName;
+  std::cout << "name = ";
+  getline(std::cin, tmpName);
+  if (tmpName.find_first_of("0123456789") == 0)
+    throw std::string("Invalid name");
+  for (auto& c : tmpName) {
+    if (c == ' ') {
+      c = '_';
+    }
+  }
+  if (checkUnique == true) {
+    if (tabMan->Find(tmpName) != nullptr) {
+      throw std::string("An object with that name already exists");
+    }
+  }
+  return tmpName;
+}
+
+std::string Interface::getStrPolInInterface() {
+  std::string tmpStrPol;
+  std::cout << "pol = ";
+  getline(std::cin, tmpStrPol);
+  if (tmpStrPol.find_first_not_of("0123456789.xyz+- ") != string::npos)
+    throw std::string("Invalid polinomial");
+  return tmpStrPol;
 }
 
 void Interface::executableFunc() {
@@ -36,67 +68,84 @@ void Interface::executableFunc() {
 }
 
 // Alg Polinoms
-// Будет добавлено по завершении полиномов
 void Interface::mode0() {
-  int choice = -1;
-  string polStr;
-  //калькулятор полиномов
-  if (choice == 0)
-  {
-    std::cout << "Введите алгебраическое выражение: ";
-    std::cin >> polStr;
-    TPostfix postfix(polStr, tabMan);
-    Polinom result = postfix.Calculate();
-    cout << "Результат: " << result << endl;
-    cout << "Сохранить результат в таблицу? 0 - Да, 1 - Нет" << endl;
-    cin >> choice;
-    if (choice == 0)
-    {
-      cout << "Введите имя полинома: ";
-      string name;
-      cin >> name;
-      tabMan->Insert(name, result);
-      return;
-    }
-    else if (choice == 1)
-      return;
+  COORD curPos = getPos();
+  for (int i = 0; i < AlgPolFuncNames.size(); i++)
+    std::cout << i + 1 << ") " << AlgPolFuncNames[i] << '\n';
+  std::cout << "\nChoose one of these modes: ";
+  int choice = Clamp(1, 2) - 1;
+  screenCleaner(curPos);
+  std::cout << "You have chosen \"" << AlgPolFuncNames[choice] << "\"\n\n";
+  switch (choice) {
+  case 0: algPolinoms(); break;
+  case 1: valueInDot(); break;
+  default: throw std::string("Incorrect data entry"); break;
   }
-  //расчет полинома в точке
-  else if(choice == 1)
-  {
-    string namePol;
-    
-    cout << "Введите имя полинома, в котором нужно произвести расчет в точке:";
-    cin >> namePol;
-    auto sharedPol = tabMan->Find(namePol);
-    if (sharedPol == nullptr)
-    {
-      cout << "Полином с именем " + namePol + " отсутствует";
-      return;
-    }
-    else
-    {
-      int x, y ,z = 0;
-      cout << "Введите значение переменной x = ";
-      cin >> x;
-      cout << "Введите значение переменной y = ";
-      cin >> y;
-      cout << "Введите значение переменной z = ";
-      cin >> z;
-      string stdResult = to_string(sharedPol->get()->getPol().Calculate(x, y, z));
-      cout << "Результат: " << stdResult << std::endl;
-      cout << "Сохранить результат в таблицу? 0 - Да, 1 - Нет" << endl;
-      cin >> choice;
-      if (choice == 0)
-      {
-        cout << "Введите имя полинома: ";
-        string name;
-        cin >> name;
-        tabMan->Insert(name, Polinom());
-        return;
+}
+
+void Interface::algPolinoms() {
+  string algExpr;
+  std::cout << "Enter an algebraic expression: ";
+  istreamCleaner();
+  getline(std::cin, algExpr);
+  TPostfix postfix(algExpr, tabMan);
+  Polinom result = postfix.Calculate();
+  std::cout << "Result: " << result << '\n';
+  std::cout << "Save the result to tables?\n1) Yes\n2) No\n";
+  int choice = Clamp(1, 2) - 1;
+  if (choice == 0) {
+    bool flag = false;
+    std::string name;
+    while (flag == false) {
+      try {
+        std::cout << "Enter the ";
+        name = getNameInInterface();
+        flag = true;
       }
-      else if (choice == 1)
-        return;
+      catch (std::string str) {
+        std::cout << str << '\n';
+      }
+    }
+    tabMan->Insert(name, result);
+  }
+}
+
+void Interface::valueInDot() {
+  string name;
+  std::cout << "Enter the name of the polynomial:\n";
+  name = getNameInInterface(false);
+  auto obj = tabMan->Find(name);
+  if (obj == nullptr)
+  {
+    std::cout << "There is no such polynomial in the table\n";
+    return;
+  }
+  else
+  {
+    double x, y, z;
+    std::cout << "x = ";
+    x = Clamp(DBL_MIN + 1, DBL_MAX - 1);
+    std::cout << "y = ";
+    y = Clamp(DBL_MIN + 1, DBL_MAX - 1);
+    std::cout << "z = ";
+    z = Clamp(DBL_MIN + 1, DBL_MAX - 1);
+    string result = std::to_string(obj->get()->getPol().Calculate(x, y, z));
+    std::cout << "Result: " << result << '\n';
+    std::cout << "Save the result to tables?\n1) Yes\n2) No";
+    int choice = Clamp(1, 2) - 1;
+    if (choice == 0) {
+      bool flag = false;
+      std::string name;
+      while (flag == false) {
+        try {
+          name = getNameInInterface();
+          flag = true;
+        }
+        catch (std::string str) {
+          std::cout << str << '\n';
+        }
+      }
+      tabMan->Insert(name, result);
     }
   }
 }
@@ -108,28 +157,16 @@ void Interface::mode1() {
 
 // Insert Elem +
 void Interface::mode2() {
-  istreamCleaner();
-  std::string tmpName, tmpStrPol;
-  std::cout << "name = ";
-  getline(std::cin, tmpName);
-  if (tmpName.find_first_of("0123456789") == 0)
-    throw std::string("Invalid name");
-  for (auto& c : tmpName) {
-    if (c == ' ') {
-      c = '_';
-    }
-  }
-  std::cout << "pol = ";
-  getline(std::cin, tmpStrPol);
-  if (tmpStrPol.find_first_not_of("0123456789.xyz+- ") != string::npos)
-    throw std::string("Invalid polinomial");
+  std::string name, strPol;
+  name = getNameInInterface();
+  strPol = getStrPolInInterface();
   int sizeBefore = tabMan->getCurSize();
-  tabMan->Insert(tmpName, tmpStrPol);
+  tabMan->Insert(name, strPol);
   if (sizeBefore != tabMan->getCurSize()) {
     std::cout << "Object inserted\n";
   }
   else {
-    std::cout << "Couldn't insert an object into the table\nProbably, an object with that name already exists";
+    std::cout << "Failed to insert an object\n";
   }
 }
 
@@ -141,15 +178,18 @@ void Interface::mode3() {
   getline(std::cin, tmpName);
   auto result = tabMan->Find(tmpName);
   if (result == nullptr) {
-    std::cout << tmpName << " was not found in the table.\n";
+    std::cout << "The element was not found\n";
   }
   else {
-    std::cout << "The element was found in the table:\n" << *result << '\n';
+    std::cout << "The element was found:\n" << *result << '\n';
   }
 }
 
 // Delete Elem +
 void Interface::mode4() {
+  if (tabMan->getCurSize() <= 0) {
+    throw std::string("The table is empty. Nothing to delete");
+  }
   istreamCleaner();
   std::string tmpName;
   std::cout << "name = ";
@@ -190,8 +230,9 @@ void Interface::mode8() {
   std::cout << "2) The name of the polynomial does not start with a digit\n";
   std::cout << "3) Floating-point numbers are written with a dot\n   (for example: 3.7)\n";
   std::cout << "4) A polynomial of three variables (x, y, z), the\n   degree of each variable is less than 16\n";
-  std::cout << "5) Supported operations: " << Operations::str_op() << '\n';
-  std::cout << "6) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
+  std::cout << "5) Monomes are introduced without any signs\n (for example: 2*x^5*y^6*z^7 must be entered as 2x5y6z7)";
+  std::cout << "6) Supported operations: " << Operations::str_op() << '\n';
+  std::cout << "7) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
 }
 
 // Exit +
@@ -235,6 +276,18 @@ void Interface::screenCleaner(COORD pos) {
 
 int Interface::Clamp(int border1, int border2) {
   int choice = INT_MIN;
+  while (choice < border1 || choice > border2) {
+    std::cin >> choice;
+    if (choice < border1 || choice > border2) {
+      std::cout << "Invalid number entered. Try again.\n";
+      Interface::istreamCleaner();
+    }
+  }
+  return choice;
+}
+
+double Interface::Clamp(double border1, double border2) {
+  double choice = DBL_MIN;
   while (choice < border1 || choice > border2) {
     std::cin >> choice;
     if (choice < border1 || choice > border2) {

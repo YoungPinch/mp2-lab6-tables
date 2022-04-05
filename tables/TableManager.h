@@ -23,7 +23,7 @@ public:
 
 private:
   TTable* tables[COUNTTABLES];
-  int cur = (int)UNSORTARR;
+  int curTableInd = (int)UNSORTARR;
   int curSize, maxSize;
 
   const std::vector<std::string> TableNames = { "Unsort Array Table", "Sort Array Table",
@@ -34,10 +34,13 @@ private:
     if (curSize == maxSize) {
       throw std::string("Too many objects in Table.");
     }
+    int sizeBefore = getCurSize();
     for (int i = 0; i < COUNTTABLES; i++) {
       tables[i]->Insert(obj);
     }
-    ++curSize;
+    if (sizeBefore != tables[curTableInd]->getCurSize()) {
+      ++curSize;
+    }
   }
 
   TableManager(const TableManager& obj) = delete; // Запрещено копирование
@@ -49,10 +52,10 @@ public:
   int getCurSize() { return curSize; }
   int getMaxSize() { return maxSize; }
   int getCountTables() { return COUNTTABLES; }
-  int getActiveTableInd() { return cur; }
+  int getActiveTableInd() { return curTableInd; }
   std::string getTableName(int ind) { return TableNames[ind]; }
 
-  void setActiveTable(int ind) { cur = ind; }
+  void setActiveTable(int ind) { curTableInd = ind; }
 
   TableManager(int size) : curSize(0), maxSize(size) {
     if (size <= 0)
@@ -69,21 +72,21 @@ public:
 
   void Insert(std::string _name, std::string _strPol) { Insert(PolinomObj::Create(_name, _strPol)); }
 
-  std::shared_ptr<PolinomObj>* Find(std::string name) { return tables[cur]->Find(name); }
+  std::shared_ptr<PolinomObj>* Find(std::string name) { return tables[curTableInd]->Find(name); }
 
   void Delete(std::string _name) {
     if (curSize <= 0) {
-      throw std::string("Too few objects in Table.");
+      throw std::string("No objects in Table");
     }
     for (int i = 0; i < COUNTTABLES; i++)
       tables[i]->Delete(_name);
-    curSize = tables[cur]->getCurSize();
+    curSize = tables[curTableInd]->getCurSize();
   }
 
   void Print() {
     if (curSize == 0)
-      std::cout << "The table is empty.\n";
-    tables[cur]->Print();
+      std::cout << "The table is empty\n";
+    tables[curTableInd]->Print();
   }
 
   ~TableManager() {

@@ -6,7 +6,9 @@
 #include "polinom.hpp"
 #include "TableManager.h"
 
-using namespace std;
+using std::string;
+using std::vector;
+using std::map;
 
 class Operations // Класс, хранящий поддерживаемые операции
 {
