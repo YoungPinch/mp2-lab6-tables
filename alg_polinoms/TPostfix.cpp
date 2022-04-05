@@ -188,8 +188,10 @@ Polinom TPostfix::Calculate()
     else //переменна€
     {
       auto p = tableManager->Find(postfix[i]);
-      if (p == nullptr)
-        throw string("ќтсутствует переменна€ с именем " + postfix[i]);
+      if (p == nullptr) {
+        std::string exc = postfix[i] + " was not found";
+        throw exc;
+      }
       result.push(p->get()->getPol());
     }
   }
