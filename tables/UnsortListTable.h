@@ -12,6 +12,8 @@ public:
   int getCurSize() { return list.GetSize(); }
 
   void Insert(std::shared_ptr<PolinomObj> data) {
+    if(Find(data.get()->getName()) != nullptr)
+      return;
     list.InsertFirst(data);
   }
 
