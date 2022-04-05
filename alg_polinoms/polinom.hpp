@@ -49,13 +49,13 @@ private:
           case 'x': i += 1; break; // 2x
           case 'y': j += 1; break;
           case 'z': k += 1; break;
-          default: throw std::string("Incorrect monomial");
+          default: throw std::string("Monom contains unexpected characters");
           }
         }
         else {
           n = stoi(s.substr(static_cast<unsigned>(i1 + 1), static_cast<unsigned>(i2 - i1 - 1)));
           if (n > (1 << DEG_BIT) - 1)
-            throw std::string("Incorrect monomial degree");
+            throw std::string("Monom contains unexpected characters");
           switch (s[i1]) {
           case 'x': i += n; break;
           case 'y': j += n; break;
@@ -362,12 +362,18 @@ public:
     for (auto p = pol.cbegin(); p != pol.cend(); ++p)
       switch (c) {
       case 'x':
+        if ((*p).i == 15)
+          throw std::string("Overflow of the monomial degree in integration by x");
         res = res + Monom((*p).coef / ((*p).i + 1), (*p).i + 1, (*p).j, (*p).k);
         break;
       case 'y':
+         if ((*p).j == 15)
+           throw std::string("Overflow of the monomial degree in integration by y");
         res = res + Monom((*p).coef / ((*p).j + 1), (*p).i, (*p).j + 1, (*p).k);
         break;
       case 'z':
+         if ((*p).k == 15)
+           throw std::string("Overflow of the monomial degree in integration by z");
         res = res + Monom((*p).coef / ((*p).k + 1), (*p).i, (*p).j, (*p).k + 1);
       }
     return res;
