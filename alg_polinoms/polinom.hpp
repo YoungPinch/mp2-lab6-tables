@@ -55,12 +55,12 @@ private:
         else {
           n = stoi(s.substr(static_cast<unsigned>(i1 + 1), static_cast<unsigned>(i2 - i1 - 1)));
           if (n > (1 << DEG_BIT) - 1)
-            throw std::string("Monom contains unexpected characters");
+            throw std::string("Incorrect monomial degree");
           switch (s[i1]) {
           case 'x': i += n; break;
           case 'y': j += n; break;
           case 'z': k += n; break;
-          default: throw std::string("Incorrect monomial");
+          default: throw std::string("Monom contains unexpected characters");
           }
         }
         i1 = i2 - 1;
