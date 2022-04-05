@@ -49,6 +49,7 @@ private:
           case 'x': i += 1; break; // 2x
           case 'y': j += 1; break;
           case 'z': k += 1; break;
+          default: throw std::string("Incorrect monomial");
           }
         }
         else {
@@ -59,6 +60,7 @@ private:
           case 'x': i += n; break;
           case 'y': j += n; break;
           case 'z': k += n; break;
+          default: throw std::string("Incorrect monomial");
           }
         }
         i1 = i2 - 1;
@@ -172,28 +174,20 @@ private:
   bool static isMonom(std::string s) {
     if (s.empty())
       return false;
-    int i1, i2; bool dot = false;
-    for (i1 = 0; i1 < s.size(); ++i1) {
-      if (!(std::isdigit(s[i1]) || s[i1] == '.' || s[i1] == '-' || s[i1] == '+'))
+    int i; bool dot = false;
+    for (i = 0; i < s.size(); ++i) {
+      if (!(std::isdigit(s[i]) || s[i] == '.' || s[i] == '-' || s[i] == '+'))
         break;
-      if (s[i1] == '.')
+      if (s[i] == '.')
         if (dot == true) // two dots
           return false;
         else
           dot = true;
     } // coef finished
 
-    for (; i1 < s.size(); ++i1) { // i1 point to letter
-      for (i2 = i1 + 1; i2 < s.size() && std::isdigit(s[i2]); ++i2) {} // find not digit
-      if (i2 == i1 + 1) // no degree
-        if (!(s[i1] == 'x' || s[i1] == 'y' || s[i1] == 'z'))
-          return false;
-        else
-          if (stoi(s.substr(i1 + 1, i2 - i1 - 1)) > (1 << DEG_BIT) - 1)
-            return false;
-
-      i1 = i2 - 1;
-    }
+    for (; i < s.size(); ++i) // i point to letter
+      if (!(s[i] == 'x' || s[i] == 'y' || s[i] == 'z'))
+        return false;
 
     return true;
   }
