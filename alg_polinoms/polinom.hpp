@@ -49,7 +49,7 @@ private:
           case 'x': i += 1; break; // 2x
           case 'y': j += 1; break;
           case 'z': k += 1; break;
-          case ' ': /* do smth important*/;
+          case ' ': break/*my hopes*/;
           default: throw std::string("Monom contains unexpected characters");
           }
         }
@@ -61,7 +61,7 @@ private:
           case 'x': i += n; break;
           case 'y': j += n; break;
           case 'z': k += n; break;
-          case ' ': /* do smth important*/;
+          case ' ': break/*my dreams*/;
           default: throw std::string("Monom contains unexpected characters");
           }
         }
