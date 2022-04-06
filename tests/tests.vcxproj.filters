@@ -27,7 +27,7 @@
     <ClCompile Include="test_unsortarr_table.cpp">
       <Filter>test_tables</Filter>
     </ClCompile>
-    <ClCompile Include="test_table.cpp">
+    <ClCompile Include="test_table_manager.cpp">
       <Filter>test_tables</Filter>
     </ClCompile>
     <ClCompile Include="test_stack.cpp">

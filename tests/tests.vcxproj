@@ -29,7 +29,7 @@
     <ClCompile Include="test_postfix.cpp" />
     <ClCompile Include="test_sortarr_table.cpp" />
     <ClCompile Include="test_stack.cpp" />
-    <ClCompile Include="test_table.cpp" />
+    <ClCompile Include="test_table_manager.cpp" />
     <ClCompile Include="test_unsortarr_table.cpp" />
     <ClCompile Include="test_unsortlist_table.cpp" />
   </ItemGroup>
