@@ -1,4 +1,4 @@
-#include <iostream>
+#include <crtdbg.h>
 #include "Interface.h"
 
 void useInterface() {
@@ -9,5 +9,6 @@ void useInterface() {
 
 int main() {
   useInterface();
+  _CrtDumpMemoryLeaks();
   return 0;
 }

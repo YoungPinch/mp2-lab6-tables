@@ -10,6 +10,7 @@ private:
 
 public:
   UnsortArrayTable(int sz = 20) : data(sz), maxInd(0), curSize(0) {}
+  ~UnsortArrayTable() { data.clear(); }
 
   int getCurSize() { return curSize; }
 

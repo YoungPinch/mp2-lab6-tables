@@ -1,13 +1,5 @@
 #include "Interface.h"
 
-const std::vector<std::string> Interface::FuncNames = { "Alg Polinoms", "Print Table",
-                                                        "Insert Elem", "Find Elem", "Delete Elem",
-                                                        "Cur Information", "Change Active Table",
-                                                        "Clearing Screen", "Help", "Exit" };
-
-const std::vector<std::string> Interface::AlgPolFuncNames = { "Algebra of polynomials",
-                                                              "The value of the polynomial at the point" };
-
 void Interface::executableFunc() {
   try {
     if (tabMan == nullptr) {
@@ -238,6 +230,7 @@ void Interface::mode8() {
 void Interface::mode9() {
   std::cout << "See you soon!\n";
   delete tabMan;
+  tabMan = nullptr;
   isWorks = false;
 }
 

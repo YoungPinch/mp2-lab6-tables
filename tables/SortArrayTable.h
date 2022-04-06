@@ -21,6 +21,7 @@ private:
 
 public:
   SortArrayTable(int sz = 20) : countElem(0), row(sz) {}
+  ~SortArrayTable() { row.clear(); }
 
   int getCurSize() { return countElem; }
 

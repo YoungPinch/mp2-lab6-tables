@@ -8,7 +8,14 @@ class Interface {
 
   bool isWorks = true;
   TableManager* tabMan = nullptr;
-  static const std::vector<std::string> FuncNames;
+  const std::vector<std::string> FuncNames = { "Alg Polinoms", "Print Table",
+                                               "Insert Elem", "Find Elem", "Delete Elem",
+                                               "Cur Information", "Change Active Table",
+                                               "Clearing Screen", "Help", "Exit" };
+
+  const std::vector<std::string> AlgPolFuncNames = { "Algebra of polynomials",
+                                                     "The value of the polynomial at the point" };
+
   void(Interface::* modeptr[10])() = { &Interface::mode0, &Interface::mode1, &Interface::mode2,
                                       &Interface::mode3, &Interface::mode4, &Interface::mode5,
                                       &Interface::mode6, &Interface::mode7, &Interface::mode8,
@@ -31,15 +38,13 @@ class Interface {
 
 public:
   Interface() {}
+  ~Interface() { delete tabMan; }
 
   static COORD getPos();
   static void istreamCleaner();
   static void screenCleaner(COORD pos);
   static int Clamp(int border1, int border2);
   static double Clamp(double border1, double border2);
-
-  static const std::vector<std::string> FuncNames;
-  static const std::vector<std::string> AlgPolFuncNames;
 
   void Run() {
     while (isWorks) {

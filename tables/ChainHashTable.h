@@ -18,9 +18,7 @@ private:
 public:
   ChainHashTable(int sz = 20) : size(sz), tables(sz), curSize(0) {}
 
-  ~ChainHashTable() {
-    tables.clear();
-  }
+  ~ChainHashTable() { tables.clear(); }
 
   int getCurSize() { return curSize; }
 

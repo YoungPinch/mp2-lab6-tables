@@ -8,6 +8,7 @@ private:
 
 public:
   UnsortListTable() {}
+  ~UnsortListTable() { }
 
   int getCurSize() { return list.GetSize(); }
 
