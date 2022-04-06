@@ -55,7 +55,12 @@ public:
   int getActiveTableInd() { return curTableInd; }
   std::string getTableName(int ind) { return TableNames[ind]; }
 
-  void setActiveTable(int ind) { curTableInd = ind; }
+  void setActiveTable(int ind) {
+    if (ind < 0 || ind >= COUNTTABLES) {
+      throw std::string("Invalid index for the active table");
+    }
+    curTableInd = ind;
+  }
 
   TableManager(int size) : curSize(0), maxSize(size) {
     if (size <= 0)

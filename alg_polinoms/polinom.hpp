@@ -53,7 +53,7 @@ private:
           }
         }
         else {
-          n = stoi(s.substr(static_cast<unsigned>(i1 + 1), static_cast<unsigned>(i2 - i1 - 1)));
+          n = stoi(s.substr(i1 + 1, i2 - i1 - 1));
           if (n > (1 << DEG_BIT) - 1)
             throw std::string("Incorrect monomial degree");
           switch (s[i1]) {

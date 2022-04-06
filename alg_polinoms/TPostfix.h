@@ -43,12 +43,11 @@ public:
     if (elem == "-")
       return left - right;
     if (elem == "d")
-      return left.Differentiate(right.ToString()[0]); //нужно каким-то образом получить от пользователю переменную, по которой диф
+      return left.Differentiate(right.ToString()[0]);
     if (elem == "I")
-    {
-      return left.Integrate(right.ToString()[0]); // аналогично
-    }
+      return left.Integrate(right.ToString()[0]);
 
+    return Polinom(std::to_string(DBL_MAX)); // when something goes wrong
   }
 };
 

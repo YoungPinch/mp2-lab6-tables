@@ -32,6 +32,42 @@ TEST(TableManager, can_get_max_size_of_tables)
   EXPECT_EQ(2, m.getMaxSize());
 }
 
+TEST(TableManager, can_get_count_of_tables)
+{
+  TableManager m(2);
+  ASSERT_NO_THROW(m.getCountTables());
+}
+
+TEST(TableManager, can_get_active_table_ind)
+{
+  TableManager m(2);
+  ASSERT_NO_THROW(m.getActiveTableInd());
+}
+
+TEST(TableManager, can_set_active_table_ind)
+{
+  TableManager m(2);
+  int actInd = -1;
+  if (m.getCountTables() >= 1)
+    actInd = 1;
+  else if (m.getCountTables() == 0)
+    actInd = 0;
+  m.setActiveTable(actInd);
+  EXPECT_EQ(actInd, m.getActiveTableInd());
+}
+
+TEST(TableManager, throw_when_set_negative_active_table_ind)
+{
+  TableManager m(2);
+  ASSERT_ANY_THROW(m.setActiveTable(-1));
+}
+
+TEST(TableManager, throw_when_set_too_large_active_table_ind)
+{
+  TableManager m(2);
+  ASSERT_ANY_THROW(m.setActiveTable(m.getCountTables() + 1));
+}
+
 TEST(TableManager, new_table_manager_is_empty)
 {
   TableManager m(2);
