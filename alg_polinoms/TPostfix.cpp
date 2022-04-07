@@ -3,15 +3,12 @@
 bool TPostfix::BracketsCorrect(const string& str) const
 {
   TStack<bool> stack; // —тек дл€ проверки наличи€ '('
-  for (const char& elem : str)
-  {
-    if (elem == '(')
-    {
+  for (const char& elem : str) {
+    if (elem == '(') {
       stack.push(true);
       continue;
     }
-    if (elem == ')')
-    {
+    if (elem == ')') {
       if (stack.empty()) // ≈сли стек пуст, то нет пары дл€ ')' -> ошибка
         return false;
       stack.pop();
@@ -29,47 +26,38 @@ void TPostfix::ToInfix(const string& str)
   string copyStr(str);
 
   DeleteSpaces(copyStr);
-  for (int i = 0; i < copyStr.size();)
-  {
+  for (int i = 0; i < copyStr.size();) {
     string lexem;
     elem = copyStr[i];
-    if (elem == "/")
-    {
+    if (elem == "/") {
       i++;
       continue;
     }
-      
+
     //проверка на то, операци€ ли это или нет, если да, то в tmp записываем эту операцию и увеличиваем счетчик на 1
-    if (operation.IsOperation(elem))
-    {
+    if (operation.IsOperation(elem)) {
       lexem = elem;
       i++;
-      if (elem == "d" || elem == "I")
-      {
+      if (elem == "d" || elem == "I") {
         string variable = IsDiff(copyStr[i]);
-        if (variable != "none")
-        {
+        if (variable != "none") {
           elem = variable;
           infix.push_back(elem);
           i++;
           continue;
         }
-        else if (copyStr[i] != '(')
-        {
+        else if (copyStr[i] != '(') {
           lexem = "";
           elem += copyStr[i];
-          while ((!operation.IsOperation(elem) && i < copyStr.size()) || elem == "d" || elem == "I")
-          {
+          while ((!operation.IsOperation(elem) && i < copyStr.size()) || elem == "d" || elem == "I") {
             lexem += elem;
             elem = copyStr[++i];
           }
         }
       }
     }
-    else
-    {
-      while ((!operation.IsOperation(elem) && i < copyStr.size()) || (elem == "d") || (elem == "I"))
-      {
+    else {
+      while ((!operation.IsOperation(elem) && i < copyStr.size()) || (elem == "d") || (elem == "I")) {
         lexem += elem;
         elem = copyStr[++i];
       }
@@ -78,14 +66,12 @@ void TPostfix::ToInfix(const string& str)
     if ((lexem == "-") && (infix.size() == 0 || (infix.size() > 0 && infix[infix.size() - 1] == "("))) // ѕревращение унарного минуса в бинарный
       infix.push_back("0");
     //проверка на моном
-    if (IsMonom(lexem))
-    {
+    if (IsMonom(lexem)) {
       infix.push_back(lexem);
       continue;
     }
     //проверка на правильность введенной переменной
-    if (lexem.find_first_of("0123456789") == 0 && lexem.find_first_not_of("0123456789.") != string::npos) // ѕроверка на корректность имени переменной, если это переменна€
-    {
+    if (lexem.find_first_of("0123456789") == 0 && lexem.find_first_not_of("0123456789.") != string::npos) {// ѕроверка на корректность имени переменной, если это переменна€
       std::string exc = "Invalid format of variable: " + lexem;
       throw exc;
     }
@@ -98,25 +84,20 @@ void TPostfix::ToPostfix()
 {
   TStack<string> opStack;
 
-  for (int i = 0; i < infix.size(); i++)
-  {
+  for (int i = 0; i < infix.size(); i++) {
     string lexem = infix[i];
-    if (!operation.IsOperation(lexem))
-    {
+    if (!operation.IsOperation(lexem)) {
       //перед нами лексема
       postfix.push_back(lexem);
       continue;
     }
-    else
-    {
-      if (lexem == "(")
-      {
+    else {
+      if (lexem == "(") {
         opStack.push(lexem);
         continue;
       }
 
-      if (lexem == ")")
-      {
+      if (lexem == ")") {
         //«аполн€ем постфикс всеми лексемами между ()
         while (opStack.tos() != "(")
           postfix.push_back(opStack.pop());
@@ -127,15 +108,12 @@ void TPostfix::ToPostfix()
       while (!opStack.empty() && operation.GetPriority(opStack.tos()) >= operation.GetPriority(lexem))
         postfix.push_back(opStack.pop());
 
-      if (opStack.empty())
-      {
+      if (opStack.empty()) {
         opStack.push(lexem);
         continue;
       }
-      else
-      {
-        if (operation.GetPriority(opStack.tos()) < operation.GetPriority(lexem))
-        {
+      else {
+        if (operation.GetPriority(opStack.tos()) < operation.GetPriority(lexem)) {
           opStack.push(lexem);
           continue;
         }
@@ -162,8 +140,7 @@ bool TPostfix::IsNumber(const string& lexem)
 
 inline void TPostfix::DeleteSpaces(string& str)
 {
-  for (size_t i = 0; i < str.size(); i++)
-  {
+  for (size_t i = 0; i < str.size(); i++) {
     if (str[i] == ' ')
       str.erase(i, 1);
   }
@@ -183,26 +160,20 @@ inline string TPostfix::IsDiff(const char& str)
 Polinom TPostfix::Calculate()
 {
   TStack<Polinom> result;
-  for (size_t i = 0; i < postfix.size(); i++)
-  {
-    if (operation.IsOperation(postfix[i])) //лексема операци€
-    {
-      if (operation.GetArity(postfix[i]) == 1)
-      {
+  for (size_t i = 0; i < postfix.size(); i++) {
+    if (operation.IsOperation(postfix[i])) {//лексема операци€
+      if (operation.GetArity(postfix[i]) == 1) {
         result.push(operation.Calc(postfix[i], result.pop(), result.pop()));
       }
-      else if (operation.GetArity(postfix[i]) == 2)
-      {
+      else if (operation.GetArity(postfix[i]) == 2) {
         result.push(operation.Calc(postfix[i], result.pop(), result.pop()));
       }
 
     }
-    else if (IsMonom(postfix[i]) || IsNumber(postfix[i])) //лексема моном или число
-    {
+    else if (IsMonom(postfix[i]) || IsNumber(postfix[i])) { //лексема моном или число
       result.push(Polinom(postfix[i]));
     }
-    else //переменна€
-    {
+    else {//переменна€
       auto p = tableManager->Find(postfix[i]);
       if (p == nullptr) {
         std::string exc = postfix[i] + " was not found";

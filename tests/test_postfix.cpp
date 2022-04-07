@@ -6,17 +6,18 @@
 struct TabManForTests
 {
   TableManager tabMan;
-  TabManForTests(int size):tabMan(size)
+  TabManForTests(int size) :tabMan(size)
   {
-	tabMan.Insert("sad", "-3x2+y3");
-	tabMan.Insert("bad", "xyz-1");
-	tabMan.Insert("ded", "z3+x2y");
-	tabMan.Insert("Inside", "x7-z7");
+    tabMan.Insert("sad", "-3x2+y3");
+    tabMan.Insert("bad", "xyz-1");
+    tabMan.Insert("ded", "z3+x2y");
+    tabMan.Insert("Inside", "x7-z7");
   }
 };
+
 TEST(TPostfix, can_create_postfix)
 {
-  ASSERT_NO_THROW(TPostfix p());
+  ASSERT_NO_THROW(TPostfix p("x"));
 }
 
 TEST(TPostfix, can_create_postfix_with_argument)

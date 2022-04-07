@@ -117,8 +117,7 @@ void Interface::valueInDot() {
   std::cout << "Enter the name of the polynomial:\n";
   name = getNameInInterface(false);
   auto obj = tabMan->Find(name);
-  if (obj == nullptr)
-  {
+  if (obj == nullptr) {
     std::cout << "There is no such polynomial in the table\n";
     return;
   }

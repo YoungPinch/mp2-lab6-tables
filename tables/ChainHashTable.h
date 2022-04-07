@@ -7,7 +7,7 @@ private:
   std::vector<TList<std::shared_ptr<PolinomObj>>> tables;
   int size;
   int curSize;
-  
+
   unsigned int Hash(const std::string& key) {
     unsigned int h = 0;
     for (char c : key)
@@ -22,18 +22,17 @@ public:
 
   int getCurSize() { return curSize; }
 
-  void Insert(std::shared_ptr<PolinomObj> data){
+  void Insert(std::shared_ptr<PolinomObj> data) {
     if (Find(data.get()->getName()) != nullptr)
       return;
-    else
-    {
+    else {
       int index = Hash(data.get()->getName());
       tables[index].InsertFirst(data);
       ++curSize;
     }
   }
 
-  std::shared_ptr<PolinomObj>* Find(std::string key){
+  std::shared_ptr<PolinomObj>* Find(std::string key) {
     int index = Hash(key);
     for (auto it = tables[index].begin(); it != tables[index].end(); ++it)
       if (it->get()->getName() == key)

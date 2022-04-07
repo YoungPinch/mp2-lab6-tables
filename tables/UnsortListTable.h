@@ -13,7 +13,7 @@ public:
   int getCurSize() { return list.GetSize(); }
 
   void Insert(std::shared_ptr<PolinomObj> data) {
-    if(Find(data.get()->getName()) != nullptr)
+    if (Find(data.get()->getName()) != nullptr)
       return;
     list.InsertFirst(data);
   }
@@ -25,20 +25,20 @@ public:
     return nullptr;
   }
 
- void Delete(std::string name) {
-   for (auto it = list.begin(); it != list.end(); ++it)
-     if (*it == name) {
-       list.Delete(it);
-       break;
-     }
- }
+  void Delete(std::string name) {
+    for (auto it = list.begin(); it != list.end(); ++it)
+      if (*it == name) {
+        list.Delete(it);
+        break;
+      }
+  }
 
- void Print() {
-   int ind = 0;
-   for (auto it = list.cbegin(); it != list.cend(); ++it, ++ind) {
-     std::cout << ind + 1 << ") " << *it << std::endl;
-   }
- }
+  void Print() {
+    int ind = 0;
+    for (auto it = list.cbegin(); it != list.cend(); ++it, ++ind) {
+      std::cout << ind + 1 << ") " << *it << std::endl;
+    }
+  }
 
 };
 

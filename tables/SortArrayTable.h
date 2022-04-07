@@ -25,7 +25,7 @@ public:
 
   int getCurSize() { return countElem; }
 
-  void Insert(std::shared_ptr<PolinomObj> data){
+  void Insert(std::shared_ptr<PolinomObj> data) {
     int left = 0;
     int right = countElem;
     int lastCompare = 0; //1 - left 2 - right
@@ -62,7 +62,7 @@ public:
     }
   }
 
-  std::shared_ptr<PolinomObj>* Find(std::string key){
+  std::shared_ptr<PolinomObj>* Find(std::string key) {
     int left = 0;
     int right = countElem - 1;
     int mid = 0;
@@ -97,7 +97,7 @@ public:
         right = mid - 1;
     }
   }
-  
+
   void Print() {
     for (size_t i = 0; i < countElem; i++) {
       std::cout << i + 1 << ") " << row[i] << std::endl;

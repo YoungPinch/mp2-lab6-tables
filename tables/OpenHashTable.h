@@ -21,7 +21,7 @@ private:
     return h % size;
   }
 
-  unsigned int gcd(unsigned int x,  unsigned int y) {
+  unsigned int gcd(unsigned int x, unsigned int y) {
     while (x != 0 && y != 0)
       if (x > y)
         x = x % y;
@@ -59,7 +59,7 @@ public:
     ++curSize;
   }
 
-  std::shared_ptr<PolinomObj>* Find(std::string key){
+  std::shared_ptr<PolinomObj>* Find(std::string key) {
     unsigned int h = Hash(key), i = 0;
     while (!(table[h].isDeleted || i == size)) {
       if (table[h].isNone)
@@ -74,7 +74,7 @@ public:
     return nullptr;
   }
 
-  void Delete(std::string key){
+  void Delete(std::string key) {
     unsigned int h = Hash(key), i = 0;
     while (!(table[h].isDeleted || i == size)) {
       if (table[h].isNone)

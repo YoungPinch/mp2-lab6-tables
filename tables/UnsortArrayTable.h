@@ -34,7 +34,7 @@ public:
     for (int i = 0; i < maxInd; i++)
       if (data[i] != nullptr && data[i].get()->getName() == name)
         return &data[i];
-    return nullptr;  
+    return nullptr;
   }
 
   void Delete(std::string name) {

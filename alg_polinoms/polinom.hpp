@@ -197,7 +197,7 @@ private:
   TList<Monom> pol;
 
   Polinom(const Monom& x) {
-    if(x.coef != 0)
+    if (x.coef != 0)
       pol.InsertLast(x);
   }
 
@@ -211,7 +211,7 @@ private:
     }
     else {
       if (x.IsSimilar(*it)) {
-        if(-x.coef != it->coef)
+        if (-x.coef != it->coef)
           res.pol.InsertLast(*(it++) + x);
       }
       else
@@ -374,13 +374,13 @@ public:
         res = res + Monom((*p).coef / ((*p).i + 1), (*p).i + 1, (*p).j, (*p).k);
         break;
       case 'y':
-         if ((*p).j == 15)
-           throw std::string("Overflow of the monomial degree in integration by y");
+        if ((*p).j == 15)
+          throw std::string("Overflow of the monomial degree in integration by y");
         res = res + Monom((*p).coef / ((*p).j + 1), (*p).i, (*p).j + 1, (*p).k);
         break;
       case 'z':
-         if ((*p).k == 15)
-           throw std::string("Overflow of the monomial degree in integration by z");
+        if ((*p).k == 15)
+          throw std::string("Overflow of the monomial degree in integration by z");
         res = res + Monom((*p).coef / ((*p).k + 1), (*p).i, (*p).j, (*p).k + 1);
       }
     return res;

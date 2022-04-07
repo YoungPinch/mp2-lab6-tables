@@ -15,8 +15,7 @@ class Operations // Класс, хранящий поддерживаемые операции
 private:
   map<string, vector<int>> ops; // string - name of operation; vector<int> - priority, arity; ops - OPerationS
 public:
-  Operations() // При добавлении операции в конструктор, обязательно нужно реализовать логику этой операции в Calc и добавить наименование в static string str_op()
-  {
+  Operations() {// При добавлении операции в конструктор, обязательно нужно реализовать логику этой операции в Calc и добавить наименование в static string str_op()
     ops.emplace("*", vector<int>{ 2, 2 });
     ops.emplace("+", vector<int>{ 1, 2 });
     ops.emplace("-", vector<int>{ 1, 2 });
@@ -34,8 +33,7 @@ public:
 
   int GetArity(const string& elem) { return ops[elem][1]; } // Получить арность у заданной операции, контроль использования за программистом 
 
-  Polinom Calc(const string& elem, Polinom left, Polinom right = Polinom()) // Вычислить
-  {
+  Polinom Calc(const string& elem, Polinom left, Polinom right = Polinom()) {// Вычислить
     if (elem == "*")
       return left * right;
     if (elem == "+")
@@ -67,8 +65,7 @@ private:
   string IsDiff(const char& str);
   TableManager* tableManager;
 public:
-  TPostfix(string str, TableManager* tb = nullptr) // Конструктор
-  {
+  TPostfix(string str, TableManager* tb = nullptr) {// Конструктор
     if (!BracketsCorrect(str))
       throw string("The brackets in expression are incorrect");
     tableManager = tb;
@@ -78,16 +75,14 @@ public:
   vector<string> GetInfix() const { return infix; }
   vector<string> GetPostfix() const { return postfix; }
 
-  string GetStringInfix() const
-  {
+  string GetStringInfix() const {
     string tmp;
     for (const string& elem : infix)
       tmp += elem + ' ';
     return tmp;
   }
 
-  string GetStringPostfix() const
-  {
+  string GetStringPostfix() const {
     string tmp;
     for (const string& elem : postfix)
       tmp += elem + ' ';
