@@ -35,7 +35,10 @@ std::string Interface::getNameInInterface(bool checkUnique) {
   std::string tmpName;
   std::cout << "name = ";
   getline(std::cin, tmpName);
-  if (tmpName.find_first_of("0123456789") == 0)
+  if (tmpName.find_first_of("0123456789") == 0
+    || tmpName.find_first_of("-+*/=().") != std::string::npos
+    || tmpName.find_first_not_of("xyz0123456789") == std::string::npos
+    || tmpName == "dx" || tmpName == "dy" || tmpName == "dz" || tmpName == "I")
     throw std::string("Invalid name");
   for (auto& c : tmpName) {
     if (c == ' ') {
@@ -56,6 +59,7 @@ std::string Interface::getStrPolInInterface() {
   getline(std::cin, tmpStrPol);
   if (tmpStrPol.find_first_not_of("0123456789.xyz+- ") != string::npos)
     throw std::string("Invalid polinomial");
+  tmpStrPol.erase(std::remove(tmpStrPol.begin(), tmpStrPol.end(), ' '), tmpStrPol.end());
   return tmpStrPol;
 }
 
@@ -76,34 +80,40 @@ void Interface::mode0() {
 }
 
 void Interface::algPolinoms() {
-  string algExpr;
+  std::string algExpr;
+  std::string nameInChoice;
   std::cout << "Enter an algebraic expression: ";
   istreamCleaner();
   getline(std::cin, algExpr);
   TPostfix postfix(algExpr, tabMan);
   Polinom result = postfix.Calculate();
   std::cout << "Result: " << result << '\n';
+  COORD curPos = getPos();
   std::cout << "Save the result to tables?\n1) Yes\n2) No\n";
   int choice = Clamp(1, 2) - 1;
   if (choice == 0) {
     bool flag = false;
-    std::string name;
     while (flag == false) {
       try {
         std::cout << "Enter the ";
-        name = getNameInInterface();
+        nameInChoice = getNameInInterface();
         flag = true;
       }
       catch (std::string str) {
         std::cout << str << '\n';
       }
     }
-    tabMan->Insert(name, result);
+    tabMan->Insert(nameInChoice, result);
+  }
+  screenCleaner(curPos);
+  if (choice == 0) {
+    std::cout << "You saved the result under the name = " << nameInChoice << '\n';
   }
 }
 
 void Interface::valueInDot() {
-  string name;
+  std::string name;
+  std::string nameInChoice;
   std::cout << "Enter the name of the polynomial:\n";
   name = getNameInInterface(false);
   auto obj = tabMan->Find(name);
@@ -122,21 +132,25 @@ void Interface::valueInDot() {
     z = Clamp(double(INT_MIN + 1), double(INT_MAX - 1));
     string resultStr = std::to_string(obj->get()->getPol().Calculate(x, y, z));
     std::cout << "Result: " << resultStr << '\n';
+    COORD curPos = getPos();
     std::cout << "Save the result to tables?\n1) Yes\n2) No\n";
     int choice = Clamp(1, 2) - 1;
     if (choice == 0) {
       bool flag = false;
-      std::string name;
       while (flag == false) {
         try {
-          name = getNameInInterface();
+          nameInChoice = getNameInInterface();
           flag = true;
         }
         catch (std::string str) {
           std::cout << str << '\n';
         }
       }
-      tabMan->Insert(name, resultStr);
+      tabMan->Insert(nameInChoice, resultStr);
+    }
+    screenCleaner(curPos);
+    if (choice == 0) {
+      std::cout << "You saved the result under the name = " << nameInChoice << '\n';
     }
   }
 }
@@ -219,11 +233,13 @@ void Interface::mode7() { system("cls"); }
 void Interface::mode8() {
   std::cout << "1) The names of polynomials with spaces are converted\n   to others (for example, \"a b\" -> \"a_b\")\n";
   std::cout << "2) The name of the polynomial does not start with a digit\n";
-  std::cout << "3) Floating-point numbers are written with a dot\n   (for example: 3.7)\n";
-  std::cout << "4) A polynomial of three variables (x, y, z), the\n   degree of each variable is less than 16\n";
-  std::cout << "5) Monomes are introduced without any symbols\n   (-2*x^5*y^6*z^7 must be entered as -2x5y6z7)\n";
-  std::cout << "6) Supported operations: " << Operations::str_op() << '\n';
-  std::cout << "7) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
+  std::cout << "3) The name of the polynomial does not contain operation\n   signs ( -, +, *, /, =, (, ), '.' )\n";
+  std::cout << "4) The name of a polynomial cannot be a polynomial,\n   dx, dy, dz, 'I' without additional characters\n";
+  std::cout << "5) Floating-point numbers are written with a dot\n   (for example: 3.7)\n";
+  std::cout << "6) A polynomial of three variables (x, y, z), the\n   degree of each variable is less than 16\n";
+  std::cout << "7) Monomes are introduced without any symbols\n   (-2*x^5*y^6*z^7 must be entered as -2x5y6z7)\n";
+  std::cout << "8) Supported operations: " << Operations::str_op() << '\n';
+  std::cout << "9) The screen displays 9 characters of the name and\n   19 characters of the polynomial\n";
 }
 
 // Exit +
