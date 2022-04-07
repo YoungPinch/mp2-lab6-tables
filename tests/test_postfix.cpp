@@ -3,15 +3,15 @@
 #include "TPostfix.h"
 #include "TPostfix.cpp"
 
-struct JopaSlona
+struct TabManForTests
 {
-  TableManager tableneger;
-  JopaSlona(int size):tableneger(size)
+  TableManager tabMan;
+  TabManForTests(int size):tabMan(size)
   {
-	tableneger.Insert("sad", "-3x2+y3");
-	tableneger.Insert("bad", "xyz-1");
-	tableneger.Insert("ded", "z3+x2y");
-	tableneger.Insert("Inside", "x7-z7");
+	tabMan.Insert("sad", "-3x2+y3");
+	tabMan.Insert("bad", "xyz-1");
+	tabMan.Insert("ded", "z3+x2y");
+	tabMan.Insert("Inside", "x7-z7");
   }
 };
 TEST(TPostfix, can_create_postfix)
@@ -137,9 +137,9 @@ TEST(TPostfix, can_be_friends_with_sad)
   string polStr = "(((((sad)))))";
   Polinom result("-3x2+y3");
 
-  JopaSlona js(10);
+  TabManForTests tm(10);
 
-  EXPECT_EQ(result, TPostfix(polStr, &js.tableneger).Calculate());
+  EXPECT_EQ(result, TPostfix(polStr, &tm.tabMan).Calculate());
 }
 
 TEST(TPostfix, can_calculate_arithmetic_expression_with_plus_and_variables)
@@ -147,8 +147,8 @@ TEST(TPostfix, can_calculate_arithmetic_expression_with_plus_and_variables)
   string polStr = "sad + bad + 3x2 + 7";
   Polinom result("xyz+y3+6");
 
-  JopaSlona js(10);
-  EXPECT_EQ(result, TPostfix(polStr, &js.tableneger).Calculate());
+  TabManForTests tm(10);
+  EXPECT_EQ(result, TPostfix(polStr, &tm.tabMan).Calculate());
 }
 
 // -
@@ -166,8 +166,8 @@ TEST(TPostfix, can_calculate_arithmetic_expression_with_minus_and_variables)
   string polStr = "sad - bad - 3x2 + 7";
   Polinom result("-6x2-xyz+y3+8");
 
-  JopaSlona js(10);
-  EXPECT_EQ(result, TPostfix(polStr, &js.tableneger).Calculate());
+  TabManForTests tm(10);
+  EXPECT_EQ(result, TPostfix(polStr, &tm.tabMan).Calculate());
 }
 
 // *
@@ -185,8 +185,8 @@ TEST(TPostfix, can_calculate_arithmetic_expression_with_multiplication_and_varia
   string polStr = "sad * bad";
   Polinom result("-3x3yz+3x2+xy4z-y3");
 
-  JopaSlona js(10);
-  EXPECT_EQ(result, TPostfix(polStr, &js.tableneger).Calculate());
+  TabManForTests tm(10);
+  EXPECT_EQ(result, TPostfix(polStr, &tm.tabMan).Calculate());
 }
 
 // d
@@ -204,8 +204,8 @@ TEST(TPostfix, can_calculate_arithmetic_expression_with_differentional_and_varia
   string polStr = "d(sad)/dx + d(Inside)/dz";
   Polinom result("-6x-7z6");
 
-  JopaSlona js(10);
-  EXPECT_EQ(result, TPostfix(polStr, &js.tableneger).Calculate());
+  TabManForTests tm(10);
+  EXPECT_EQ(result, TPostfix(polStr, &tm.tabMan).Calculate());
 }
 
 //I
@@ -222,8 +222,8 @@ TEST(TPostfix, can_calculate_arithmetic_expression_with_integral_and_variables)
   string polStr = "I(sad)dx + I(Inside)/dz";
   Polinom result("-1x3+x7z+xy3-0.125z8");
 
-  JopaSlona js(10);
-  EXPECT_EQ(result, TPostfix(polStr, &js.tableneger).Calculate());
+  TabManForTests tm(10);
+  EXPECT_EQ(result, TPostfix(polStr, &tm.tabMan).Calculate());
 }
 
 
