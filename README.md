@@ -209,6 +209,16 @@ __Цель данной работы__  — разработать програ�
 2. Если текущий элемент – операция, то извлекаем из стека столько чисел, сколько арность у текущей операции, и используем их в качестве операндов для данной операции.
 3. После прохода по всему постфиксному представлению, в стеке остаётся одно число, которое является результатом вычисления. Алгоритм прекращает свою работу.
 
+### Алгоритмы работы с АВЛ-деревом:
+
+#### 1. [Балансировка.][avltreebalance]
+
+#### 2. [Вставка в дерево.][avltreeinsert]
+
+#### 3. [Удаление из дерева.][avltreedelete]
+
+#### 4. [Поиск по дереву.][avltreesearching]
+
 ## Используемые инструменты
 
   - Система контроля версий [Git][git].
@@ -222,4 +232,8 @@ __Цель данной работы__  — разработать програ�
 [list]: https://www.bestprog.net/ru/2022/02/11/c-linear-singly-linked-list-general-information-ru/
 [stack]: https://www.bestprog.net/ru/2019/09/18/c-the-concept-of-stack-operations-on-the-stack-an-example-implementation-of-the-stack-as-a-dynamic-array-ru/
 [binsearch]:https://ru.wikipedia.org/wiki/Двоичный_поиск
-[avltree]:https://habr.com/ru/post/150732/
+[avltree]:https://en.wikipedia.org/wiki/AVL_tree
+[avltreebalance]:https://en.wikipedia.org/wiki/AVL_tree#Rebalancing
+[avltreeinsert]:https://en.wikipedia.org/wiki/AVL_tree#Insert
+[avltreedelete]:https://en.wikipedia.org/wiki/AVL_tree#Delete
+[avltreesearching]:https://en.wikipedia.org/wiki/AVL_tree#Searching
